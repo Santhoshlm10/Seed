@@ -1,0 +1,5339 @@
+{
+  "Airlines": {
+    "groupName": "Airlines",
+    "groupValue": [
+      {
+        "parameterName": "Aircraft Type",
+        "searchQueries": ["airplane", "air", "aircraft type"],
+        "category": "airline",
+        "subCategory": "aircraftType",
+        "description": "Returns a random aircraft type.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Air Line",
+        "searchQueries": ["airplane", "air", "aircraft line"],
+        "category": "airline",
+        "subCategory": "airline",
+        "description": "Generates a random airline",
+        "returnType": {
+          "type": "object",
+          "values": [
+            {
+              "name": "Name",
+              "key": "name",
+              "type": "string"
+            },
+            {
+              "name": "IATA Code",
+              "key": "iataCode",
+              "type": "string"
+            }
+          ]
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Air Plane",
+        "searchQueries": ["airplane", "air", "aircraft line"],
+        "category": "airline",
+        "subCategory": "airplane",
+        "description": "Generates a random airplane.",
+        "returnType": {
+          "type": "object",
+          "values": [
+            {
+              "name": "Name",
+              "key": "name",
+              "type": "string"
+            },
+            {
+              "name": "IATA Type Code",
+              "key": "iataTypeCode",
+              "type": "string"
+            }
+          ]
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Airport",
+        "searchQueries": ["airplane", "air", "airport"],
+        "category": "airline",
+        "subCategory": "airport",
+        "description": "Generates a random airport.",
+        "returnType": {
+          "type": "object",
+          "values": [
+            {
+              "name": "Name",
+              "key": "name",
+              "type": "string"
+            },
+            {
+              "name": "IATA Code",
+              "key": "iataCode",
+              "type": "string"
+            }
+          ]
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Flight Number",
+        "searchQueries": ["airplane", "air", "aircraft line", "flightNumber"],
+        "category": "airline",
+        "subCategory": "flightNumber",
+        "description": "Returns a random flight number.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Add leading zeros",
+            "keyName": "addLeadingZeros",
+            "type": "boolean",
+            "description": "Whether to pad the flight number up to 4 digits with leading zeros.",
+            "defaultValue": false
+          },
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum number of digits to generate."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum number of digits to generate."
+              }
+            ],
+            "description": "The number or range of digits to generate."
+          }
+        ]
+      },
+      {
+        "parameterName": "Record Locator",
+        "searchQueries": ["airplane", "air", "record locator"],
+        "category": "airline",
+        "subCategory": "recordLocator",
+        "description": "Generates a random record locator.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Allow Numerics",
+            "keyName": "addLeadingZeros",
+            "type": "boolean",
+            "description": "Whether to pad the flight number up to 4 digits with leading zeros.",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "parameterName": "Seat",
+        "searchQueries": ["airplane", "air", "Seat"],
+        "category": "airline",
+        "subCategory": "seat",
+        "description": "Generates a random seat.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Aircraft type",
+            "keyName": "aircraftType",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "narrowbody",
+                "label": "Narrow Body"
+              },
+              {
+                "key": "regional",
+                "label": "Regional"
+              },
+              {
+                "key": "widebody",
+                "label": "Widebody"
+              }
+            ],
+            "description": "Whether to pad the flight number up to 4 digits with leading zeros.",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  "Animal": {
+    "groupName": "Animal",
+    "groupValue": [
+      {
+        "parameterName": "Bear",
+        "searchQueries": ["animal", "bear"],
+        "category": "animal",
+        "subCategory": "bear",
+        "description": "Returns a random bear species.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Bird",
+        "searchQueries": ["animal", "bird"],
+        "category": "animal",
+        "subCategory": "bird",
+        "description": "Returns a random bird species.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Cat",
+        "searchQueries": ["animal", "cat"],
+        "category": "animal",
+        "subCategory": "cat",
+        "description": "Returns a random cat breed.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Cetacean",
+        "searchQueries": ["animal", "cetacean"],
+        "category": "animal",
+        "subCategory": "cetacean",
+        "description": "Returns a random cetacean species.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Cow",
+        "searchQueries": ["animal", "cow"],
+        "category": "animal",
+        "subCategory": "cow",
+        "description": "Returns a random cow species.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Crocodilia",
+        "searchQueries": ["animal", "crocodilia"],
+        "category": "animal",
+        "subCategory": "crocodilia",
+        "description": "Returns a random crocodilia species.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Dog",
+        "searchQueries": ["animal", "dog"],
+        "category": "animal",
+        "subCategory": "dog",
+        "description": "Returns a random dog breed.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Fish",
+        "searchQueries": ["animal", "fish"],
+        "category": "animal",
+        "subCategory": "fish",
+        "description": "Returns a random fish species.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Horse",
+        "searchQueries": ["animal", "horse"],
+        "category": "animal",
+        "subCategory": "horse",
+        "description": "Returns a random horse breed.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Insect",
+        "searchQueries": ["animal", "insect"],
+        "category": "animal",
+        "subCategory": "insect",
+        "description": "Returns a random insect species.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Lion",
+        "searchQueries": ["animal", "lion"],
+        "category": "animal",
+        "subCategory": "lion",
+        "description": "Returns a random lion species.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Rabbit",
+        "searchQueries": ["animal", "rabbit"],
+        "category": "animal",
+        "subCategory": "rabbit",
+        "description": "Returns a random rabbit species.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Rodent",
+        "searchQueries": ["animal", "rodent"],
+        "category": "animal",
+        "subCategory": "rodent",
+        "description": "Returns a random rodent breed.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Snake",
+        "searchQueries": ["animal", "snake"],
+        "category": "animal",
+        "subCategory": "snake",
+        "description": "Returns a random snake species.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      }
+    ]
+  },
+  "Color": {
+    "groupName": "Color",
+    "groupValue": [
+      {
+        "parameterName": "CMYK",
+        "searchQueries": ["color", "cmyk"],
+        "category": "color",
+        "subCategory": "cmyk",
+        "description": "Returns a CMYK color.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Color By CSS Color Space",
+        "searchQueries": ["color", "colorByCSSColorSpace"],
+        "category": "color",
+        "subCategory": "colorByCSSColorSpace",
+        "description": "Returns a random color based on CSS color space specified.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "CSS Supported Function",
+        "searchQueries": ["color", "cssSupportedFunction"],
+        "category": "color",
+        "subCategory": "cssSupportedFunction",
+        "description": "Returns a random css supported color function name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "CSS Supported Space",
+        "searchQueries": ["color", "cssSupportedSpace"],
+        "category": "color",
+        "subCategory": "cssSupportedSpace",
+        "description": "Returns a random css supported color space name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "HSL",
+        "searchQueries": ["color", "hsl"],
+        "category": "color",
+        "subCategory": "hsl",
+        "description": "Returns an HSL color.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Human",
+        "searchQueries": ["color", "human"],
+        "category": "color",
+        "subCategory": "human",
+        "description": "Returns a random human-readable color name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "HWD",
+        "searchQueries": ["color", "hwb"],
+        "category": "color",
+        "subCategory": "hwb",
+        "description": "Returns an HWB color.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "LCH",
+        "searchQueries": ["color", "lch"],
+        "category": "color",
+        "subCategory": "lch",
+        "description": "Returns an LCH color. Even though upper bound of chroma in LCH color space is theoretically unbounded, it is bounded to 230 as anything above will not make a noticeable difference in the browser.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "RGB",
+        "searchQueries": ["color", "rgb"],
+        "category": "color",
+        "subCategory": "rgb",
+        "description": "Returns an RGB color.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Space",
+        "searchQueries": ["color", "space"],
+        "category": "color",
+        "subCategory": "space",
+        "description": "Returns a random color space name from the worldwide accepted color spaces.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      }
+    ]
+  },
+  "Commerce": {
+    "groupName": "Commerce",
+    "groupValue": [
+      {
+        "parameterName": "Department",
+        "searchQueries": ["commerce", "department"],
+        "category": "commerce",
+        "subCategory": "department",
+        "description": "Returns a department inside a shop.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "ISBN",
+        "searchQueries": ["commerce", "isbn"],
+        "category": "commerce",
+        "subCategory": "isbn",
+        "description": "Returns a random ISBN identifier.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Seperator",
+            "keyName": "separator",
+            "type": "string",
+            "description": "The separator to use in the format.",
+            "defaultValue": "-"
+          },
+          {
+            "name": "Variant",
+            "keyName": "variant",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "10",
+                "label": "10"
+              },
+              {
+                "key": "13",
+                "label": "13"
+              }
+            ],
+            "description": "The variant of the identifier to return. Can be either 10 (10-digit format) or 13 (13-digit format).",
+            "defaultValue": "10"
+          }
+        ]
+      },
+      {
+        "parameterName": "Price",
+        "searchQueries": ["commerce", "price"],
+        "category": "commerce",
+        "subCategory": "price",
+        "description": "Generates a price between min and max (inclusive)",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Decimal Places",
+            "keyName": "dec",
+            "type": "number",
+            "description": "The number of decimal places.",
+            "defaultValue": "2"
+          },
+          {
+            "name": "Symbol",
+            "keyName": "symbol",
+            "type": "string",
+            "description": "The currency value to use.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Minimum Price",
+            "keyName": "min",
+            "type": "number",
+            "description": "The minimum price.",
+            "defaultValue": 1
+          },
+          {
+            "name": "Maximum Price",
+            "keyName": "max",
+            "type": "number",
+            "description": "The maximum price.",
+            "defaultValue": 1000
+          }
+        ]
+      },
+      {
+        "parameterName": "Product",
+        "searchQueries": ["commerce", "product"],
+        "category": "commerce",
+        "subCategory": "product",
+        "description": "Returns a short product name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Product Adjective",
+        "searchQueries": ["commerce", "product", "adjective"],
+        "category": "commerce",
+        "subCategory": "productAdjective",
+        "description": "Returns an adjective describing a product.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Product Description",
+        "searchQueries": ["commerce", "product", "description"],
+        "category": "commerce",
+        "subCategory": "productDescription",
+        "description": "Returns a product description.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Product Material",
+        "searchQueries": ["commerce", "product", "material"],
+        "category": "commerce",
+        "subCategory": "productMaterial",
+        "description": "Returns a material of a product.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Product Name",
+        "searchQueries": ["commerce", "product", "name"],
+        "category": "commerce",
+        "subCategory": "productName",
+        "description": "Generates a random descriptive product name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      }
+    ]
+  },
+  "Company": {
+    "groupName": "Company",
+    "groupValue": [
+      {
+        "parameterName": "Buzz Adjective",
+        "searchQueries": ["company", "buzz", "adjective"],
+        "category": "company",
+        "subCategory": "buzzAdjective",
+        "description": "Returns a random buzz adjective that can be used to demonstrate data being viewed by a manager.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Buzz Noun",
+        "searchQueries": ["company", "buzz", "noun"],
+        "category": "company",
+        "subCategory": "buzzNoun",
+        "description": "Returns a random buzz noun that can be used to demonstrate data being viewed by a manager.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Buzz Phrase",
+        "searchQueries": ["company", "buzz", "phrase"],
+        "category": "company",
+        "subCategory": "buzzPhrase",
+        "description": "Generates a random buzz phrase that can be used to demonstrate data being viewed by a manager.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Buzz Verb",
+        "searchQueries": ["company", "buzz", "verb"],
+        "category": "company",
+        "subCategory": "buzzVerb",
+        "description": "Returns a random buzz verb that can be used to demonstrate data being viewed by a manager.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Catch Phrase",
+        "searchQueries": ["company", "catch", "phrase"],
+        "category": "company",
+        "subCategory": "catchPhrase",
+        "description": "Generates a random catch phrase that can be displayed to an end user.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Catch Phrase",
+        "searchQueries": ["company", "catch", "phrase"],
+        "category": "company",
+        "subCategory": "catchPhrase",
+        "description": "Generates a random catch phrase that can be displayed to an end user.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Catch Phrase Adjective",
+        "searchQueries": ["company", "catch", "phrase", "adjective"],
+        "category": "company",
+        "subCategory": "catchPhraseAdjective",
+        "description": "Returns a random catch phrase adjective that can be displayed to an end user.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Catch Phrase Descriptor",
+        "searchQueries": ["company", "catch", "phrase", "descriptor"],
+        "category": "company",
+        "subCategory": "catchPhraseDescriptor",
+        "description": "Returns a random catch phrase descriptor that can be displayed to an end user.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Catch Phrase Noun",
+        "searchQueries": ["company", "catch", "phrase", "noun"],
+        "category": "company",
+        "subCategory": "catchPhraseNoun",
+        "description": "Returns a random catch phrase noun that can be displayed to an end user.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Name",
+        "searchQueries": ["company", "name"],
+        "category": "company",
+        "subCategory": "name",
+        "description": "Generates a random company name.                ",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      }
+    ]
+  },
+  "Database": {
+    "groupName": "Database",
+    "groupValue": [
+      {
+        "parameterName": "Collation",
+        "searchQueries": ["database", "collation"],
+        "category": "database",
+        "subCategory": "collation",
+        "description": "Returns a random database collation.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Column",
+        "searchQueries": ["database", "column"],
+        "category": "database",
+        "subCategory": "column",
+        "description": "Returns a random database column name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Engine",
+        "searchQueries": ["database", "engine"],
+        "category": "database",
+        "subCategory": "engine",
+        "description": "Returns a random database engine.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "MongoDB Object ID",
+        "searchQueries": ["database", "mongo", "ID"],
+        "category": "database",
+        "subCategory": "mongodbObjectId",
+        "description": "Returns a MongoDB ObjectId string.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      },
+      {
+        "parameterName": "Type",
+        "searchQueries": ["database", "type"],
+        "category": "database",
+        "subCategory": "type",
+        "description": "Returns a random database column type.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": null
+      }
+    ]
+  },
+  "Datatype": {
+    "groupName": "Datatype",
+    "groupValue": [
+      {
+        "parameterName": "Boolean",
+        "searchQueries": ["datatype", "boolean"],
+        "category": "datatype",
+        "subCategory": "boolean",
+        "description": "Returns the boolean value true or false.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Probability",
+            "keyName": "probability",
+            "type": "number",
+            "description": "The probability ([0.00, 1.00]) of returning true",
+            "defaultValue": "0.5"
+          }
+        ]
+      }
+    ]
+  },
+  "Date": {
+    "groupName": "Date",
+    "groupValue": [
+      {
+        "parameterName": "Anytime",
+        "searchQueries": ["date", "anytime"],
+        "category": "date",
+        "subCategory": "anytime",
+        "description": "Generates a random date that can be either in the past or in the future.",
+        "returnType": {
+          "type": "date",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Reference Date",
+            "keyName": "refDate",
+            "type": "date",
+            "description": "The date to use as reference point for the newly generated date."
+          }
+        ]
+      },
+      {
+        "parameterName": "Between",
+        "searchQueries": ["date", "between"],
+        "category": "date",
+        "subCategory": "between",
+        "description": "Generates a random date between the given boundaries.",
+        "returnType": {
+          "type": "date",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "From Date",
+            "keyName": "from",
+            "type": "date",
+            "description": "From date"
+          },
+          {
+            "name": "To Date",
+            "keyName": "date",
+            "type": "date",
+            "description": "To date"
+          }
+        ]
+      },
+      {
+        "parameterName": "Betweens",
+        "searchQueries": ["date", "betweens"],
+        "category": "date",
+        "subCategory": "between",
+        "description": "Generates random dates between the given boundaries. The dates will be returned in an array sorted in chronological order.",
+        "returnType": {
+          "type": "array",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Count",
+            "keyName": "count",
+            "type": "number",
+            "description": "The number of dates to generate."
+          },
+          {
+            "name": "From",
+            "keyName": "from",
+            "type": "date",
+            "description": "The early date boundary."
+          },
+          {
+            "name": "To",
+            "keyName": "to",
+            "type": "date",
+            "description": "The late date boundary."
+          }
+        ]
+      },
+      {
+        "parameterName": "Birthdate",
+        "searchQueries": ["date", "birthdate"],
+        "category": "date",
+        "subCategory": "birthdate",
+        "description": "Returns a random birthdate. By default, the birthdate is generated for an adult between 18 and 80 years old. But you can customize the 'age' range or the 'year' range to generate a more specific birthdate.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Reference Date",
+            "keyName": "refDate",
+            "type": "date",
+            "description": "The date to use as reference point for the newly generated date."
+          }
+        ]
+      },
+      {
+        "parameterName": "Future",
+        "searchQueries": ["date", "future"],
+        "category": "date",
+        "subCategory": "future",
+        "description": "Generates a random date in the future.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Years",
+            "keyName": "years",
+            "type": "number",
+            "description": "The range of years the date may be in the future."
+          },
+          {
+            "name": "Reference Date",
+            "keyName": "refDate",
+            "type": "date",
+            "description": "The date to use as reference point for the newly generated date."
+          }
+        ]
+      },
+      {
+        "parameterName": "Month",
+        "searchQueries": ["date", "month"],
+        "category": "date",
+        "subCategory": "month",
+        "description": "Returns a random name of a month.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Abbreviated",
+            "keyName": "abbreviated",
+            "type": "boolean",
+            "description": "Whether to return an abbreviation."
+          },
+          {
+            "name": "Context",
+            "keyName": "context",
+            "type": "boolean",
+            "description": "Whether to return the name of a month in the context of a date."
+          }
+        ]
+      },
+      {
+        "parameterName": "Past",
+        "searchQueries": ["date", "past"],
+        "category": "date",
+        "subCategory": "past",
+        "description": "Generates a random date in the past.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Years",
+            "keyName": "years",
+            "type": "number",
+            "description": "The range of years the date may be in the past.",
+            "defaultValue": "1"
+          },
+          {
+            "name": "Reference Date",
+            "keyName": "refDate",
+            "type": "date",
+            "description": "The date to use as reference point for the newly generated date."
+          }
+        ]
+      },
+      {
+        "parameterName": "Recent",
+        "searchQueries": ["date", "recent"],
+        "category": "date",
+        "subCategory": "recent",
+        "description": "Returns a random birthdate. By default, the birthdate is generated for an adult between 18 and 80 years old. But you can customize the 'age' range or the 'year' range to generate a more specific birthdate.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Days",
+            "keyName": "days",
+            "type": "number",
+            "description": "The range of days the date may be in the past.",
+            "defaultValue": "1"
+          },
+          {
+            "name": "Reference Date",
+            "keyName": "refDate",
+            "type": "date",
+            "description": "The date to use as reference point for the newly generated date."
+          }
+        ]
+      },
+      {
+        "parameterName": "Soon",
+        "searchQueries": ["date", "soon"],
+        "category": "date",
+        "subCategory": "soon",
+        "description": "Generates a random date in the near future.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Days",
+            "keyName": "days",
+            "type": "number",
+            "description": "The range of days the date may be in the future.",
+            "defaultValue": "1"
+          },
+          {
+            "name": "Reference Date",
+            "keyName": "refDate",
+            "type": "date",
+            "description": "The date to use as reference point for the newly generated date."
+          }
+        ]
+      },
+      {
+        "parameterName": "TimeZone",
+        "searchQueries": ["date", "timeZone"],
+        "category": "date",
+        "subCategory": "timeZone",
+        "description": "Returns a random IANA time zone name. (The returned time zone is not tied to the current locale.)",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Weekday",
+        "searchQueries": ["date", "weekday"],
+        "category": "date",
+        "subCategory": "weekday",
+        "description": "Returns a random day of the week.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Abbreviated",
+            "keyName": "abbreviated",
+            "type": "boolean",
+            "description": "Whether to return an abbreviation."
+          },
+          {
+            "name": "Context",
+            "keyName": "context",
+            "type": "boolean",
+            "description": "Whether to return the day of the week in the context of a date."
+          }
+        ]
+      }
+    ]
+  },
+  "Finance": {
+    "groupName": "Finance",
+    "groupValue": [
+      {
+        "parameterName": "Account Name",
+        "searchQueries": ["finance", "account", "name"],
+        "category": "finance",
+        "subCategory": "accountName",
+        "description": "Generates a random account name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Account Number",
+        "searchQueries": ["finance", "account", "number"],
+        "category": "finance",
+        "subCategory": "accountNumber",
+        "description": "Generates a random account number.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "number",
+            "description": "The length of the account number.",
+            "defaultValue": "8"
+          }
+        ]
+      },
+      {
+        "parameterName": "Amount",
+        "searchQueries": ["finance", "amount"],
+        "category": "finance",
+        "subCategory": "amount",
+        "description": "Generates a random amount between the given bounds (inclusive).",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min Amount",
+            "keyName": "min",
+            "type": "number",
+            "description": "The lower bound for the amount.",
+            "defaultValue": "0"
+          },
+          {
+            "name": "Max Amount",
+            "keyName": "max",
+            "type": "number",
+            "description": "The upper bound for the amount.",
+            "defaultValue": "1000"
+          },
+          {
+            "name": "Symbol",
+            "keyName": "symbol",
+            "type": "string",
+            "description": "The symbol used to prefix the amount.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Decimal Places",
+            "keyName": "dec",
+            "type": "number",
+            "description": "The number of decimal places for the amount.",
+            "defaultValue": "2"
+          },
+          {
+            "name": "Auto Format",
+            "keyName": "autoFormat",
+            "type": "boolean",
+            "description": "If true this method will use Number.toLocaleString(). Otherwise it will use Number.toFixed().",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "parameterName": "BIC",
+        "searchQueries": ["finance", "bic"],
+        "category": "finance",
+        "subCategory": "bic",
+        "description": "Generates a random SWIFT/BIC code based on the ISO-9362 format.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Include Branch Code",
+            "keyName": "includeBranchCode",
+            "type": "boolean",
+            "description": "Whether to include a three-digit branch code at the end of the generated code.",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "parameterName": "Bit Coin Address",
+        "searchQueries": ["finance", "bit", "coin", "address"],
+        "category": "finance",
+        "subCategory": "bitcoinAddress",
+        "description": "Generates a random Bitcoin address.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Network",
+            "keyName": "network",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "mainnet",
+                "label": "Main net"
+              },
+              {
+                "key": "testnet",
+                "label": "Test net"
+              }
+            ],
+            "description": "The bitcoin network",
+            "defaultValue": "mainnet"
+          },
+          {
+            "name": "Type",
+            "keyName": "type",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "bech32",
+                "label": "Bech32"
+              },
+              {
+                "key": "legacy",
+                "label": "Legacy"
+              },
+              {
+                "key": "segwit",
+                "label": "Segwit"
+              },
+              {
+                "key": "taproot",
+                "label": "Taproot"
+              }
+            ],
+            "description": "The bitcoin address type",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "Credit Card CVV",
+        "searchQueries": ["finance", "credit", "card", "cvv"],
+        "category": "finance",
+        "subCategory": "creditCardCVV",
+        "description": "Generates a random credit card CVV.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Credit Card Issuer",
+        "searchQueries": ["finance", "credit", "card", "issuer"],
+        "category": "finance",
+        "subCategory": "creditCardIssuer",
+        "description": "Returns a random credit card issuer.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Credit Card Number",
+        "searchQueries": ["finance", "credit", "card", "number"],
+        "category": "finance",
+        "subCategory": "creditCardNumber",
+        "description": "Generates a random credit card number.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Issuer",
+            "keyName": "issuer",
+            "type": "string",
+            "description": "The name of the issuer (case-insensitive) or the format used to generate one.",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "Currency",
+        "searchQueries": ["finance", "currency"],
+        "category": "finance",
+        "subCategory": "currency",
+        "description": "Returns a random currency object, containing code, name and symbol properties.",
+        "returnType": {
+          "type": "object",
+          "values": [
+            {
+              "name": "Code",
+              "key": "code",
+              "type": "string"
+            },
+            {
+              "name": "Name",
+              "key": "name",
+              "type": "string"
+            },
+            {
+              "name": "Symbol",
+              "key": "symbol",
+              "type": "string"
+            }
+          ]
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Currency Code",
+        "searchQueries": ["finance", "currency", "code"],
+        "category": "finance",
+        "subCategory": "currencyCode",
+        "description": "Returns a random currency code. (The short text/abbreviation for the currency (e.g. US Dollar -> USD))",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Currency Name",
+        "searchQueries": ["finance", "currency", "name"],
+        "category": "finance",
+        "subCategory": "currencyName",
+        "description": "Returns a random currency name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Currency Symbol",
+        "searchQueries": ["finance", "currency", "symbol"],
+        "category": "finance",
+        "subCategory": "currencySymbol",
+        "description": "Returns a random currency symbol.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Ethereum Address",
+        "searchQueries": ["finance", "ethereum", "address"],
+        "category": "finance",
+        "subCategory": "ethereumAddress",
+        "description": "Creates a random, non-checksum Ethereum address.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "IBAN",
+        "searchQueries": ["finance", "iban"],
+        "category": "finance",
+        "subCategory": "iban",
+        "description": "Generates a random IBAN.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Country Code",
+            "keyName": "countryCode",
+            "type": "string",
+            "description": "The country code from which you want to generate an IBAN, if none is provided a random country will be used.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Formatted",
+            "keyName": "formatted",
+            "type": "boolean",
+            "description": "Return a formatted version of the generated IBAN.",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "parameterName": "Litecoin Address",
+        "searchQueries": ["finance", "litecoint", "address"],
+        "category": "finance",
+        "subCategory": "litecoinAddress",
+        "description": "Generates a random Litecoin address.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Pin",
+        "searchQueries": ["finance", "pin"],
+        "category": "finance",
+        "subCategory": "pin",
+        "description": "Generates a random PIN number.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "number",
+            "description": "The length of the PIN to generate.",
+            "defaultValue": "4"
+          }
+        ]
+      },
+      {
+        "parameterName": "Routing Number",
+        "searchQueries": ["finance", "routing", "number"],
+        "category": "finance",
+        "subCategory": "routingNumber",
+        "description": "Generates a random routing number.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Transaction Description",
+        "searchQueries": ["finance", "transaction", "description"],
+        "category": "finance",
+        "subCategory": "transactionDescription",
+        "description": "Generates a random transaction description.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Transaction Type",
+        "searchQueries": ["finance", "transaction", "type"],
+        "category": "finance",
+        "subCategory": "transactionType",
+        "description": "Returns a random transaction type.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      }
+    ]
+  },
+  "Food": {
+    "groupName": "Food",
+    "groupValue": [
+      {
+        "parameterName": "Adjective",
+        "searchQueries": ["food", "adjective"],
+        "category": "food",
+        "subCategory": "adjective",
+        "description": "Generates a random dish adjective.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Description",
+        "searchQueries": ["food", "description"],
+        "category": "food",
+        "subCategory": "description",
+        "description": "Generates a random dish description.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Dish",
+        "searchQueries": ["food", "dish"],
+        "category": "food",
+        "subCategory": "dish",
+        "description": "Generates a random dish name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Ethnic Category",
+        "searchQueries": ["food", "ethnic", "category"],
+        "category": "food",
+        "subCategory": "ethnicCategory",
+        "description": "Generates a random food's ethnic category.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Fruit",
+        "searchQueries": ["food", "fruit"],
+        "category": "food",
+        "subCategory": "fruit",
+        "description": "Generates a random fruit name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Ingredient",
+        "searchQueries": ["food", "ingredient"],
+        "category": "food",
+        "subCategory": "ingredient",
+        "description": "Generates a random ingredient name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Meat",
+        "searchQueries": ["food", "meat"],
+        "category": "food",
+        "subCategory": "meat",
+        "description": "Generates a random meat",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Spice",
+        "searchQueries": ["food", "spice"],
+        "category": "food",
+        "subCategory": "spice",
+        "description": "Generates a random spice name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Vegetable",
+        "searchQueries": ["food", "vegetable"],
+        "category": "food",
+        "subCategory": "vegetable",
+        "description": "Generates a random vegetable name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      }
+    ]
+  },
+  "Git": {
+    "groupName": "Git",
+    "groupValue": [
+      {
+        "parameterName": "Branch",
+        "searchQueries": ["git", "branch"],
+        "category": "git",
+        "subCategory": "branch",
+        "description": "Generates a random branch name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Commit Date",
+        "searchQueries": ["git", "commit", "date"],
+        "category": "git",
+        "subCategory": "commitDate",
+        "description": "Generates a date string for a git commit using the same format as git log.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Reference Date",
+            "keyName": "refDate",
+            "type": "string",
+            "description": "The date to use as reference point for the commit.",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "Commit Entry",
+        "searchQueries": ["git", "commit", "entry"],
+        "category": "git",
+        "subCategory": "commitEntry",
+        "description": "Generates a random commit entry as printed by git log.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Reference Date",
+            "keyName": "refDate",
+            "type": "string",
+            "description": "The date to use as reference point for the commit.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Merge",
+            "keyName": "merge",
+            "type": "boolean",
+            "description": "Set to true to generate a merge message line.",
+            "defaultValue": false
+          },
+          {
+            "name": "End of Line",
+            "keyName": "eol",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "CRLF",
+                "label": "CRLF"
+              },
+              {
+                "key": "LF",
+                "label": "LF"
+              }
+            ],
+            "description": "Choose the end of line character to use. Defaults to 'CRLF'. 'LF' = '\n', 'CRLF' = '\r\n'",
+            "defaultValue": "CRLF"
+          }
+        ]
+      },
+      {
+        "parameterName": "Commit Message",
+        "searchQueries": ["git", "commit", "message"],
+        "category": "git",
+        "subCategory": "commitMessage",
+        "description": "Generates a random commit message.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Commit SHA",
+        "searchQueries": ["git", "commit", "SHA"],
+        "category": "git",
+        "subCategory": "commitSha",
+        "description": "Generates a random commit sha.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "number",
+            "description": "The length of the commit sha.",
+            "defaultValue": "40"
+          }
+        ]
+      }
+    ]
+  },
+  "Hacker": {
+    "groupName": "Hacker",
+    "groupValue": [
+      {
+        "parameterName": "Abbreviation",
+        "searchQueries": ["hacker", "abbreviation"],
+        "category": "hacker",
+        "subCategory": "abbreviation",
+        "description": "Returns a random hacker/IT abbreviation.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Adjective",
+        "searchQueries": ["hacker", "adjective"],
+        "category": "hacker",
+        "subCategory": "adjective",
+        "description": "Returns a random hacker/IT adjective.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Ingverb",
+        "searchQueries": ["hacker", "ingverb"],
+        "category": "hacker",
+        "subCategory": "ingverb",
+        "description": "Returns a random hacker/IT verb for continuous actions (en: ing suffix; e.g. hacking).",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Noun",
+        "searchQueries": ["hacker", "noun"],
+        "category": "hacker",
+        "subCategory": "noun",
+        "description": "Returns a random hacker/IT noun.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Phrase",
+        "searchQueries": ["hacker", "phrase"],
+        "category": "hacker",
+        "subCategory": "phrase",
+        "description": "Generates a random hacker/IT phrase.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Verb",
+        "searchQueries": ["hacker", "verb"],
+        "category": "hacker",
+        "subCategory": "verb",
+        "description": "Returns a random hacker/IT verb.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      }
+    ]
+  },
+  "Image": {
+    "groupName": "Image",
+    "groupValue": [
+      {
+        "parameterName": "Avatar",
+        "searchQueries": ["image", "avatar"],
+        "category": "image",
+        "subCategory": "avatar",
+        "description": "Generates a random avatar image url.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Avatar Github",
+        "searchQueries": ["image", "avatar", "github"],
+        "category": "image",
+        "subCategory": "avatarGitHub",
+        "description": "Generates a random avatar from GitHub.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Data URI",
+        "searchQueries": ["image", "dataUri"],
+        "category": "image",
+        "subCategory": "dataUri",
+        "description": "Generates a random data uri containing an URL-encoded SVG image or a Base64-encoded SVG image.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Type",
+            "keyName": "type",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "svg-base64",
+                "label": "SVG Base64"
+              },
+              {
+                "key": "svg-uri",
+                "label": "SVG URI"
+              }
+            ],
+            "description": "The type of the image to return. Consisting of the file extension and the used encoding.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Color",
+            "keyName": "color",
+            "type": "string",
+            "description": "The color of the image. Must be a color supported by svg.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Height",
+            "keyName": "height",
+            "type": "number",
+            "description": "The height of the image.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Width",
+            "keyName": "width",
+            "type": "number",
+            "description": "The width of the image.",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "Person Portrait",
+        "searchQueries": ["image", "person", "portrait"],
+        "category": "image",
+        "subCategory": "personPortrait",
+        "description": "Generates a random square portrait (avatar) of a person. These are static images of fictional people created by an AI, Stable Diffusion 3. The image URLs are served via the JSDelivr CDN and subject to their terms of use.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Sex",
+            "keyName": "sex",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "male",
+                "label": "Male"
+              },
+              {
+                "key": "femal",
+                "label": "Female"
+              }
+            ],
+            "description": "The sex of the person for the avatar. Can be 'female' or 'male'.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Size",
+            "keyName": "size",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": 32,
+                "label": "32"
+              },
+              {
+                "key": 64,
+                "label": "64"
+              },
+              {
+                "key": 128,
+                "label": "128"
+              },
+              {
+                "key": 256,
+                "label": "256"
+              },
+              {
+                "key": 512,
+                "label": "512"
+              }
+            ],
+            "description": "The size of the image. Can be 512, 256, 128, 64 or 32.",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "URL",
+        "searchQueries": ["image", "url"],
+        "category": "image",
+        "subCategory": "url",
+        "description": "Generates a random image url.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Width",
+            "keyName": "width",
+            "type": "number",
+            "description": "The width of the image.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Height",
+            "keyName": "height",
+            "type": "number",
+            "description": "The height of the image.",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "URL Lorem Flickr",
+        "searchQueries": ["image", "url", "lorem", "flickr"],
+        "category": "image",
+        "subCategory": "urlLoremFlickr",
+        "description": "Generates a random image url provided via https://loremflickr.com.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Category",
+            "keyName": "category",
+            "type": "string",
+            "description": "Category to use for the image.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Height",
+            "keyName": "height",
+            "type": "number",
+            "description": "The height of the image.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Width",
+            "keyName": "width",
+            "type": "number",
+            "description": "The width of the image.",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "URL Picsum Photos",
+        "searchQueries": ["image", "url", "picsum", "photos"],
+        "category": "image",
+        "subCategory": "urlPicsumPhotos",
+        "description": "Generates a random image url provided via https://picsum.photos.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Blur",
+            "keyName": "blur",
+            "type": "range",
+            "minRange": 1,
+            "maxRange": 10,
+            "description": "Whether the image should be blurred. 0 disables the blur.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Gray Scale",
+            "keyName": "grayscale",
+            "type": "boolean",
+            "description": "Whether the image should be grayscale.",
+            "defaultValue": false
+          },
+          {
+            "name": "Height",
+            "keyName": "height",
+            "type": "number",
+            "description": "The height of the image.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Width",
+            "keyName": "width",
+            "type": "number",
+            "description": "The width of the image.",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  "Internet": {
+    "groupName": "Internet",
+    "groupValue": [
+      {
+        "parameterName": "Color",
+        "searchQueries": ["internet", "color"],
+        "category": "internet",
+        "subCategory": "color",
+        "description": "Generates a random css hex color code in aesthetically pleasing color palette.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Blue Base",
+            "keyName": "blueBase",
+            "type": "range",
+            "minRange": 0,
+            "maxRange": 255,
+            "description": "The optional base blue in range between 0 and 255.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Green Base",
+            "keyName": "greenBase",
+            "type": "range",
+            "minRange": 0,
+            "maxRange": 255,
+            "description": "The optional base green in range between 0 and 255.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Red Base",
+            "keyName": "redBase",
+            "type": "range",
+            "minRange": 0,
+            "maxRange": 255,
+            "description": "The optional base red in range between 0 and 255.",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "Display Name",
+        "searchQueries": ["internet", "displayName"],
+        "category": "internet",
+        "subCategory": "displayName",
+        "description": "Generates a display name using the given person's name as base. The resulting display name may use one or both of the provided names. If the input names include Unicode characters, the resulting display name will contain Unicode characters. It will not contain spaces.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Firstname",
+            "keyName": "firstName",
+            "type": "string",
+            "description": "The optional first name to use.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Lastname",
+            "keyName": "lastName",
+            "type": "string",
+            "description": "The optional last name to use.",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "Domain Suffix",
+        "searchQueries": ["internet", "domain", "suffix"],
+        "category": "internet",
+        "subCategory": "domainSuffix",
+        "description": "Returns a random domain suffix.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Domain Word",
+        "searchQueries": ["internet", "domain", "word"],
+        "category": "internet",
+        "subCategory": "domainWord",
+        "description": "Generates a random domain word.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Email",
+        "searchQueries": ["internet", "email"],
+        "category": "internet",
+        "subCategory": "email",
+        "description": "Generates an email address using the given person's name as base.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Firstname",
+            "keyName": "firstName",
+            "type": "string",
+            "description": "The optional first name to use.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Lastname",
+            "keyName": "lastName",
+            "type": "string",
+            "description": "The optional last name to use.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Provider",
+            "keyName": "provider",
+            "type": "string",
+            "description": "The mail provider domain to use. If not specified, a random free mail provider will be chosen.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Allow Special Characters",
+            "keyName": "allowSpecialCharacters",
+            "type": "boolean",
+            "description": "Whether special characters such as .!#$%&'*+-/=?^_`{|}~ should be included in the email address.",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "parameterName": "Emoji",
+        "searchQueries": ["internet", "emoji"],
+        "category": "internet",
+        "subCategory": "emoji",
+        "description": "Generates a random emoji.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Types",
+            "keyName": "types",
+            "type": "multiSelect",
+            "description": "A list of the emoji types that should be used.",
+            "defaultValue": "",
+            "selectValues": [
+              {
+                "key": "activity",
+                "label": "Activity"
+              },
+              {
+                "key": "body",
+                "label": "Body"
+              },
+              {
+                "key": "flag",
+                "label": "Flag"
+              },
+              {
+                "key": "food",
+                "label": "Food"
+              },
+              {
+                "key": "nature",
+                "label": "Nature"
+              },
+              {
+                "key": "object",
+                "label": "Object"
+              },
+              {
+                "key": "person",
+                "label": "Person"
+              },
+              {
+                "key": "smiley",
+                "label": "Smiley"
+              },
+              {
+                "key": "symbol",
+                "label": "Symbol"
+              },
+              {
+                "key": "travel",
+                "label": "Travel"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "parameterName": "Example Email",
+        "searchQueries": ["internet", "email", "example"],
+        "category": "internet",
+        "subCategory": "exampleEmail",
+        "description": "Generates an email address using an example mail provider using the given person's name as base.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Firstname",
+            "keyName": "firstName",
+            "type": "string",
+            "description": "The optional first name to use.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Lastname",
+            "keyName": "lastName",
+            "type": "string",
+            "description": "The optional last name to use.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Allow Special Characters",
+            "keyName": "allowSpecialCharacters",
+            "type": "boolean",
+            "description": "Whether special characters such as .!#$%&'*+-/=?^_`{|}~ should be included in the email address.",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "parameterName": "HTTP Method",
+        "searchQueries": ["internet", "http", "method"],
+        "category": "internet",
+        "subCategory": "httpMethod",
+        "description": "Returns a random http method.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "HTTP Status Code",
+        "searchQueries": ["internet", "http", "status", "code"],
+        "category": "internet",
+        "subCategory": "httpStatusCode",
+        "description": "Generates a random HTTP status code.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Types",
+            "keyName": "types",
+            "type": "multiSelect",
+            "description": "A list of the HTTP status code types that should be used.",
+            "defaultValue": "",
+            "selectValues": [
+              {
+                "key": "clientError",
+                "label": "Client Error"
+              },
+              {
+                "key": "informational",
+                "label": "Informational"
+              },
+              {
+                "key": "redirection",
+                "label": "Redirection"
+              },
+              {
+                "key": "serverError",
+                "label": "Server Error"
+              },
+              {
+                "key": "success",
+                "label": "Success"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "parameterName": "IP",
+        "searchQueries": ["internet", "ip"],
+        "category": "internet",
+        "subCategory": "ip",
+        "description": "Generates a random IPv4 or IPv6 address.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "IPV4",
+        "searchQueries": ["internet", "ipv4"],
+        "category": "internet",
+        "subCategory": "ipv4",
+        "description": "Generates a random IPv4 address.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "CIDR Block",
+            "keyName": "cidrBlock",
+            "type": "string",
+            "description": "The optional CIDR block to use. Must be in the format x.x.x.x/y.",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "IPV6",
+        "searchQueries": ["internet", "ipv6"],
+        "category": "internet",
+        "subCategory": "ipv6",
+        "description": "Generates a random IPv6 address.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "JWT",
+        "searchQueries": ["internet", "jwt"],
+        "category": "internet",
+        "subCategory": "jwt",
+        "description": "Generates a random JWT (JSON Web Token).",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Reference Date",
+            "keyName": "refDate",
+            "type": "date",
+            "description": "The date to use as reference point for the newly generated date."
+          }
+        ]
+      },
+      {
+        "parameterName": "JWT Algorithm",
+        "searchQueries": ["internet", "jwt", "algorithm"],
+        "category": "internet",
+        "subCategory": "jwtAlgorithm",
+        "description": "Generates a random JWT (JSON Web Token) Algorithm.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "MAC",
+        "searchQueries": ["internet", "mac"],
+        "category": "internet",
+        "subCategory": "mac",
+        "description": "Generates a random mac address.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Password",
+        "searchQueries": ["internet", "password"],
+        "category": "internet",
+        "subCategory": "password",
+        "description": "Generates a random password-like string. Do not use this method for generating actual passwords for users. Since the source of the randomness is not cryptographically secure, neither is this generator.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "number",
+            "description": "The length of the password to generate.",
+            "defaultValue": 15
+          },
+          {
+            "name": "Memorable",
+            "keyName": "memorable",
+            "type": "boolean",
+            "description": "Whether the generated password should be memorable.",
+            "defaultValue": false
+          },
+          {
+            "name": "Pattern",
+            "keyName": "pattern",
+            "type": "string",
+            "description": "The pattern that all chars should match. This option will be ignored, if memorable is true. example: /[A-Z]/",
+            "defaultValue": ""
+          },
+          {
+            "name": "Prefix",
+            "keyName": "prefix",
+            "type": "string",
+            "description": "The prefix to use.",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "Port",
+        "searchQueries": ["internet", "port"],
+        "category": "internet",
+        "subCategory": "port",
+        "description": "Generates a random port number.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Protocol",
+        "searchQueries": ["internet", "protocol"],
+        "category": "internet",
+        "subCategory": "protocol",
+        "description": "Returns a random web protocol. Either http or https.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "URL",
+        "searchQueries": ["internet", "url"],
+        "category": "internet",
+        "subCategory": "url",
+        "description": "Generates a random http(s) url.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Append Slash",
+            "keyName": "appendSlash",
+            "type": "boolean",
+            "description": "Whether to append a slash to the end of the url (path).",
+            "defaultValue": false
+          },
+          {
+            "name": "Protocol",
+            "keyName": "protocol",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "http",
+                "label": "HTTP"
+              },
+              {
+                "key": "https",
+                "label": "HTTPS"
+              }
+            ],
+            "description": "The protocol to use.",
+            "defaultValue": "https"
+          }
+        ]
+      },
+      {
+        "parameterName": "User Agent",
+        "searchQueries": ["internet", "user", "agent"],
+        "category": "internet",
+        "subCategory": "userAgent",
+        "description": "Generates a random user agent string.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Username",
+        "searchQueries": ["internet", "username"],
+        "category": "internet",
+        "subCategory": "username",
+        "description": "Generates a username using the given person's name as base. The resulting username may use neither, one or both of the names provided. This will always return a plain ASCII string. Some basic stripping of accents and transliteration of characters will be done.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Firstname",
+            "keyName": "firstName",
+            "type": "string",
+            "description": "The optional first name to use.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Lastname",
+            "keyName": "lastName",
+            "type": "string",
+            "description": "The optional last name to use.",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  "Location": {
+    "groupName": "Location",
+    "groupValue": [
+      {
+        "parameterName": "Building Number",
+        "searchQueries": ["location", "building", "number"],
+        "category": "location",
+        "subCategory": "buildingNumber",
+        "description": "Generates a random building number.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Cardinal Direction",
+        "searchQueries": ["location", "cardinal", "direction"],
+        "category": "location",
+        "subCategory": "cardinalDirection",
+        "description": "Returns a random cardinal direction (north, east, south, west).",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Abbreviated",
+            "keyName": "abbreviated",
+            "type": "boolean",
+            "description": "If true this will return abbreviated directions (N, E, etc). Otherwise this will return the long name.",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "parameterName": "City",
+        "searchQueries": ["location", "city"],
+        "category": "location",
+        "subCategory": "city",
+        "description": "Generates a random localized city name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Continent",
+        "searchQueries": ["location", "continent"],
+        "category": "location",
+        "subCategory": "continent",
+        "description": "Returns a random continent name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Country",
+        "searchQueries": ["location", "country"],
+        "category": "location",
+        "subCategory": "country",
+        "description": "Returns a random country name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Country Code",
+        "searchQueries": ["location", "country", "code"],
+        "category": "location",
+        "subCategory": "countryCode",
+        "description": "Returns a random ISO_3166-1 country code.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Variant",
+            "keyName": "variant",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "alpha-2",
+                "label": "Aplha-2"
+              },
+              {
+                "key": "alpha-3",
+                "label": "Alpha-3"
+              },
+              {
+                "key": "numeric",
+                "label": "Numeric"
+              }
+            ],
+            "description": "The code to return. Can be either 'alpha-2' (two-letter code), 'alpha-3' (three-letter code) or 'numeric' (numeric code).",
+            "defaultValue": "alpha-2"
+          }
+        ]
+      },
+      {
+        "parameterName": "County",
+        "searchQueries": ["location", "county"],
+        "category": "location",
+        "subCategory": "county",
+        "description": "Returns a random localized county, or other equivalent second-level administrative entity for the locale's country such as a district or department.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Direction",
+        "searchQueries": ["location", "direction"],
+        "category": "location",
+        "subCategory": "direction",
+        "description": "Returns a random direction (cardinal and ordinal; northwest, east, etc).",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Abbreviated",
+            "keyName": "abbreviated",
+            "type": "boolean",
+            "description": "If true this will return abbreviated directions (NW, E, etc). Otherwise this will return the long name.",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "parameterName": "Language",
+        "searchQueries": ["location", "language"],
+        "category": "location",
+        "subCategory": "language",
+        "description": "Returns a random spoken language.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Latitude",
+        "searchQueries": ["location", "latitude"],
+        "category": "location",
+        "subCategory": "latitude",
+        "description": "Generates a random latitude.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "The upper bound for the latitude to generate.",
+            "defaultValue": 90
+          },
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "The lower bound for the latitude to generate.",
+            "defaultValue": "-90"
+          },
+          {
+            "name": "Precision",
+            "keyName": "precision",
+            "type": "number",
+            "description": "The number of decimal points of precision for the latitude.",
+            "defaultValue": 4
+          }
+        ]
+      },
+      {
+        "parameterName": "Longitude",
+        "searchQueries": ["location", "longitude"],
+        "category": "location",
+        "subCategory": "longitude",
+        "description": "Generates a random longitude.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "The upper bound for the longitude to generate.",
+            "defaultValue": 90
+          },
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "The lower bound for the longitude to generate.",
+            "defaultValue": -90
+          },
+          {
+            "name": "Precision",
+            "keyName": "precision",
+            "type": "number",
+            "description": "The number of decimal points of precision for the longitude.",
+            "defaultValue": 4
+          }
+        ]
+      },
+      {
+        "parameterName": "Near by GPS Coordinate",
+        "searchQueries": ["location", "near", "by", "GPS", "coordinate"],
+        "category": "location",
+        "subCategory": "nearbyGPSCoordinate",
+        "description": "Generates a random GPS coordinate within the specified radius from the given coordinate.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Is Metric",
+            "keyName": "isMetric",
+            "type": "boolean",
+            "description": "If true assume the radius to be in kilometers. If false for miles.",
+            "defaultValue": true
+          },
+          {
+            "name": "Origin",
+            "keyName": "origin",
+            "type": "latlong",
+            "description": "The original coordinate to get a new coordinate close to.",
+            "defaultValue": [0, 0]
+          },
+          {
+            "name": "Radius",
+            "keyName": "radius",
+            "type": "number",
+            "description": "The maximum distance from the given coordinate to the new coordinate.",
+            "defaultValue": 10
+          }
+        ]
+      },
+      {
+        "parameterName": "Ordinal Direction",
+        "searchQueries": ["location", "ordinal", "direction"],
+        "category": "location",
+        "subCategory": "ordinalDirection",
+        "description": "Returns a random ordinal direction (northwest, southeast, etc).",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Abbreviated",
+            "keyName": "abbreviated",
+            "type": "boolean",
+            "description": "If true this will return abbreviated directions (NW, SE, etc). Otherwise this will return the long name.",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "parameterName": "Secondary Address",
+        "searchQueries": ["location", "secondary", "address"],
+        "category": "location",
+        "subCategory": "secondaryAddress",
+        "description": "Generates a random localized secondary address. This refers to a specific location at a given address such as an apartment or room number.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "State",
+        "searchQueries": ["location", "state"],
+        "category": "location",
+        "subCategory": "state",
+        "description": "Returns a random localized state, or other equivalent first-level administrative entity for the locale's country such as a province or region. Generally, these are the ISO 3166-2 subdivisions for a country. If a locale doesn't correspond to one specific country, the method may return ISO 3166-2 subdivisions from one or more countries that uses that language. For example, the ar locale includes subdivisions from Arabic-speaking countries, such as Tunisia, Algeria, Syria, Lebanon, etc. For historical compatibility reasons, the default en locale only includes states in the United States (identical to en_US). However, you can use other English locales, such as en_IN, en_GB, and en_AU, if needed.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Abbreviated",
+            "keyName": "abbreviated",
+            "type": "boolean",
+            "description": "If true this will return abbreviated first-level administrative entity names. Otherwise this will return the long name.",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "parameterName": "Street",
+        "searchQueries": ["location", "street"],
+        "category": "location",
+        "subCategory": "street",
+        "description": "Generates a random localized street name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Street Address",
+        "searchQueries": ["location", "street", "address"],
+        "category": "location",
+        "subCategory": "streetAddress",
+        "description": "Generates a random localized street address.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Use Full Address",
+            "keyName": "useFullAddress",
+            "type": "boolean",
+            "description": "When true this will generate a full address. Otherwise it will just generate a street address.",
+            "defaultValue": true
+          }
+        ]
+      },
+      {
+        "parameterName": "Time Zone",
+        "searchQueries": ["location", "time", "zone"],
+        "category": "location",
+        "subCategory": "timeZone",
+        "description": "Returns a random IANA time zone relevant to this locale.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Zip Code",
+        "searchQueries": ["location", "zip", "code"],
+        "category": "location",
+        "subCategory": "zipCode",
+        "description": "Generates random zip code from specified format. If format is not specified, the locale's zip format is used.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Format",
+            "keyName": "format",
+            "type": "string",
+            "description": "The optional format used to generate the zip code. This won't be used if the state option is specified.",
+            "defaultValue": ""
+          },
+          {
+            "name": "State",
+            "keyName": "state",
+            "type": "string",
+            "description": "The state to generate the zip code for.",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  "Lorem": {
+    "groupName": "Lorem",
+    "groupValue": [
+      {
+        "parameterName": "Lines",
+        "searchQueries": ["lorem", "lines"],
+        "category": "lorem",
+        "subCategory": "lines",
+        "description": "Generates the given number lines of lorem separated by '\n'.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "The minimum number of lines to generate.",
+            "defaultValue": "5"
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "The maximum number of lines to generate.",
+            "defaultValue": "40"
+          }
+        ]
+      },
+      {
+        "parameterName": "Paragraph",
+        "searchQueries": ["lorem", "paragraph"],
+        "category": "lorem",
+        "subCategory": "paragraph",
+        "description": "Generates a paragraph with the given number of sentences.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "The minimum number of sentences to generate.",
+            "defaultValue": "10"
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "The maximum number of sentences to generate.",
+            "defaultValue": "30"
+          }
+        ]
+      },
+      {
+        "parameterName": "Paragraphs",
+        "searchQueries": ["lorem", "paragraphs"],
+        "category": "lorem",
+        "subCategory": "paragraphs",
+        "description": "Generates the given number of paragraphs.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "The minimum number of paragraphs to generate.",
+            "defaultValue": "10"
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "The maximum number of paragraphs to generate.",
+            "defaultValue": "30"
+          }
+        ]
+      },
+      {
+        "parameterName": "Sentence",
+        "searchQueries": ["lorem", "sentence"],
+        "category": "lorem",
+        "subCategory": "sentence",
+        "description": "Generates a space separated list of words beginning with a capital letter and ending with a period.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "The minimum number of words to generate.",
+            "defaultValue": "10"
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "The maximum number of words to generate.",
+            "defaultValue": "30"
+          }
+        ]
+      },
+      {
+        "parameterName": "Sentences",
+        "searchQueries": ["lorem", "sentences"],
+        "category": "lorem",
+        "subCategory": "sentences",
+        "description": "Generates the given number of sentences.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "The minimum number of sentences to generate.",
+            "defaultValue": "10"
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "The maximum number of sentences to generate.",
+            "defaultValue": "30"
+          }
+        ]
+      },
+      {
+        "parameterName": "Slug",
+        "searchQueries": ["lorem", "slug"],
+        "category": "lorem",
+        "subCategory": "slug",
+        "description": "Generates a slugified text consisting of the given number of hyphen separated words.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "The minimum number of words to generate.",
+            "defaultValue": "2"
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "The maximum number of words to generate.",
+            "defaultValue": "30"
+          }
+        ]
+      },
+      {
+        "parameterName": "Text",
+        "searchQueries": ["lorem", "text"],
+        "category": "lorem",
+        "subCategory": "text",
+        "description": "Generates a random text based on a random lorem method.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Word",
+        "searchQueries": ["lorem", "word"],
+        "category": "lorem",
+        "subCategory": "word",
+        "description": "Generates a word of a specified length.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the word."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the word."
+              }
+            ],
+            "description": "The expected length of the word."
+          },
+          {
+            "name": "Strategy",
+            "keyName": "strategy",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "any-length",
+                "label": "Any Length"
+              },
+              {
+                "key": "closest",
+                "label": "Closest"
+              },
+              {
+                "key": "fail",
+                "label": "Fail"
+              },
+              {
+                "key": "longest",
+                "label": "Longest"
+              },
+              {
+                "key": "shortest",
+                "label": "Shortest"
+              }
+            ],
+            "description": "The strategy to apply when no words with a matching length are found",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "Words",
+        "searchQueries": ["lorem", "words"],
+        "category": "lorem",
+        "subCategory": "words",
+        "description": "Generates a space separated list of words.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum number of words to generate."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum number of words to generate."
+              }
+            ],
+            "description": "The expected length of the word."
+          }
+        ]
+      }
+    ]
+  },
+  "Music": {
+    "groupName": "Music",
+    "groupValue": [
+      {
+        "parameterName": "Album",
+        "searchQueries": ["music", "album"],
+        "category": "music",
+        "subCategory": "album",
+        "description": "Returns a random album name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        }
+      },
+      {
+        "parameterName": "Artist",
+        "searchQueries": ["music", "artist"],
+        "category": "music",
+        "subCategory": "artist",
+        "description": "Returns a random artist name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        }
+      },
+      {
+        "parameterName": "Genre",
+        "searchQueries": ["music", "genre"],
+        "category": "music",
+        "subCategory": "genre",
+        "description": "Returns a random music genre.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        }
+      },
+      {
+        "parameterName": "Song Name",
+        "searchQueries": ["music", "songName"],
+        "category": "music",
+        "subCategory": "songName",
+        "description": "Returns a random song name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        }
+      }
+    ]
+  },
+  "Number": {
+    "groupName": "Number",
+    "groupValue": [
+      {
+        "parameterName": "Big Int",
+        "searchQueries": ["number", "bigInt"],
+        "category": "number",
+        "subCategory": "bigInt",
+        "description": "Returns a BigInt number. The bounds are inclusive.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "Lower bound for generated bigint.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "Upper bound for generated bigint.",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "Binary",
+        "searchQueries": ["number", "binary"],
+        "category": "number",
+        "subCategory": "binary",
+        "description": "Returns a binary number. The bounds are inclusive.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "Lower bound for generated number.",
+            "defaultValue": "0"
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "Upper bound for generated number.",
+            "defaultValue": "1"
+          }
+        ]
+      },
+      {
+        "parameterName": "Float",
+        "searchQueries": ["number", "float"],
+        "category": "number",
+        "subCategory": "float",
+        "description": "Returns a single random floating-point number, by default between 0.0 and 1.0. To change the range, pass a min and max value. To limit the number of decimal places, pass a multipleOf or fractionDigits parameter.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Fraction Digits",
+            "keyName": "fractionDigits",
+            "type": "number",
+            "description": "The maximum number of digits to appear after the decimal point, for example 2 will round to 2 decimal points. Only one of multipleOf or fractionDigits should be passed.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "Lower bound for generated number, inclusive.",
+            "defaultValue": "0.0"
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "Upper bound for generated number, exclusive, unless multipleOf or fractionDigits are passed.",
+            "defaultValue": "1.0"
+          },
+          {
+            "name": "Multiple Of",
+            "keyName": "multipleOf",
+            "type": "number",
+            "description": "The generated number will be a multiple of this parameter. Only one of multipleOf or fractionDigits should be passed.",
+            "defaultValue": ""
+          }
+        ]
+      },
+      {
+        "parameterName": "Hex",
+        "searchQueries": ["number", "hex"],
+        "category": "number",
+        "subCategory": "hex",
+        "description": "Returns a lowercase hexadecimal number. The bounds are inclusive.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "Lower bound for generated number..",
+            "defaultValue": "0"
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "Upper bound for generated number.",
+            "defaultValue": "15"
+          }
+        ]
+      },
+      {
+        "parameterName": "Int",
+        "searchQueries": ["number", "int", "integer"],
+        "category": "number",
+        "subCategory": "int",
+        "description": "Returns a single random integer between zero and the given max value or the given range. The bounds are inclusive.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "Lower bound for generated number..",
+            "defaultValue": "0"
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "Upper bound for generated number.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Multiple Of",
+            "keyName": "multipleOf",
+            "type": "number",
+            "description": "Generated number will be a multiple of the given integer.",
+            "defaultValue": "1"
+          }
+        ]
+      },
+      {
+        "parameterName": "Octal",
+        "searchQueries": ["number", "octal"],
+        "category": "number",
+        "subCategory": "octal",
+        "description": "Returns an octal number. The bounds are inclusive.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "Lower bound for generated number..",
+            "defaultValue": "0"
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "Upper bound for generated number.",
+            "defaultValue": "7"
+          }
+        ]
+      },
+      {
+        "parameterName": "Roman Numeral",
+        "searchQueries": ["number", "romanNumeral"],
+        "category": "number",
+        "subCategory": "romanNumeral",
+        "description": "Returns a roman numeral in String format. The bounds are inclusive.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min",
+            "keyName": "min",
+            "type": "number",
+            "description": "Lower bound for generated number.",
+            "defaultValue": "1"
+          },
+          {
+            "name": "Max",
+            "keyName": "max",
+            "type": "number",
+            "description": "Upper bound for generated number.",
+            "defaultValue": "3999"
+          }
+        ]
+      }
+    ]
+  },
+  "Person": {
+    "groupName": "Person",
+    "groupValue": [
+      {
+        "parameterName": "Bio",
+        "searchQueries": ["person", "bio"],
+        "category": "person",
+        "subCategory": "bio",
+        "description": "Returns a random short biography",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "First Name",
+        "searchQueries": ["person", "firstName"],
+        "category": "person",
+        "subCategory": "firstName",
+        "description": "Returns a random first name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [],
+        "arguments": [
+          {
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "female",
+                "label": "Female"
+              },
+              {
+                "key": "male",
+                "label": "Male"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "parameterName": "Full Name",
+        "searchQueries": ["person", "fullName"],
+        "category": "person",
+        "subCategory": "fullName",
+        "description": "Generates a random full name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "First Name",
+            "keyName": "firstName",
+            "type": "string",
+            "description": "The optional first name to use. If not specified a random one will be chosen.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Last Name",
+            "keyName": "lastName",
+            "type": "string",
+            "description": "The optional last name to use. If not specified a random one will be chosen.",
+            "defaultValue": ""
+          },
+          {
+            "name": "Sex",
+            "keyName": "sex",
+            "type": "select",
+            "description": "The optional sex to use. Can be either 'female' or 'male'.",
+            "selectValues": [
+              {
+                "key": "male",
+                "label": "Male"
+              },
+              {
+                "key": "female",
+                "label": "Female"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "parameterName": "Gender",
+        "searchQueries": ["person", "gender"],
+        "category": "person",
+        "subCategory": "gender",
+        "description": "Returns a random gender.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Job Area",
+        "searchQueries": ["person", "jobArea"],
+        "category": "person",
+        "subCategory": "jobArea",
+        "description": "Generates a random job area.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Job Descriptor",
+        "searchQueries": ["person", "jobDescriptor"],
+        "category": "person",
+        "subCategory": "jobDescriptor",
+        "description": "Generates a random job descriptor.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Job Title",
+        "searchQueries": ["person", "jobTitle"],
+        "category": "person",
+        "subCategory": "jobTitle",
+        "description": "Generates a random job title.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Job Type",
+        "searchQueries": ["person", "jobType"],
+        "category": "person",
+        "subCategory": "jobType",
+        "description": "Generates a random job type.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Job Type",
+        "searchQueries": ["person", "jobType"],
+        "category": "person",
+        "subCategory": "jobType",
+        "description": "Generates a random job type.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Last Name",
+        "searchQueries": ["person", "lastName"],
+        "category": "person",
+        "subCategory": "lastName",
+        "description": "Returns a random last name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [],
+        "arguments": [
+          {
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "female",
+                "label": "Female"
+              },
+              {
+                "key": "male",
+                "label": "Male"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "parameterName": "Middle Name",
+        "searchQueries": ["person", "middle", "name"],
+        "category": "person",
+        "subCategory": "middleName",
+        "description": "Returns a random middle name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [],
+        "arguments": [
+          {
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "female",
+                "label": "Female"
+              },
+              {
+                "key": "male",
+                "label": "Male"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "parameterName": "Prefix",
+        "searchQueries": ["person", "prefix"],
+        "category": "person",
+        "subCategory": "prefix",
+        "description": "Returns a random person prefix.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [],
+        "arguments": [
+          {
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "female",
+                "label": "Female"
+              },
+              {
+                "key": "male",
+                "label": "Male"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "parameterName": "Sex",
+        "searchQueries": ["person", "sex"],
+        "category": "person",
+        "subCategory": "sex",
+        "description": "Returns a random sex.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Sex Type",
+        "searchQueries": ["person", "sex", "type"],
+        "category": "person",
+        "subCategory": "sexType",
+        "description": "Returns a random sex type. The SexType is intended to be used in parameters and conditions.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Suffix",
+        "searchQueries": ["person", "suffix"],
+        "category": "person",
+        "subCategory": "suffix",
+        "description": "Returns a random person suffix.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Zodiac Sign",
+        "searchQueries": ["person", "zodiacSign"],
+        "category": "person",
+        "subCategory": "zodiacSign",
+        "description": "Returns a random zodiac sign.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      }
+    ]
+  },
+  "Phone": {
+    "groupName": "Phone",
+    "groupValue": [
+      {
+        "parameterName": "IMEI",
+        "searchQueries": ["phone", "imei"],
+        "category": "phone",
+        "subCategory": "imei",
+        "description": "Generates IMEI number.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Number",
+        "searchQueries": ["phone", "number"],
+        "category": "phone",
+        "subCategory": "number",
+        "description": "Generates a random phone number.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Style",
+            "keyName": "style",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "human",
+                "label": "Human"
+              },
+              {
+                "key": "international",
+                "label": "International"
+              },
+              {
+                "key": "national",
+                "label": "National"
+              }
+            ],
+            "description": "Style of the generated phone number:",
+            "defaultValue": ""
+          }
+        ]
+      }
+    ]
+  },
+  "Science": {
+    "groupName": "Science",
+    "groupValue": [
+      {
+        "parameterName": "Chemical Element",
+        "searchQueries": ["science", "chemical", "element"],
+        "category": "science",
+        "subCategory": "chemicalElement",
+        "description": "Returns a random periodic table element.",
+        "returnType": {
+          "type": "object",
+          "values": [
+            {
+              "name": "Atomic Number",
+              "key": "atomicNumber",
+              "type": "string"
+            },
+            {
+              "name": "Name",
+              "key": "name",
+              "type": "string"
+            },
+            {
+              "name": "Symbol",
+              "key": "symbol",
+              "type": "string"
+            }
+          ]
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Unit",
+        "searchQueries": ["science", "unit"],
+        "category": "science",
+        "subCategory": "unit",
+        "description": "Returns a random scientific unit.",
+        "returnType": {
+          "type": "object",
+          "values": [
+            {
+              "name": "Name",
+              "key": "name",
+              "type": "string"
+            },
+            {
+              "name": "Symbol",
+              "key": "symbol",
+              "type": "string"
+            }
+          ]
+        },
+        "options": []
+      }
+    ]
+  },
+  "String": {
+    "groupName": "String",
+    "groupValue": [
+      {
+        "parameterName": "Alpha",
+        "searchQueries": ["string", "alpha"],
+        "category": "string",
+        "subCategory": "alpha",
+        "description": "Generating a string consisting of letters in the English alphabet.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Casing",
+            "keyName": "casing",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "lower",
+                "label": "Lower"
+              },
+              {
+                "key": "mixed",
+                "label": "Mixed"
+              },
+              {
+                "key": "upper",
+                "label": "Upper"
+              }
+            ],
+            "description": "The casing of the characters.",
+            "defaultValue": "mixed"
+          },
+          {
+            "name": "Exclude",
+            "keyName": "exclude",
+            "type": "multiSelect",
+            "description": "An array with characters which should be excluded in the generated string.",
+            "defaultValue": "",
+            "selectValues": [
+              { "key": "A", "label": "A" },
+              { "key": "B", "label": "B" },
+              { "key": "C", "label": "C" },
+              { "key": "D", "label": "D" },
+              { "key": "E", "label": "E" },
+              { "key": "F", "label": "F" },
+              { "key": "G", "label": "G" },
+              { "key": "H", "label": "H" },
+              { "key": "I", "label": "I" },
+              { "key": "J", "label": "J" },
+              { "key": "K", "label": "K" },
+              { "key": "L", "label": "L" },
+              { "key": "M", "label": "M" },
+              { "key": "N", "label": "N" },
+              { "key": "O", "label": "O" },
+              { "key": "P", "label": "P" },
+              { "key": "Q", "label": "Q" },
+              { "key": "R", "label": "R" },
+              { "key": "S", "label": "S" },
+              { "key": "T", "label": "T" },
+              { "key": "U", "label": "U" },
+              { "key": "V", "label": "V" },
+              { "key": "W", "label": "W" },
+              { "key": "X", "label": "X" },
+              { "key": "Y", "label": "Y" },
+              { "key": "Z", "label": "Z" },
+              { "key": "a", "label": "a" },
+              { "key": "b", "label": "b" },
+              { "key": "c", "label": "c" },
+              { "key": "d", "label": "d" },
+              { "key": "e", "label": "e" },
+              { "key": "f", "label": "f" },
+              { "key": "g", "label": "g" },
+              { "key": "h", "label": "h" },
+              { "key": "i", "label": "i" },
+              { "key": "j", "label": "j" },
+              { "key": "k", "label": "k" },
+              { "key": "l", "label": "l" },
+              { "key": "m", "label": "m" },
+              { "key": "n", "label": "n" },
+              { "key": "o", "label": "o" },
+              { "key": "p", "label": "p" },
+              { "key": "q", "label": "q" },
+              { "key": "r", "label": "r" },
+              { "key": "s", "label": "s" },
+              { "key": "t", "label": "t" },
+              { "key": "u", "label": "u" },
+              { "key": "v", "label": "v" },
+              { "key": "w", "label": "w" },
+              { "key": "x", "label": "x" },
+              { "key": "y", "label": "y" },
+              { "key": "z", "label": "z" }
+            ]
+          },
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The maximum length of the string to generate."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the string to generate."
+              }
+            ],
+            "description": "The length of the string to generate either as a fixed length or as a length range."
+          }
+        ]
+      },
+      {
+        "parameterName": "Alphanumeric",
+        "searchQueries": ["string", "alpha", "numeric"],
+        "category": "string",
+        "subCategory": "alphanumeric",
+        "description": "Generating a string consisting of alpha characters and digits.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Casing",
+            "keyName": "casing",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "lower",
+                "label": "Lower"
+              },
+              {
+                "key": "mixed",
+                "label": "Mixed"
+              },
+              {
+                "key": "upper",
+                "label": "Upper"
+              }
+            ],
+            "description": "The casing of the characters.",
+            "defaultValue": "mixed"
+          },
+          {
+            "name": "Exclude",
+            "keyName": "exclude",
+            "type": "multiSelect",
+            "description": "An array with characters which should be excluded in the generated string.",
+            "defaultValue": "",
+            "selectValues": [
+              { "key": "A", "label": "A" },
+              { "key": "B", "label": "B" },
+              { "key": "C", "label": "C" },
+              { "key": "D", "label": "D" },
+              { "key": "E", "label": "E" },
+              { "key": "F", "label": "F" },
+              { "key": "G", "label": "G" },
+              { "key": "H", "label": "H" },
+              { "key": "I", "label": "I" },
+              { "key": "J", "label": "J" },
+              { "key": "K", "label": "K" },
+              { "key": "L", "label": "L" },
+              { "key": "M", "label": "M" },
+              { "key": "N", "label": "N" },
+              { "key": "O", "label": "O" },
+              { "key": "P", "label": "P" },
+              { "key": "Q", "label": "Q" },
+              { "key": "R", "label": "R" },
+              { "key": "S", "label": "S" },
+              { "key": "T", "label": "T" },
+              { "key": "U", "label": "U" },
+              { "key": "V", "label": "V" },
+              { "key": "W", "label": "W" },
+              { "key": "X", "label": "X" },
+              { "key": "Y", "label": "Y" },
+              { "key": "Z", "label": "Z" },
+              { "key": "a", "label": "a" },
+              { "key": "b", "label": "b" },
+              { "key": "c", "label": "c" },
+              { "key": "d", "label": "d" },
+              { "key": "e", "label": "e" },
+              { "key": "f", "label": "f" },
+              { "key": "g", "label": "g" },
+              { "key": "h", "label": "h" },
+              { "key": "i", "label": "i" },
+              { "key": "j", "label": "j" },
+              { "key": "k", "label": "k" },
+              { "key": "l", "label": "l" },
+              { "key": "m", "label": "m" },
+              { "key": "n", "label": "n" },
+              { "key": "o", "label": "o" },
+              { "key": "p", "label": "p" },
+              { "key": "q", "label": "q" },
+              { "key": "r", "label": "r" },
+              { "key": "s", "label": "s" },
+              { "key": "t", "label": "t" },
+              { "key": "u", "label": "u" },
+              { "key": "v", "label": "v" },
+              { "key": "w", "label": "w" },
+              { "key": "x", "label": "x" },
+              { "key": "y", "label": "y" },
+              { "key": "z", "label": "z" },
+              { "key": "0", "label": "0" },
+              { "key": "1", "label": "1" },
+              { "key": "2", "label": "2" },
+              { "key": "3", "label": "3" },
+              { "key": "4", "label": "4" },
+              { "key": "5", "label": "5" },
+              { "key": "6", "label": "6" },
+              { "key": "7", "label": "7" },
+              { "key": "8", "label": "8" },
+              { "key": "9", "label": "9" }
+            ]
+          },
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The maximum length of the string to generate."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the string to generate."
+              }
+            ],
+            "description": "The length of the string to generate either as a fixed length or as a length range."
+          }
+        ]
+      },
+      {
+        "parameterName": "Binary",
+        "searchQueries": ["string", "binary"],
+        "category": "string",
+        "subCategory": "binary",
+        "description": "Returns a binary string.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the string (excluding the prefix) to generate."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the string (excluding the prefix) to generate."
+              }
+            ],
+            "description": "The length of the string to generate either as a fixed length or as a length range."
+          },
+          {
+            "name": "Prefix",
+            "keyName": "prefix",
+            "type": "string",
+            "description": "Prefix for the generated number.",
+            "defaultValue": "0b"
+          }
+        ]
+      },
+      {
+        "parameterName": "From Characters",
+        "searchQueries": ["string", "fromCharacters"],
+        "category": "string",
+        "subCategory": "fromCharacters",
+        "description": "Generates a string from the given characters.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "arguments": [
+          {
+            "name": "Characters",
+            "keyName": "characters",
+            "type": "string",
+            "description": "The characters to use for the string. Can be a string or an array of characters. If it is an array, then each element is treated as a single character even if it is a string with multiple characters."
+          },
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The maximum length of the string to generate."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the string to generate."
+              }
+            ],
+            "description": " The length of the string to generate either as a fixed length or as a length range. Defaults to 1."
+          }
+        ]
+      },
+      {
+        "parameterName": "Hexa Decimal",
+        "searchQueries": ["string", "hexa", "decimal"],
+        "category": "string",
+        "subCategory": "hexadecimal",
+        "description": "Returns a hexadecimal string.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the string (excluding the prefix) to generate."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the string (excluding the prefix) to generate."
+              }
+            ],
+            "description": "The length of the string to generate either as a fixed length or as a length range."
+          },
+          {
+            "name": "Prefix",
+            "keyName": "prefix",
+            "type": "string",
+            "description": "Prefix for the generated number.",
+            "defaultValue": "0x"
+          },
+          {
+            "name": "Casing",
+            "keyName": "casing",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "lower",
+                "label": "Lower"
+              },
+              {
+                "key": "mixed",
+                "label": "Mixed"
+              },
+              {
+                "key": "upper",
+                "label": "Upper"
+              }
+            ],
+            "description": "Casing of the generated number.",
+            "defaultValue": "mixed"
+          }
+        ]
+      },
+      {
+        "parameterName": "Nano ID",
+        "searchQueries": ["string", "nano", "id"],
+        "category": "string",
+        "subCategory": "nanoid",
+        "description": "Generates a Nano ID.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min value",
+            "keyName": "min",
+            "type": "number",
+            "description": "The minimum length of the Nano ID to generate."
+          },
+          {
+            "name": "Max value",
+            "keyName": "max",
+            "type": "number",
+            "description": "The maximum length of the Nano ID to generate."
+          }
+        ]
+      },
+      {
+        "parameterName": "Numeric",
+        "searchQueries": ["string", "numeric"],
+        "category": "string",
+        "subCategory": "numeric",
+        "description": "Generates a given length string of digits.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Allow Leading Zeros",
+            "keyName": "allowLeadingZeros",
+            "type": "boolean",
+            "description": "Whether leading zeros are allowed or not.",
+            "defaultValue": true
+          },
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the string to generate."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the string to generate."
+              }
+            ],
+            "description": "The length of the string to generate either as a fixed length or as a length range."
+          },
+          {
+            "name": "Exclude",
+            "keyName": "exclude",
+            "type": "multiSelect",
+            "description": "An array of digits which should be excluded in the generated string.",
+            "defaultValue": "",
+            "selectValues": [
+              { "key": "0", "label": "0" },
+              { "key": "1", "label": "1" },
+              { "key": "2", "label": "2" },
+              { "key": "3", "label": "3" },
+              { "key": "4", "label": "4" },
+              { "key": "5", "label": "5" },
+              { "key": "6", "label": "6" },
+              { "key": "7", "label": "7" },
+              { "key": "8", "label": "8" },
+              { "key": "9", "label": "9" }
+            ]
+          }
+        ]
+      },
+      {
+        "parameterName": "Octal",
+        "searchQueries": ["string", "octal"],
+        "category": "string",
+        "subCategory": "octal",
+        "description": "Returns an octal string.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Prefix",
+            "keyName": "prefix",
+            "type": "string",
+            "description": "Prefix for the generated number.",
+            "defaultValue": "0o"
+          },
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the string (excluding the prefix) to generate."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the string (excluding the prefix) to generate."
+              }
+            ],
+            "description": "The length of the string to generate either as a fixed length or as a length range."
+          }
+        ]
+      },
+      {
+        "parameterName": "Sample",
+        "searchQueries": ["string", "sample"],
+        "category": "string",
+        "subCategory": "sample",
+        "description": "Returns a string containing UTF-16 chars between 33 and 125 (! to }).",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min value",
+            "keyName": "min",
+            "type": "number",
+            "description": "The minimum length of the string to generate."
+          },
+          {
+            "name": "Max value",
+            "keyName": "max",
+            "type": "number",
+            "description": "The maximum length of the string to generate."
+          }
+        ]
+      },
+      {
+        "parameterName": "Symbol",
+        "searchQueries": ["string", "symbol"],
+        "category": "string",
+        "subCategory": "symbol",
+        "description": "Returns a string containing only special characters from the following list:",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Min value",
+            "keyName": "min",
+            "type": "number",
+            "description": "The minimum length of the string to generate."
+          },
+          {
+            "name": "Max value",
+            "keyName": "max",
+            "type": "number",
+            "description": "The maximum length of the string to generate."
+          }
+        ]
+      },
+      {
+        "parameterName": "ULID",
+        "searchQueries": ["string", "ulid"],
+        "category": "string",
+        "subCategory": "ulid",
+        "description": "Returns a ULID (Universally Unique Lexicographically Sortable Identifier).",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Ref Date",
+            "keyName": "refDate",
+            "type": "date",
+            "description": "The date to use as reference point for the newly generated ULID encoded timestamp. The encoded timestamp is represented by the first 10 characters of the result."
+          }
+        ]
+      },
+      {
+        "parameterName": "UUID",
+        "searchQueries": ["string", "uuid"],
+        "category": "string",
+        "subCategory": "uuid",
+        "description": "Returns a UUID v4 (Universally Unique Identifier).",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      }
+    ]
+  },
+  "System": {
+    "groupName": "System",
+    "groupValue": [
+      {
+        "parameterName": "Common File Ext",
+        "searchQueries": ["system", "common", "file", "extension"],
+        "category": "system",
+        "subCategory": "commonFileExt",
+        "description": "Returns a commonly used file extension.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Common File Name",
+        "searchQueries": ["system", "common", "file", "name"],
+        "category": "system",
+        "subCategory": "commonFileName",
+        "description": "Returns a random file name with a given extension or a commonly used extension.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "arguments": [
+          {
+            "name": "Extension",
+            "keyName": "extension",
+            "type": "string",
+            "description": "File extension",
+            "defaultValue": ""
+          }
+        ],
+        "options": []
+      },
+      {
+        "parameterName": "Common File Type",
+        "searchQueries": ["system", "common", "file", "type"],
+        "category": "system",
+        "subCategory": "commonFileType",
+        "description": "Returns a commonly used file type.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "CRON",
+        "searchQueries": ["system", "cron"],
+        "category": "system",
+        "subCategory": "cron",
+        "description": "Returns a random cron expression.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Include Non Standard",
+            "keyName": "includeNonStandard",
+            "type": "boolean",
+            "description": "Whether to include a @yearly, @monthly, @daily, etc text labels in the generated expression.",
+            "defaultValue": false
+          },
+          {
+            "name": "Include Year",
+            "keyName": "includeYear",
+            "type": "boolean",
+            "description": "Whether to include a year in the generated expression.",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "parameterName": "Directory Path",
+        "searchQueries": ["system", "directory", "path"],
+        "category": "system",
+        "subCategory": "directoryPath",
+        "description": "Returns a directory path.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "File Extension",
+        "searchQueries": ["system", "file","ext"],
+        "category": "system",
+        "subCategory": "fileExt",
+        "description": "Returns a file extension.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "arguments": [
+          {
+            "name": "Extension",
+            "keyName": "extension",
+            "type": "string",
+            "description": "File extension",
+            "defaultValue": ""
+          }
+        ],
+        "options": []
+      },
+      {
+        "parameterName": "File Name",
+        "searchQueries": ["system", "file","name"],
+        "category": "system",
+        "subCategory": "fileName",
+        "description": "Returns a random file name with extension.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Extension Count",
+            "keyName": "extensionCount",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "Minimum number of extensions."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum number of digits to generate."
+              }
+            ],
+            "description": "Maximum number of extensions.",
+            "defaultValue":"1"
+          }
+        ]
+      },
+      {
+        "parameterName": "File Path",
+        "searchQueries": ["system", "file", "path"],
+        "category": "system",
+        "subCategory": "filePath",
+        "description": "Returns a file path.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "File Type",
+        "searchQueries": ["system", "file", "type"],
+        "category": "system",
+        "subCategory": "fileType",
+        "description": "Returns a file type.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "MIME Type",
+        "searchQueries": ["system", "mime", "type"],
+        "category": "system",
+        "subCategory": "mimeType",
+        "description": "Returns a mime-type.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Network Interface",
+        "searchQueries": ["system", "network", "interface"],
+        "category": "system",
+        "subCategory": "networkInterface",
+        "description": "Returns a random network interface.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Interface Schema",
+            "keyName": "interfaceSchema",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "index",
+                "label": "Index"
+              },
+              {
+                "key": "mac",
+                "label": "MAC"
+              },
+              {
+                "key": "pci",
+                "label": "PCI"
+              },
+              {
+                "key": "slot",
+                "label": "Slot"
+              }
+            ],
+            "description": "The interface schema. Can be one of index, slot, mac, pci."
+          },
+          {
+            "name": "Interface Type",
+            "keyName": "interfaceType",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "en",
+                "label": "EN"
+              },
+              {
+                "key": "wl",
+                "label": "WL"
+              },
+              {
+                "key": "ww",
+                "label": "WW"
+              }
+            ],
+            "description": "The interface type. Can be one of en, wl, ww."
+          }
+        ]
+      },
+      {
+        "parameterName": "Semver",
+        "searchQueries": ["system", "semver"],
+        "category": "system",
+        "subCategory": "semver",
+        "description": "Returns a semantic version.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      }
+    ]
+  },
+  "Vehicle": {
+    "groupName": "Vehicle",
+    "groupValue": [
+      {
+        "parameterName": "Bicycle",
+        "searchQueries": ["vehicle", "bicycle"],
+        "category": "vehicle",
+        "subCategory": "bicycle",
+        "description": "Returns a type of bicycle.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Color",
+        "searchQueries": ["vehicle", "color"],
+        "category": "vehicle",
+        "subCategory": "color",
+        "description": "Returns a vehicle color.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Fuel",
+        "searchQueries": ["vehicle", "fuel"],
+        "category": "vehicle",
+        "subCategory": "fuel",
+        "description": "Returns a fuel type.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Manufacturer",
+        "searchQueries": ["vehicle", "manufacturer"],
+        "category": "vehicle",
+        "subCategory": "manufacturer",
+        "description": "Returns a manufacturer name.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Model",
+        "searchQueries": ["vehicle", "model"],
+        "category": "vehicle",
+        "subCategory": "model",
+        "description": "Returns a vehicle model.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Type",
+        "searchQueries": ["vehicle", "type"],
+        "category": "vehicle",
+        "subCategory": "type",
+        "description": "Returns a vehicle type.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "Vehicle",
+        "searchQueries": ["vehicle"],
+        "category": "vehicle",
+        "subCategory": "vehicle",
+        "description": "Returns a random vehicle.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "VIN",
+        "searchQueries": ["vehicle","vin"],
+        "category": "vehicle",
+        "subCategory": "vin",
+        "description": "Returns a vehicle identification number (VIN).",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      },
+      {
+        "parameterName": "VRM",
+        "searchQueries": ["vehicle","vrm"],
+        "category": "vehicle",
+        "subCategory": "vrm",
+        "description": "Returns a vehicle registration number (Vehicle Registration Mark - VRM)",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": []
+      }
+    ]
+  },
+  "Word": {
+    "groupName": "Word",
+    "groupValue": [
+      {
+        "parameterName": "Adjective",
+        "searchQueries": ["word", "adjective"],
+        "category": "word",
+        "subCategory": "adjective",
+        "description": "Returns a random adjective.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the word."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the word."
+              }
+            ],
+            "description": "The expected length of the word."
+          },
+          {
+            "name": "Strategy",
+            "keyName": "strategy",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "any-length",
+                "label": "Any Length"
+              },
+              {
+                "key": "closest",
+                "label": "Closest"
+              },
+              {
+                "key": "fail",
+                "label": "Fail"
+              },
+              {
+                "key": "longest",
+                "label": "Longest"
+              },
+              {
+                "key": "shortest",
+                "label": "Shortest"
+              }
+            ],
+            "description": "The strategy to apply when no words with a matching length are found"
+          }
+        ]
+      },
+      {
+        "parameterName": "Adverb",
+        "searchQueries": ["word", "Adverb"],
+        "category": "word",
+        "subCategory": "adverb",
+        "description": "Returns a random adverb.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the word."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the word."
+              }
+            ],
+            "description": "The expected length of the word."
+          },
+          {
+            "name": "Strategy",
+            "keyName": "strategy",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "any-length",
+                "label": "Any Length"
+              },
+              {
+                "key": "closest",
+                "label": "Closest"
+              },
+              {
+                "key": "fail",
+                "label": "Fail"
+              },
+              {
+                "key": "longest",
+                "label": "Longest"
+              },
+              {
+                "key": "shortest",
+                "label": "Shortest"
+              }
+            ],
+            "description": "The strategy to apply when no words with a matching length are found"
+          }
+        ]
+      },
+      {
+        "parameterName": "Conjunction",
+        "searchQueries": ["word", "conjunction"],
+        "category": "word",
+        "subCategory": "conjunction",
+        "description": "Returns a random conjunction.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the word."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the word."
+              }
+            ],
+            "description": "The expected length of the word."
+          },
+          {
+            "name": "Strategy",
+            "keyName": "strategy",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "any-length",
+                "label": "Any Length"
+              },
+              {
+                "key": "closest",
+                "label": "Closest"
+              },
+              {
+                "key": "fail",
+                "label": "Fail"
+              },
+              {
+                "key": "longest",
+                "label": "Longest"
+              },
+              {
+                "key": "shortest",
+                "label": "Shortest"
+              }
+            ],
+            "description": "The strategy to apply when no words with a matching length are found"
+          }
+        ]
+      },
+      {
+        "parameterName": "Interjection",
+        "searchQueries": ["word", "interjection"],
+        "category": "word",
+        "subCategory": "interjection",
+        "description": "Returns a random interjection.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the word."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the word."
+              }
+            ],
+            "description": "The expected length of the word."
+          },
+          {
+            "name": "Strategy",
+            "keyName": "strategy",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "any-length",
+                "label": "Any Length"
+              },
+              {
+                "key": "closest",
+                "label": "Closest"
+              },
+              {
+                "key": "fail",
+                "label": "Fail"
+              },
+              {
+                "key": "longest",
+                "label": "Longest"
+              },
+              {
+                "key": "shortest",
+                "label": "Shortest"
+              }
+            ],
+            "description": "The strategy to apply when no words with a matching length are found"
+          }
+        ]
+      },
+      {
+        "parameterName": "Noun",
+        "searchQueries": ["word", "noun"],
+        "category": "word",
+        "subCategory": "noun",
+        "description": "Returns a random noun.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the word."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the word."
+              }
+            ],
+            "description": "The expected length of the word."
+          },
+          {
+            "name": "Strategy",
+            "keyName": "strategy",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "any-length",
+                "label": "Any Length"
+              },
+              {
+                "key": "closest",
+                "label": "Closest"
+              },
+              {
+                "key": "fail",
+                "label": "Fail"
+              },
+              {
+                "key": "longest",
+                "label": "Longest"
+              },
+              {
+                "key": "shortest",
+                "label": "Shortest"
+              }
+            ],
+            "description": "The strategy to apply when no words with a matching length are found"
+          }
+        ]
+      },
+      {
+        "parameterName": "Preposition",
+        "searchQueries": ["word", "preposition"],
+        "category": "word",
+        "subCategory": "preposition",
+        "description": "Returns a random preposition.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the word."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the word."
+              }
+            ],
+            "description": "The expected length of the word."
+          },
+          {
+            "name": "Strategy",
+            "keyName": "strategy",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "any-length",
+                "label": "Any Length"
+              },
+              {
+                "key": "closest",
+                "label": "Closest"
+              },
+              {
+                "key": "fail",
+                "label": "Fail"
+              },
+              {
+                "key": "longest",
+                "label": "Longest"
+              },
+              {
+                "key": "shortest",
+                "label": "Shortest"
+              }
+            ],
+            "description": "The strategy to apply when no words with a matching length are found"
+          }
+        ]
+      },
+      {
+        "parameterName": "Sample",
+        "searchQueries": ["word", "sample"],
+        "category": "word",
+        "subCategory": "sample",
+        "description": "Returns a random word, that can be an adjective, adverb, conjunction, interjection, noun, preposition, or verb.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the word."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the word."
+              }
+            ],
+            "description": "The expected length of the word."
+          },
+          {
+            "name": "Strategy",
+            "keyName": "strategy",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "any-length",
+                "label": "Any Length"
+              },
+              {
+                "key": "closest",
+                "label": "Closest"
+              },
+              {
+                "key": "fail",
+                "label": "Fail"
+              },
+              {
+                "key": "longest",
+                "label": "Longest"
+              },
+              {
+                "key": "shortest",
+                "label": "Shortest"
+              }
+            ],
+            "description": "The strategy to apply when no words with a matching length are found"
+          }
+        ]
+      },
+      {
+        "parameterName": "Verb",
+        "searchQueries": ["word", "verb"],
+        "category": "word",
+        "subCategory": "verb",
+        "description": "Returns a random verb.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Length",
+            "keyName": "length",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "length.min",
+                "type": "number",
+                "description": "The minimum length of the word."
+              },
+              {
+                "name": "Max value",
+                "keyName": "length.max",
+                "type": "number",
+                "description": "The maximum length of the word."
+              }
+            ],
+            "description": "The expected length of the word."
+          },
+          {
+            "name": "Strategy",
+            "keyName": "strategy",
+            "type": "select",
+            "selectValues": [
+              {
+                "key": "any-length",
+                "label": "Any Length"
+              },
+              {
+                "key": "closest",
+                "label": "Closest"
+              },
+              {
+                "key": "fail",
+                "label": "Fail"
+              },
+              {
+                "key": "longest",
+                "label": "Longest"
+              },
+              {
+                "key": "shortest",
+                "label": "Shortest"
+              }
+            ],
+            "description": "The strategy to apply when no words with a matching length are found"
+          }
+        ]
+      },
+      {
+        "parameterName": "Words",
+        "searchQueries": ["word", "words"],
+        "category": "word",
+        "subCategory": "words",
+        "description": "Returns a random string containing some words separated by spaces.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Count",
+            "keyName": "count",
+            "type": "object",
+            "children": [
+              {
+                "name": "Min value",
+                "keyName": "count.min",
+                "type": "number",
+                "description": "The minimum number of words to return.",
+                "defaultValue":"1"
+              },
+              {
+                "name": "Max value",
+                "keyName": "count.max",
+                "type": "number",
+                "description": "The maximum number of words to return.",
+                "defaultValue":"3"
+              }
+            ],
+            "description": "The number of words to return."
+          }
+        ]
+      }
+    ]
+  }
+}
