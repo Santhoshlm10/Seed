@@ -41,7 +41,7 @@ const Moon = () => (
   </svg>
 );
 
-const ChevronUp = () => (
+const ChevronRight = () => (
   <svg
     width="16"
     height="16"
@@ -52,9 +52,10 @@ const ChevronUp = () => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <polyline points="18 15 12 9 6 15"></polyline>
+    <polyline points="9 6 15 12 9 18"></polyline>
   </svg>
 );
+
 
 const ChevronDown = () => (
   <svg
@@ -105,4 +106,6 @@ const FileIcon = () => (
 
 
 
-export { MoreVertical, Moon, Plus, Sun, Trash2,ChevronUp,ChevronDown,CrossIcon,FileIcon }
+
+
+export { MoreVertical, Moon, Plus, Sun, Trash2,ChevronRight,ChevronDown,CrossIcon,FileIcon }

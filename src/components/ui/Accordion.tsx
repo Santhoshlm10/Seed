@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp } from "./Icons";
+import { ChevronDown, ChevronRight } from "./Icons";
 
 /**
  * There was no such component like accordion from Radix UI
@@ -21,14 +21,14 @@ const Accordion = ({
   return (
     <div className={"mb-2"}>
       <div
-        className="flex items-center p-[10px] gap-[10px] cursor-pointer bg-[#f9f9f9]"
+        className="flex items-center p-[10px] gap-[10px] cursor-pointer"
         onClick={toggleAccordion}
       >
         <span className="mr-[10px] flex items-center">
           {isOpen ? (
             <ChevronDown />
           ) : (
-            <ChevronUp />
+            <ChevronRight />
           )}
         </span>
         <span className={"font-semibold"}>{title}</span>
