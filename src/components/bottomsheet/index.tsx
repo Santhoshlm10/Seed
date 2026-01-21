@@ -3,7 +3,7 @@ import { useTheme } from "../../ThemeProvider";
 import Accordion from "../ui/Accordion";
 import data from "./../../resources/data.json";
 import { DataSource, Group, Parameter } from "../../models/Playground";
-import { CrossIcon, FileIcon } from "../ui/Icons";
+import {  FileIcon } from "../ui/Icons";
 
 interface IBottomSheet {
   closeBottomSheet: () => void;
@@ -12,7 +12,7 @@ interface IBottomSheet {
 
 function BottomSheet({ closeBottomSheet }: IBottomSheet) {
   const { theme, isDarkMode } = useTheme();
-  const { bgSecondary, borderColor, textPrimary, inputBg, textSecondary,hoverBg } = theme;
+  const { bgSecondary, borderColor, textPrimary, inputBg, textSecondary } = theme;
 
   const [dataSrc, setDataSrc] = React.useState<DataSource>(data as any);
 
@@ -72,7 +72,7 @@ function BottomSheet({ closeBottomSheet }: IBottomSheet) {
                     {group.parameterName}
                   </div>
                 </div>
-                <hr className="border border-gray-300 w-full" />
+                <hr className="border border-gray-100 w-full" />
               </div>
             );
           })}
@@ -97,13 +97,13 @@ function BottomSheet({ closeBottomSheet }: IBottomSheet) {
         onClick={closeBottomSheet}
       ></div>
 
-      <div className={`absolute bottom-0 left-0 right-0 ${bgSecondary} rounded-t-2xl z-50 h-[40rem] overflow-hidden flex flex-col shadow-2xl`}>
+      <div className={`absolute bottom-0 left-0 right-0 ${bgSecondary} rounded-t-2xl z-50 h-[35rem] overflow-hidden flex flex-col shadow-2xl`}>
         <div className="flex justify-center py-3">
           <div className={`w-10 h-1 ${isDarkMode ? 'bg-slate-600' : 'bg-gray-300'} rounded-full`}></div>
         </div>
 
-        <div className={`px-4 pb-3 border-b flex flex-row items-center justify-between ${borderColor}`}>
-          <div className="relative w-80">
+        <div className={`px-4 pb-3 border-b ${borderColor}`}>
+          <div className="relative">
             <span className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
               <svg
                 width="16"
@@ -129,9 +129,7 @@ function BottomSheet({ closeBottomSheet }: IBottomSheet) {
               placeholder="Search"
             />
           </div>
-          <div className={`w-8 h-8 flex items-center justify-center cursor-pointer rounded-full hover:${hoverBg} transition-colors`}>
-            <CrossIcon />
-          </div>
+    
 
         </div>
 
@@ -144,6 +142,7 @@ function BottomSheet({ closeBottomSheet }: IBottomSheet) {
                   title={returnTitle(item)}
                   children={renderOptions(item)}
                   key={index}
+                  titleKey={item}
                 />
               );
             })}

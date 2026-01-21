@@ -16,6 +16,7 @@
             "128": "logo128.png"
         }
     },
+    "minimum_chrome_version": "90",
     "permissions": [
         "storage",
         "tabs",
