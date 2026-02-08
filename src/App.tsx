@@ -1,11 +1,9 @@
-import Header from "./components/header";
-import Hello from "./components/hello";
+import PaperTiger from "./components/PaperTiger";
 
 function App() {
   return (
-    <div className="w-96">
-      <Header />
-      <Hello />
+    <div className="w-full h-full">
+      <PaperTiger />
     </div>
   );
 }
