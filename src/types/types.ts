@@ -5,4 +5,6 @@ export interface IMenuItem {
 }
 export interface IMenuList {
   lists: IMenuItem[];
+  trigger?: React.ReactNode;
+  position?: 'top' | 'bottom';
 }

@@ -584,6 +584,61 @@ const Export = () => (
   </svg>
 );
 
+const FileJson = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <polyline points="14 2 14 8 20 8" />
+    <path d="M10 12a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1" />
+    <path d="M14 12a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1" />
+  </svg>
+);
+
+const FileSpreadsheet = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <polyline points="14 2 14 8 20 8" />
+    <path d="M8 13h2" />
+    <path d="M8 17h2" />
+    <path d="M14 13h2" />
+    <path d="M14 17h2" />
+  </svg>
+);
+
+const RefreshCw = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M23 4v6h-6" />
+    <path d="M1 20v-6h6" />
+    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+  </svg>
+);
+
 const About = () => (
   <svg
     width="16"
@@ -651,7 +706,23 @@ const EmptyStateIcon = () => (
   </svg>
 );
 
-// export all icons from beginning
+const Download = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="7 10 12 15 17 10" />
+    <line x1="12" y1="15" x2="12" y2="3" />
+  </svg>
+);
+
 export {
   MoreVertical,
   Plus,
@@ -692,5 +763,9 @@ export {
   About,
   Clone,
   ModifyConfiguration,
-  EmptyStateIcon
+  EmptyStateIcon,
+  Download,
+  FileJson,
+  FileSpreadsheet,
+  RefreshCw,
 }

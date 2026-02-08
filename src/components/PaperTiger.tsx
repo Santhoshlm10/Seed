@@ -34,20 +34,16 @@ const PaperTiger: React.FC = () => {
   const [showBottomSheet, setShowBottomSheet] = useState<boolean>(false);
   const [activeFieldId, setActiveFieldId] = useState<string | null>(null);
   const [schemaName, setSchemaName] = useState<string>("Untitled Schema");
+  const { generateFile, loading, progress } = useDataGenerator();
 
-  const { generateData, loading, progress } = useDataGenerator();
 
-  const handleGenerate = () => {
-    if (fields.length === 0) {
-      alert("Please add at least one field to generate data.");
-      return;
-    }
 
-    // Map fields to Schema (Parameter[])
+  const handleDownloadAction = (action: string) => {
+
+    const fileName = `${schemaName}_data`;
     const schema: Parameter[] = fields.map(f => f.value);
-    generateData(schema, recordCount, (generatedData) => {
-      DownloadManager.saveAsJSON({ data: generatedData }, `${schemaName}_data`);
-    });
+
+    generateFile(null, action, fileName, schema, recordCount, schemaName.replace(/\s+/g, '_'), schemaName.replace(/\s+/g, '_'));
   };
 
   const openBottomSheet = (fieldId: string) => {
@@ -232,9 +228,9 @@ const PaperTiger: React.FC = () => {
                     </label>
                     <button
                       onClick={() => openBottomSheet(field.id)}
-                      className={`w-full ${inputBg} border ${borderColor} rounded px-3 py-2 text-sm ${textPrimary} text-left focus:outline-none focus:border-blue-500 ${hoverBg.replace("hover:", "")} flex items-center justify-between`}
+                      className={`w-full ${inputBg} border ${borderColor} rounded px-3 py-2 text-sm text-left focus:outline-none focus:border-blue-500 ${hoverBg.replace("hover:", "")} flex items-center justify-between ${field.value?.parameterName ? textPrimary : textSecondary}`}
                     >
-                      <span>{field.value.parameterName}</span>
+                      <span>{field.value?.parameterName || "Select Type"}</span>
                       <svg
                         width="16"
                         height="16"
@@ -260,7 +256,7 @@ const PaperTiger: React.FC = () => {
       <Footer
         recordCount={recordCount}
         setRecordCount={setRecordCount}
-        onGenerate={handleGenerate}
+        onDownloadAction={handleDownloadAction}
         loading={loading}
         progress={progress}
       />
