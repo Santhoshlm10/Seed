@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTheme } from "../../ThemeProvider";
 import { MoreVertical } from "./Icons";
-import { IMenuList } from "../../types/types";
+import { IMenuList } from "../../models/Menu";
 
 
 

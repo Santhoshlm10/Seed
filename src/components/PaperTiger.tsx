@@ -5,7 +5,6 @@ import Header from "./header";
 import BottomSheet from "./bottomsheet";
 import Menu from "./ui/Menu";
 
-import DownloadManager from "../utils/download-manager";
 import { Parameter } from "../models/Playground";
 import Footer from "./footer";
 import useDataGenerator from "../hooks/useDataGenerator";
@@ -97,7 +96,43 @@ const PaperTiger: React.FC = () => {
 
   const handleExport = () => {
     const parameters: Parameter[] = fields.map(f => f.value);
-    DownloadManager.saveTemplate(parameters, schemaName, recordCount.toString());
+    const sanitizedSchemaName = schemaName.replace(/[<>:"/\\|?*]/g, "_");
+
+    const downloadTemplate = {
+      data: parameters,
+      playgroundName: schemaName,
+      count: recordCount.toString(),
+    };
+
+    const jsonContent = JSON.stringify(downloadTemplate, null, 2);
+    const fileName = `${sanitizedSchemaName}_template.json`;
+    const blob = new Blob([jsonContent], { type: "application/json" });
+
+    // @ts-ignore
+    const isExtension = typeof chrome !== "undefined" && chrome.downloads;
+
+    if (isExtension) {
+      // Use Chrome Downloads API (doesn't close side panel)
+      const reader = new FileReader();
+      reader.onload = () => {
+        // @ts-ignore
+        chrome.downloads.download({
+          url: reader.result as string,
+          filename: fileName,
+          saveAs: false
+        });
+      };
+      reader.readAsDataURL(blob);
+    } else {
+      // Fallback to standard download for web
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(link.href), 100);
+    }
   };
 
   const processFile = (file: File) => {
