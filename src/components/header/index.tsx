@@ -1,13 +1,14 @@
 import { useTheme } from "../../ThemeProvider";
 import { useToast } from "../hooks/useToast";
-import { About, Export, Moon, Sun } from "../ui/Icons";
+import { About, Export, Import, Moon, Sun } from "../ui/Icons";
 import Menu from "../ui/Menu";
 
 interface HeaderProps {
     onExport: () => void;
+    onImport: () => void;
 }
 
-function Header({ onExport }: HeaderProps) {
+function Header({ onExport, onImport }: HeaderProps) {
 
     const { theme, setTheme, isDarkMode } = useTheme();
     const { borderColor, textPrimary, textSecondary } = theme;
@@ -28,6 +29,7 @@ function Header({ onExport }: HeaderProps) {
             <h1 className="text-lg font-semibold" onClick={() => showToast("Hello", "error")}>Paper Tiger</h1>
             <Menu
                 lists={[
+                    { name: "Import Schema", icon: <Import />, onClick: onImport },
                     { name: "Export Schema", icon: <Export />, onClick: onExport },
                     { name: "About", icon: <About />, onClick: () => window.open("https://github.com/Santhoshlm10/paper-tiger") },
                 ]}
