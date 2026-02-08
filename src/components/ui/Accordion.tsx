@@ -14,7 +14,6 @@ const Accordion = ({
   children: React.ReactElement;
   titleKey?: string;
 }) => {
-  console.log("RenderingAccordion", titleKey);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {

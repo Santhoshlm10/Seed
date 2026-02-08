@@ -7,6 +7,8 @@ import Menu from "./ui/Menu";
 
 import DownloadManager from "../utils/download-manager";
 import { Parameter } from "../models/Playground";
+import Footer from "./footer";
+import useDataGenerator from "../hooks/useDataGenerator";
 
 interface Field {
   id: string;
@@ -28,11 +30,25 @@ const PaperTiger: React.FC = () => {
 
   const [fields, setFields] = useState<Field[]>([]);
 
-  console.log("FieldsData", fields)
   const [recordCount, setRecordCount] = useState<number>(100);
   const [showBottomSheet, setShowBottomSheet] = useState<boolean>(false);
   const [activeFieldId, setActiveFieldId] = useState<string | null>(null);
   const [schemaName, setSchemaName] = useState<string>("Untitled Schema");
+
+  const { generateData, loading, progress } = useDataGenerator();
+
+  const handleGenerate = () => {
+    if (fields.length === 0) {
+      alert("Please add at least one field to generate data.");
+      return;
+    }
+
+    // Map fields to Schema (Parameter[])
+    const schema: Parameter[] = fields.map(f => f.value);
+    generateData(schema, recordCount, (generatedData) => {
+      DownloadManager.saveAsJSON({ data: generatedData }, `${schemaName}_data`);
+    });
+  };
 
   const openBottomSheet = (fieldId: string) => {
     setActiveFieldId(fieldId);
@@ -46,7 +62,6 @@ const PaperTiger: React.FC = () => {
 
   const onSelect = (data: any) => {
     if (activeFieldId) {
-      // updateField(activeFieldId, "type", `${data.parameterName}`);
       updateField(activeFieldId, "value", data);
       closeBottomSheet();
     }
@@ -241,43 +256,14 @@ const PaperTiger: React.FC = () => {
         </div>
       </div>
 
-      {/* Generate Button */}
-      <div className={`p-4 border-t flex flex-col gap-2 ${borderColor}`}>
-        <div>
-          <div>
-            <label className={`text-xs ${textSecondary} block mb-2`}>
-              Number of Records
-            </label>
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                value={recordCount}
-                onChange={(e) => setRecordCount(Number(e.target.value))}
-                className={`flex-1 ${bgSecondary} border ${borderColor} rounded px-3 py-2 text-sm ${textPrimary} focus:outline-none focus:border-blue-500`}
-                min="1"
-              />
-            </div>
-          </div>
-        </div>
-        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            className="mt-0.5"
-          >
-            <path
-              d="M8 2V14M8 14L4 10M8 14L12 10"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          Generate & Download
-        </button>
-      </div>
+      {/* Footer */}
+      <Footer
+        recordCount={recordCount}
+        setRecordCount={setRecordCount}
+        onGenerate={handleGenerate}
+        loading={loading}
+        progress={progress}
+      />
 
       {/* Bottom Sheet */}
       {showBottomSheet && (
