@@ -1,9 +1,9 @@
-import Hello from "./components/hello";
+import PaperTiger from "./components/PaperTiger";
 
 function App() {
   return (
     <div className="w-full h-full">
-      <Hello />
+      <PaperTiger />
     </div>
   );
 }

@@ -3,12 +3,17 @@ import { useToast } from "../hooks/useToast";
 import { About, Export, Import, Moon, Sun } from "../ui/Icons";
 import Menu from "../ui/Menu";
 
-function Header() {
+interface HeaderProps {
+    onExport: () => void;
+    onImport: () => void;
+}
+
+function Header({ onExport, onImport }: HeaderProps) {
 
     const { theme, setTheme, isDarkMode } = useTheme();
     const { borderColor, textPrimary, textSecondary } = theme;
 
-    const {showToast,Toast} = useToast();
+    const { showToast, Toast } = useToast();
 
     const toggleTheme = () => {
         setTheme()
@@ -21,15 +26,15 @@ function Header() {
             >
                 {isDarkMode ? <Sun /> : <Moon />}
             </button>
-            <h1 className="text-lg font-semibold" onClick={() => showToast("Hello","error")}>Paper Tiger</h1>
+            <h1 className="text-lg font-semibold" onClick={() => showToast("Hello", "error")}>Paper Tiger</h1>
             <Menu
                 lists={[
-                    { name: "Export Schema", icon: <Export/>, onClick: () => { } },
-                    { name: "Import Schema", icon: <Import/>, onClick: () => { } },
-                    { name: "About", icon: <About/>, onClick: () => { } },
+                    { name: "Export Schema", icon: <Export />, onClick: onExport },
+                    { name: "Import Schema", icon: <Import />, onClick: onImport },
+                    { name: "About", icon: <About />, onClick: () => window.open("https://github.com/Santhoshlm10/paper-tiger") },
                 ]}
             />
-            <Toast/>
+            <Toast />
         </div>
     )
 }

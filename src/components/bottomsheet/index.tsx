@@ -7,10 +7,10 @@ import {  FileIcon } from "../ui/Icons";
 
 interface IBottomSheet {
   closeBottomSheet: () => void;
-  selectType: (data: any, type: any) => void;
+  onSelect: (data: any) => void;
 }
 
-function BottomSheet({ closeBottomSheet }: IBottomSheet) {
+function BottomSheet({ closeBottomSheet, onSelect }: IBottomSheet) {
   const { theme, isDarkMode } = useTheme();
   const { bgSecondary, borderColor, textPrimary, inputBg, textSecondary } = theme;
 
@@ -54,13 +54,14 @@ function BottomSheet({ closeBottomSheet }: IBottomSheet) {
   const renderOptions = useCallback(
     (item: string) => {
       const { groupValue } = dataSrc[item];
+      
       return (
         <div className="flex flex-col gap-2">
           {groupValue.map((group: Parameter, index: number) => {
             return (
               <div
                 title={group?.description}
-                onClick={() => alert(group)}
+                onClick={() => onSelect(groupValue[index])}
                 key={index}
               >
                 <div
