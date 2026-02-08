@@ -7,7 +7,8 @@ html, body {
   padding: 0;
   overflow: hidden;
   box-sizing: border-box;
-  scroll-behavior: smooth;
+  width: 384px;
+  height: 600px;
 }
 
 * {
@@ -39,6 +40,6 @@ html, body {
 
 #root {
   width: 100%;
-  height: 600px;
+  height: 100%;
   overflow: hidden;
 }

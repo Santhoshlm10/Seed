@@ -1,11 +1,14 @@
 import { useTheme } from "../../ThemeProvider";
-import { Moon, Sun } from "../ui/Icons";
+import { useToast } from "../hooks/useToast";
+import { About, Export, Import, Moon, Sun } from "../ui/Icons";
 import Menu from "../ui/Menu";
 
 function Header() {
 
     const { theme, setTheme, isDarkMode } = useTheme();
     const { borderColor, textPrimary, textSecondary } = theme;
+
+    const {showToast,Toast} = useToast();
 
     const toggleTheme = () => {
         setTheme()
@@ -18,8 +21,15 @@ function Header() {
             >
                 {isDarkMode ? <Sun /> : <Moon />}
             </button>
-            <h1 className="text-lg font-semibold">Paper Tiger</h1>
-            <Menu />
+            <h1 className="text-lg font-semibold" onClick={() => showToast("Hello","error")}>Paper Tiger</h1>
+            <Menu
+                lists={[
+                    { name: "Export Schema", icon: <Export/>, onClick: () => { } },
+                    { name: "Import Schema", icon: <Import/>, onClick: () => { } },
+                    { name: "About", icon: <About/>, onClick: () => { } },
+                ]}
+            />
+            <Toast/>
         </div>
     )
 }

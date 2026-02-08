@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useTheme } from "../ThemeProvider";
-import { Plus, Trash2 } from "./ui/Icons";
+import { Clone, ModifyConfiguration, Plus, Trash2 } from "./ui/Icons";
 import Header from "./header";
 import BottomSheet from "./bottomsheet";
+import Menu from "./ui/Menu";
 
 interface Field {
   id: string;
@@ -72,7 +73,7 @@ const DataGenerator: React.FC = () => {
 
   return (
     <div
-      className={`w-auto h-screen ${bgPrimary} ${textPrimary} flex flex-col relative overflow-hidden`}
+      className={`w-auto h-full ${bgPrimary} ${textPrimary} flex flex-col relative overflow-hidden`}
     >
       {/* Header */}
       <Header />
@@ -111,9 +112,6 @@ const DataGenerator: React.FC = () => {
                     >
                       Field Name
                     </label>
-                    <div>
-                      <p>He</p>
-                    </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <input
@@ -125,12 +123,15 @@ const DataGenerator: React.FC = () => {
                       className={`flex-1 ${inputBg} border ${borderColor} rounded px-3 py-2 text-sm ${textPrimary} focus:outline-none focus:border-blue-500`}
                       placeholder="Enter field name"
                     />
-                    <button
-                      onClick={() => removeField(field.id)}
-                      className={`${textSecondary} hover:text-red-400`}
-                    >
-                      <Trash2 />
-                    </button>
+                    <div>
+                      <Menu
+                        lists={[
+                          { name: "Clone Item", icon: <Clone />, onClick: () => { } },
+                          { name: "Delete Item", icon: <Trash2 />, onClick: () => { } },
+                          { name: "Configuration", icon: <ModifyConfiguration />, onClick: (item) => removeField(item) },
+                        ]}
+                      />
+                    </div>
                   </div>
                 </div>
 
