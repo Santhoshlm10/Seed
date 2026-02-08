@@ -116,7 +116,7 @@ const useDataGenerator = (): UseDataGeneratorReturn => {
                         link.click();
                         document.body.removeChild(link);
                         setTimeout(() => URL.revokeObjectURL(link.href), 100);
-                    } catch (e) {
+                    } catch (e:any) {
                         setError(e.message || "Download failed");
                     }
                     break;

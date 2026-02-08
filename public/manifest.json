@@ -20,7 +20,8 @@
     "permissions": [
         "storage",
         "tabs",
-        "sidePanel"
+        "sidePanel",
+        "downloads"
     ],
     "side_panel": {
         "default_path": "index.html"

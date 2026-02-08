@@ -29,20 +29,16 @@ const PaperTiger: React.FC = () => {
   } = theme;
 
   const [fields, setFields] = useState<Field[]>([]);
-
   const [recordCount, setRecordCount] = useState<number>(100);
   const [showBottomSheet, setShowBottomSheet] = useState<boolean>(false);
   const [activeFieldId, setActiveFieldId] = useState<string | null>(null);
   const [schemaName, setSchemaName] = useState<string>("Untitled Schema");
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const { generateFile, loading, progress } = useDataGenerator();
 
-
-
   const handleDownloadAction = (action: string) => {
-
     const fileName = `${schemaName}_data`;
     const schema: Parameter[] = fields.map(f => f.value);
-
     generateFile(null, action, fileName, schema, recordCount, schemaName.replace(/\s+/g, '_'), schemaName.replace(/\s+/g, '_'));
   };
 
@@ -100,56 +96,85 @@ const PaperTiger: React.FC = () => {
   };
 
   const handleExport = () => {
-    // Transform fields to match Parameter type if needed, or cast if they are compatible
-    // The current Field value seems to hold the Parameter structure based on usage
-    // We might need to map it correctly.
-    // Based on `field.value.parameterName`, `field.value` seems to be the Parameter object.
     const parameters: Parameter[] = fields.map(f => f.value);
     DownloadManager.saveTemplate(parameters, schemaName, recordCount.toString());
   };
 
-  const handleImport = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'application/json';
-    input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          try {
-            const content = event.target?.result as string;
-            const parsed = JSON.parse(content);
-            if (parsed.data && Array.isArray(parsed.data)) {
-              // Map back to Field structure
-              const importedFields: Field[] = parsed.data.map((param: any) => ({
-                id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
-                name: param.parameterName || "", // Or use existing logic if name is stored differently
-                value: param
-              }));
-              setFields(importedFields);
-              if (parsed.playgroundName) setSchemaName(parsed.playgroundName);
-              if (parsed.count) setRecordCount(Number(parsed.count));
-            } else {
-              alert("Invalid template file format.");
-            }
-          } catch (error) {
-            console.error("Error parsing JSON:", error);
-            alert("Error parsing JSON file.");
-          }
-        };
-        reader.readAsText(file);
+  const processFile = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const content = event.target?.result as string;
+        const parsed = JSON.parse(content);
+        if (parsed.data && Array.isArray(parsed.data)) {
+          // Map back to Field structure
+          const importedFields: Field[] = parsed.data.map((param: any) => ({
+            id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
+            name: param.parameterName || "", // Or use existing logic if name is stored differently
+            value: param
+          }));
+          setFields(importedFields);
+          if (parsed.playgroundName) setSchemaName(parsed.playgroundName);
+          if (parsed.count) setRecordCount(Number(parsed.count));
+        } else {
+          alert("Invalid template file format.");
+        }
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+        alert("Error parsing JSON file.");
       }
     };
-    input.click();
+    reader.readAsText(file);
+  }
+
+  const onDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const onDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (e.currentTarget === e.target) {
+      setIsDragging(false);
+    }
+  };
+
+  const onDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (file && file.type === "application/json") {
+      processFile(file);
+    } else if (file) {
+      alert("Please drop a valid JSON file.");
+    }
   };
 
   return (
     <div
       className={`w-auto h-full ${bgPrimary} ${textPrimary} flex flex-col relative overflow-hidden`}
+      onDragOver={onDragOver}
+      onDragLeave={onDragLeave}
+      onDrop={onDrop}
     >
+      {/* Drag Overlay */}
+      {isDragging && (
+        <div className="absolute inset-0 z-50 bg-blue-500 bg-opacity-20 backdrop-blur-sm border-4 border-blue-500 border-dashed m-4 rounded-lg flex items-center justify-center pointer-events-none">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl flex flex-col items-center">
+            <div className="text-blue-500 mb-2">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+            <p className="text-lg font-bold text-gray-900 dark:text-white">Drop template to import</p>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
-      <Header onExport={handleExport} onImport={handleImport} />
+      <Header onExport={handleExport} />
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto p-4 flex flex-col">
@@ -181,7 +206,7 @@ const PaperTiger: React.FC = () => {
                   <EmptyStateIcon />
                 </div>
                 <p className={`text-sm ${textSecondary}`}>
-                  Please add fields to generate data
+                  Please add fields or drag and drop a template to generate data
                 </p>
               </div>
             ) : (
