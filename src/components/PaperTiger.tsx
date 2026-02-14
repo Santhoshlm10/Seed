@@ -28,6 +28,7 @@ const PaperTiger: React.FC = () => {
   } = theme;
 
   const [fields, setFields] = useState<Field[]>([]);
+  console.log("FieldsData", fields)
   const [recordCount, setRecordCount] = useState<number>(100);
   const [showBottomSheet, setShowBottomSheet] = useState<boolean>(false);
   const [activeFieldId, setActiveFieldId] = useState<string | null>(null);
@@ -352,6 +353,7 @@ const PaperTiger: React.FC = () => {
         <BottomSheet
           closeBottomSheet={closeBottomSheet}
           onSelect={onSelect}
+          activeField={activeFieldId ? fields.find(f => f.id === activeFieldId) : null}
         />
       )}
     </div>

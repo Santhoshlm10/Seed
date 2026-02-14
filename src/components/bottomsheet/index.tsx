@@ -3,21 +3,31 @@ import { useTheme } from "../../ThemeProvider";
 import Accordion from "../ui/Accordion";
 import data from "./../../resources/data.json";
 import { DataSource, Group, Parameter } from "../../models/Playground";
-import {  FileIcon } from "../ui/Icons";
+import { FileIcon } from "../ui/Icons";
+import ConfigurationView from "./ConfigurationView";
 
 interface IBottomSheet {
   closeBottomSheet: () => void;
   onSelect: (data: any) => void;
+  activeField?: { id: string; name: string; value: any } | null;
 }
 
-function BottomSheet({ closeBottomSheet, onSelect }: IBottomSheet) {
+function BottomSheet({ closeBottomSheet, onSelect, activeField }: IBottomSheet) {
   const { theme, isDarkMode } = useTheme();
   const { bgSecondary, borderColor, textPrimary, inputBg, textSecondary } = theme;
 
   const [dataSrc, setDataSrc] = React.useState<DataSource>(data as any);
-
-
   const [searchValue, setSearchValue] = useState<string>("");
+
+  // If activeField has a value (parameter), start in configuration view
+  const hasExistingParameter = activeField?.value && Object.keys(activeField.value).length > 0;
+  const [view, setView] = useState<'selection' | 'configuration'>(
+    hasExistingParameter ? 'configuration' : 'selection'
+  );
+  const [selectedParameter, setSelectedParameter] = useState<Parameter | null>(
+    hasExistingParameter ? activeField.value : null
+  );
+
   const returnTitle = useCallback(
     (item: string) => {
       return `${item} (${dataSrc[item]["groupValue"].length})`;
@@ -51,17 +61,32 @@ function BottomSheet({ closeBottomSheet, onSelect }: IBottomSheet) {
     return result;
   }
 
+  const handleParameterSelect = (parameter: Parameter) => {
+    setSelectedParameter(parameter);
+    setView('configuration');
+  };
+
+  const handleBackToSelection = () => {
+    setView('selection');
+    setSelectedParameter(null);
+  };
+
+  const handleApplyConfiguration = (configuredParameter: Parameter) => {
+    onSelect(configuredParameter);
+    closeBottomSheet();
+  };
+
   const renderOptions = useCallback(
     (item: string) => {
       const { groupValue } = dataSrc[item];
-      
+
       return (
         <div className="flex flex-col gap-2">
           {groupValue.map((group: Parameter, index: number) => {
             return (
               <div
                 title={group?.description}
-                onClick={() => onSelect(groupValue[index])}
+                onClick={() => handleParameterSelect(groupValue[index])}
                 key={index}
               >
                 <div
@@ -88,7 +113,7 @@ function BottomSheet({ closeBottomSheet, onSelect }: IBottomSheet) {
     let filter = searchJSON(data as any, text);
     setDataSrc(filter)
     setSearchValue(text);
-  }, [searchJSON]);
+  }, []);
 
 
   return (
@@ -99,55 +124,64 @@ function BottomSheet({ closeBottomSheet, onSelect }: IBottomSheet) {
       ></div>
 
       <div className={`absolute bottom-0 left-0 right-0 ${bgSecondary} rounded-t-2xl z-50 h-[35rem] overflow-hidden flex flex-col shadow-2xl`}>
-        <div className="flex justify-center py-3">
-          <div className={`w-10 h-1 ${isDarkMode ? 'bg-slate-600' : 'bg-gray-300'} rounded-full`}></div>
-        </div>
+        {view === 'selection' ? (
+          <>
+            <div className="flex justify-center py-3">
+              <div className={`w-10 h-1 ${isDarkMode ? 'bg-slate-600' : 'bg-gray-300'} rounded-full`}></div>
+            </div>
 
-        <div className={`px-4 pb-3 border-b ${borderColor}`}>
-          <div className="relative">
-            <span className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className={textSecondary}
-              >
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-            </span>
+            <div className={`px-4 pb-3 border-b ${borderColor}`}>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={textSecondary}
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                </span>
 
-            <input
-              type="text"
-              value={searchValue}
-              onChange={handleSearch}
-              className={`w-full ${inputBg} border ${borderColor} rounded-lg pl-10 pr-3 py-2 text-sm font-semibold ${textPrimary} focus:outline-none focus:border-blue-500`}
-              placeholder="Search"
-            />
-          </div>
-    
-
-        </div>
-
-
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {dataSrc &&
-            Object.keys(dataSrc).map((item, index) => {
-              return (
-                <Accordion
-                  title={returnTitle(item)}
-                  children={renderOptions(item)}
-                  key={index}
-                  titleKey={item}
+                <input
+                  type="text"
+                  value={searchValue}
+                  onChange={handleSearch}
+                  className={`w-full ${inputBg} border ${borderColor} rounded-lg pl-10 pr-3 py-2 text-sm font-semibold ${textPrimary} focus:outline-none focus:border-blue-500`}
+                  placeholder="Search"
                 />
-              );
-            })}
-        </div>
+              </div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {dataSrc &&
+                Object.keys(dataSrc).map((item, index) => {
+                  return (
+                    <Accordion
+                      title={returnTitle(item)}
+                      children={renderOptions(item)}
+                      key={index}
+                      titleKey={item}
+                    />
+                  );
+                })}
+            </div>
+          </>
+        ) : (
+          selectedParameter && (
+            <ConfigurationView
+              parameter={selectedParameter}
+              onBack={handleBackToSelection}
+              onApply={handleApplyConfiguration}
+            />
+          )
+        )}
       </div>
     </>
   )
