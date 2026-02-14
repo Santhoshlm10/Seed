@@ -26,12 +26,12 @@ function Header({ onExport, onImport }: HeaderProps) {
             >
                 {isDarkMode ? <Sun /> : <Moon />}
             </button>
-            <h1 className="text-lg font-semibold" onClick={() => showToast("Hello", "error")}>Paper Tiger</h1>
+            <h1 className="text-lg font-semibold" onClick={() => showToast("Hello", "error")}>Seed</h1>
             <Menu
                 lists={[
                     { name: "Import Schema", icon: <Import />, onClick: onImport },
                     { name: "Export Schema", icon: <Export />, onClick: onExport },
-                    { name: "About", icon: <About />, onClick: () => window.open("https://github.com/Santhoshlm10/paper-tiger") },
+                    { name: "About", icon: <About />, onClick: () => window.open("https://github.com/Santhoshlm10/seed") },
                 ]}
             />
             <Toast />

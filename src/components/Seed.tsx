@@ -15,7 +15,7 @@ interface Field {
   value: any
 }
 
-const PaperTiger: React.FC = () => {
+const Seed: React.FC = () => {
   const { theme } = useTheme();
   const {
     bgPrimary,
@@ -360,4 +360,4 @@ const PaperTiger: React.FC = () => {
   );
 };
 
-export default PaperTiger;
+export default Seed;

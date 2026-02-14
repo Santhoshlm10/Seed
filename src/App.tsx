@@ -1,9 +1,9 @@
-import PaperTiger from "./components/PaperTiger";
+import Seed from "./components/Seed";
 
 function App() {
   return (
     <div className="w-full h-full">
-      <PaperTiger />
+      <Seed />
     </div>
   );
 }
