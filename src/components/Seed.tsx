@@ -29,6 +29,7 @@ const Seed: React.FC = () => {
 
   const [fields, setFields] = useState<Field[]>([]);
   console.log("FieldsData", fields)
+  
   const [recordCount, setRecordCount] = useState<number>(100);
   const [showBottomSheet, setShowBottomSheet] = useState<boolean>(false);
   const [activeFieldId, setActiveFieldId] = useState<string | null>(null);

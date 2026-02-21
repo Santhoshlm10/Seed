@@ -174,7 +174,7 @@ function BottomSheet({ closeBottomSheet, onSelect, activeField }: IBottomSheet) 
             </div>
           </>
         ) : (
-          selectedParameter && (
+          selectedParameter  && (
             <ConfigurationView
               parameter={selectedParameter}
               onBack={handleBackToSelection}

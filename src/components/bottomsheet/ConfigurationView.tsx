@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useTheme } from "../../ThemeProvider";
 import { Parameter } from "../../models/Playground";
 import ConfigurationInput from "./ConfigurationInput";
@@ -12,13 +12,11 @@ interface ConfigurationViewProps {
 
 function ConfigurationView({ parameter, onBack, onApply }: ConfigurationViewProps) {
     const { theme } = useTheme();
-    const { bgSecondary, borderColor, textPrimary, textSecondary } = theme;
+    const {  borderColor, textPrimary, textSecondary } = theme;
 
-    // Initialize configuration values from parameter options
     const [configValues, setConfigValues] = useState<Record<string, any>>(() => {
         const initialValues: Record<string, any> = {};
         parameter.options?.forEach((option) => {
-            // Use 'value' if it exists, otherwise fall back to defaultValue
             initialValues[option.keyName] = option.value !== undefined
                 ? option.value
                 : option.defaultValue !== undefined
@@ -42,15 +40,14 @@ function ConfigurationView({ parameter, onBack, onApply }: ConfigurationViewProp
     };
 
     const handleApply = () => {
-        // Update parameter options with configured values in 'value' property
         const updatedParameter = {
             ...parameter,
             options: parameter.options?.map((option) => ({
                 ...option,
-                value: configValues[option.keyName], // Store in 'value' not 'defaultValue'
+                value: configValues[option.keyName], 
             })),
         };
-        onApply(updatedParameter);
+        onApply(updatedParameter as Parameter);
     };
 
     return (

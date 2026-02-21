@@ -45,6 +45,7 @@ export interface Option {
     selectedValue?: string;
     minRange?: number,
     maxRange?: number,
+    value?:boolean | string | number | number[] | string[];
 }
 
 interface SelectValue {
