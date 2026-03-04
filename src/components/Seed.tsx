@@ -5,7 +5,6 @@ import Header from "./header";
 import BottomSheet from "./bottomsheet";
 import Menu from "./ui/Menu";
 
-import DownloadManager from "../utils/download-manager";
 import { Parameter } from "../models/Playground";
 import Footer from "./footer";
 import useDataGenerator from "../hooks/useDataGenerator";
@@ -16,7 +15,7 @@ interface Field {
   value: any
 }
 
-const PaperTiger: React.FC = () => {
+const Seed: React.FC = () => {
   const { theme } = useTheme();
   const {
     bgPrimary,
@@ -29,11 +28,14 @@ const PaperTiger: React.FC = () => {
   } = theme;
 
   const [fields, setFields] = useState<Field[]>([]);
+  console.log("FieldsData", fields)
+  
   const [recordCount, setRecordCount] = useState<number>(100);
   const [showBottomSheet, setShowBottomSheet] = useState<boolean>(false);
   const [activeFieldId, setActiveFieldId] = useState<string | null>(null);
   const [schemaName, setSchemaName] = useState<string>("Untitled Schema");
-  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [draggedField, setDraggedField] = useState<string | null>(null);
+  const [dragOverField, setDragOverField] = useState<string | null>(null);
   const { generateFile, loading, progress } = useDataGenerator();
 
   const handleDownloadAction = (action: string) => {
@@ -97,7 +99,43 @@ const PaperTiger: React.FC = () => {
 
   const handleExport = () => {
     const parameters: Parameter[] = fields.map(f => f.value);
-    DownloadManager.saveTemplate(parameters, schemaName, recordCount.toString());
+    const sanitizedSchemaName = schemaName.replace(/[<>:"/\\|?*]/g, "_");
+
+    const downloadTemplate = {
+      data: parameters,
+      playgroundName: schemaName,
+      count: recordCount.toString(),
+    };
+
+    const jsonContent = JSON.stringify(downloadTemplate, null, 2);
+    const fileName = `${sanitizedSchemaName}_template.json`;
+    const blob = new Blob([jsonContent], { type: "application/json" });
+
+    // @ts-ignore
+    const isExtension = typeof chrome !== "undefined" && chrome.downloads;
+
+    if (isExtension) {
+      // Use Chrome Downloads API (doesn't close side panel)
+      const reader = new FileReader();
+      reader.onload = () => {
+        // @ts-ignore
+        chrome.downloads.download({
+          url: reader.result as string,
+          filename: fileName,
+          saveAs: false
+        });
+      };
+      reader.readAsDataURL(blob);
+    } else {
+      // Fallback to standard download for web
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(link.href), 100);
+    }
   };
 
   const processFile = (file: File) => {
@@ -127,54 +165,71 @@ const PaperTiger: React.FC = () => {
     reader.readAsText(file);
   }
 
-  const onDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
+  const handleImport = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        processFile(file);
+      }
+    };
+    input.click();
   };
 
-  const onDragLeave = (e: React.DragEvent) => {
+  const handleFieldDragStart = (e: React.DragEvent, fieldId: string) => {
+    setDraggedField(fieldId);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleFieldDragOver = (e: React.DragEvent, fieldId: string) => {
     e.preventDefault();
-    if (e.currentTarget === e.target) {
-      setIsDragging(false);
+    e.dataTransfer.dropEffect = "move";
+    if (draggedField && draggedField !== fieldId) {
+      setDragOverField(fieldId);
     }
   };
 
-  const onDrop = (e: React.DragEvent) => {
+  const handleFieldDragLeave = () => {
+    setDragOverField(null);
+  };
+
+  const handleFieldDrop = (e: React.DragEvent, targetFieldId: string) => {
     e.preventDefault();
-    setIsDragging(false);
-    const file = e.dataTransfer.files[0];
-    if (file && file.type === "application/json") {
-      processFile(file);
-    } else if (file) {
-      alert("Please drop a valid JSON file.");
+    e.stopPropagation();
+
+    if (!draggedField || draggedField === targetFieldId) {
+      setDraggedField(null);
+      setDragOverField(null);
+      return;
     }
+
+    const draggedIndex = fields.findIndex(f => f.id === draggedField);
+    const targetIndex = fields.findIndex(f => f.id === targetFieldId);
+
+    if (draggedIndex !== -1 && targetIndex !== -1) {
+      const newFields = [...fields];
+      const [removed] = newFields.splice(draggedIndex, 1);
+      newFields.splice(targetIndex, 0, removed);
+      setFields(newFields);
+    }
+
+    setDraggedField(null);
+    setDragOverField(null);
+  };
+
+  const handleFieldDragEnd = () => {
+    setDraggedField(null);
+    setDragOverField(null);
   };
 
   return (
     <div
       className={`w-auto h-full ${bgPrimary} ${textPrimary} flex flex-col relative overflow-hidden`}
-      onDragOver={onDragOver}
-      onDragLeave={onDragLeave}
-      onDrop={onDrop}
     >
-      {/* Drag Overlay */}
-      {isDragging && (
-        <div className="absolute inset-0 z-50 bg-blue-500 bg-opacity-20 backdrop-blur-sm border-4 border-blue-500 border-dashed m-4 rounded-lg flex items-center justify-center pointer-events-none">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl flex flex-col items-center">
-            <div className="text-blue-500 mb-2">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="17 8 12 3 7 8"></polyline>
-                <line x1="12" y1="3" x2="12" y2="15"></line>
-              </svg>
-            </div>
-            <p className="text-lg font-bold text-gray-900 dark:text-white">Drop template to import</p>
-          </div>
-        </div>
-      )}
-
       {/* Header */}
-      <Header onExport={handleExport} />
+      <Header onExport={handleExport} onImport={handleImport} />
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto p-4 flex flex-col">
@@ -206,14 +261,22 @@ const PaperTiger: React.FC = () => {
                   <EmptyStateIcon />
                 </div>
                 <p className={`text-sm ${textSecondary}`}>
-                  Please add fields or drag and drop a template to generate data
+                  Please add fields to generate data
                 </p>
               </div>
             ) : (
               fields.map((field) => (
                 <div
                   key={field.id}
-                  className={`${bgSecondary} rounded-lg p-3 space-y-2`}
+                  draggable
+                  onDragStart={(e) => handleFieldDragStart(e, field.id)}
+                  onDragOver={(e) => handleFieldDragOver(e, field.id)}
+                  onDragLeave={handleFieldDragLeave}
+                  onDrop={(e) => handleFieldDrop(e, field.id)}
+                  onDragEnd={handleFieldDragEnd}
+                  className={`${bgSecondary} rounded-lg p-3 space-y-2 cursor-move transition-all ${draggedField === field.id ? 'opacity-50 scale-95' : ''
+                    } ${dragOverField === field.id ? 'border-2 border-blue-500 border-dashed' : ''
+                    }`}
                 >
                   <div>
                     <div className="flex flex-row items-center justify-between">
@@ -291,10 +354,11 @@ const PaperTiger: React.FC = () => {
         <BottomSheet
           closeBottomSheet={closeBottomSheet}
           onSelect={onSelect}
+          activeField={activeFieldId ? fields.find(f => f.id === activeFieldId) : null}
         />
       )}
     </div>
   );
 };
 
-export default PaperTiger;
+export default Seed;

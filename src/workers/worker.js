@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker";
 import * as XLSX from "xlsx";
-import yaml from "js-yaml";
 import jsontoxml from "jsontoxml";
 
 self.onmessage = function (event) {
@@ -14,10 +13,33 @@ self.onmessage = function (event) {
     for (let i = 0; i < totalCount; i++) {
       const record = {};
       schema.forEach(field => {
-        const { category, subCategory, parameterName } = field;
+        const { category, subCategory, parameterName, options } = field;
         try {
           if (faker[category] && typeof faker[category][subCategory] === 'function') {
-            record[parameterName] = faker[category][subCategory]();
+            // Build options object from parameter options
+            const fakerOptions = {};
+            if (options && Array.isArray(options)) {
+              options.forEach(option => {
+                // Use 'value' property (configured by user) instead of defaultValue
+                if (option.keyName && option.value !== undefined) {
+                  let optionValue = option.value;
+
+                  // Convert date strings to Date objects for faker
+                  if (option.type === 'date' && typeof optionValue === 'string') {
+                    optionValue = new Date(optionValue);
+                  }
+
+                  fakerOptions[option.keyName] = optionValue;
+                }
+              });
+            }
+
+            // Call faker function with options if available
+            if (Object.keys(fakerOptions).length > 0) {
+              record[parameterName] = faker[category][subCategory](fakerOptions);
+            } else {
+              record[parameterName] = faker[category][subCategory]();
+            }
           } else {
             record[parameterName] = null;
           }

@@ -1,5 +1,5 @@
 {
-    "name": "Paper Tiger",
+    "name": "Seed",
     "description": "Open-source, fully offline data generation tool for developers to create and export mock data securely.",
     "version": "0.0.1",
     "manifest_version": 3,
@@ -7,14 +7,6 @@
         "16": "logo16.png",
         "48": "logo48.png",
         "128": "logo128.png"
-    },
-    "action": {
-        "default_popup": "index.html",
-        "default_icon": {
-            "16": "logo16.png",
-            "48": "logo48.png",
-            "128": "logo128.png"
-        }
     },
     "minimum_chrome_version": "90",
     "permissions": [
@@ -26,5 +18,5 @@
     "side_panel": {
         "default_path": "index.html"
     },
-    "homepage_url": "https://github.com/Santhoshlm10/paper-tiger"
+    "homepage_url": "https://github.com/Santhoshlm10/seed"
 }
