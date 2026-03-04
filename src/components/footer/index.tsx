@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { useTheme } from "../../ThemeProvider";
-import { Download, FileJson, FileSpreadsheet, Database, ChevronDown } from "../ui/Icons";
+import { Download, FileJson, FileSpreadsheet, Database, ChevronDown, CopyIcon } from "../ui/Icons";
 import Menu from "../ui/Menu";
 
 interface IFooter {
@@ -41,6 +41,7 @@ function Footer({ recordCount, setRecordCount, onDownloadAction, loading, progre
         { name: "Excel (.xlsx)", icon: <FileSpreadsheet />, onClick: () => onDownloadAction('excel') },
         { name: "CSV (.csv)", icon: <FileSpreadsheet />, onClick: () => onDownloadAction('csv') },
         { name: "JSON (.json)", icon: <FileJson />, onClick: () => onDownloadAction('json') },
+                { name: "Copy to Clipboard (json)", icon: <CopyIcon />, onClick: () => onDownloadAction('json') },
         { name: "SQL Insert", icon: <Database />, onClick: () => onDownloadAction('sql') },
         { name: "MongoDB Insert", icon: <Database />, onClick: () => onDownloadAction('mongo') },
     ];

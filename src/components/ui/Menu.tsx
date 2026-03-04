@@ -44,7 +44,7 @@ function Menu({ lists, trigger, position }: IMenuList) {
                   <button
                     className={`flex items-center gap-2 w-full text-left px-4 py-2 text-sm ${textPrimary} ${hoverBg} transition-colors`}
                     onClick={() => {
-                      i.onClick(i);
+                      i.onClick("");
                       setShowMenu(false);
                     }}
                   >
