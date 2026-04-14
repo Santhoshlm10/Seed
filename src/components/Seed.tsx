@@ -4,8 +4,10 @@ import { Clone, Plus, Trash2, EmptyStateIcon } from "./ui/Icons";
 import Header from "./header";
 import BottomSheet from "./bottomsheet";
 import Menu from "./ui/Menu";
+import Forms from "./forms/Forms";
 
 import { Parameter } from "../models/Playground";
+import { FormFieldMapping } from "../models/Forms";
 import Footer from "./footer";
 import useDataGenerator from "../hooks/useDataGenerator";
 import { useToast } from "./hooks/useToast";
@@ -39,6 +41,9 @@ const Seed: React.FC = () => {
   const [dragOverField, setDragOverField] = useState<string | null>(null);
   const { generateFile, loading, progress } = useDataGenerator();
   const { showToast, Toast } = useToast();
+  const [activeTab, setActiveTab] = useState<'generator' | 'forms'>('generator');
+  const [formMappings, setFormMappings] = useState<FormFieldMapping[]>([]);
+  const [formName, setFormName] = useState<string>('Untitled Form');
 
   const handleDownloadAction = (action: string) => {
     // Validate field names
@@ -215,6 +220,74 @@ const Seed: React.FC = () => {
     input.click();
   };
 
+  // ─── Form export / import ────────────────────────────────────────────────
+
+  const downloadJSON = (content: string, fileName: string) => {
+    const blob = new Blob([content], { type: 'application/json' });
+    // @ts-ignore
+    const isExtension = typeof chrome !== 'undefined' && chrome.downloads;
+    if (isExtension) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        // @ts-ignore
+        chrome.downloads.download({ url: reader.result as string, filename: fileName, saveAs: false });
+      };
+      reader.readAsDataURL(blob);
+    } else {
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(link.href), 100);
+    }
+  };
+
+  const handleExportForm = () => {
+    if (formMappings.length === 0) {
+      showToast('No form fields to export', 'error');
+      return;
+    }
+    const sanitized = formName.replace(/[<>:"/\\|?*]/g, '_');
+    const content = JSON.stringify({ version: 1, name: formName, mappings: formMappings }, null, 2);
+    downloadJSON(content, `${sanitized}_form.json`);
+    showToast('Form exported', 'success');
+  };
+
+  const handleImportForm = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const parsed = JSON.parse(ev.target?.result as string);
+          if (parsed.mappings && Array.isArray(parsed.mappings)) {
+            // Re-stamp IDs so they're unique in this session
+            const imported: FormFieldMapping[] = parsed.mappings.map((m: FormFieldMapping) => ({
+              ...m,
+              id: `field_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+            }));
+            setFormMappings(imported);
+            if (parsed.name) setFormName(parsed.name);
+            setActiveTab('forms');
+            showToast(`Imported ${imported.length} field${imported.length !== 1 ? 's' : ''}`, 'success');
+          } else {
+            showToast('Invalid form file', 'error');
+          }
+        } catch {
+          showToast('Could not parse file', 'error');
+        }
+      };
+      reader.readAsText(file);
+    };
+    input.click();
+  };
+
   const handleFieldDragStart = (e: React.DragEvent, fieldId: string) => {
     setDraggedField(fieldId);
     e.dataTransfer.effectAllowed = "move";
@@ -266,9 +339,42 @@ const Seed: React.FC = () => {
       className={`w-auto h-full ${bgPrimary} ${textPrimary} flex flex-col relative overflow-hidden`}
     >
       {/* Header */}
-      <Header onExport={handleExport} onImport={handleImport} />
+      <Header
+        activeTab={activeTab}
+        onExport={handleExport}
+        onImport={handleImport}
+        onExportForm={handleExportForm}
+        onImportForm={handleImportForm}
+      />
 
-      {/* Content */}
+      {/* Tab Bar */}
+      <div className={`flex border-b ${borderColor} shrink-0`}>
+        {(['generator', 'forms'] as const).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`flex-1 py-2.5 text-sm font-semibold transition-colors capitalize ${
+              activeTab === tab
+                ? `border-b-2 border-blue-500 text-blue-500`
+                : `${textSecondary} hover:${textPrimary}`
+            }`}
+          >
+            {tab === 'generator' ? 'Generator' : 'Forms'}
+          </button>
+        ))}
+      </div>
+
+      {/* Forms tab — full height, own scroll */}
+      {activeTab === 'forms' && (
+        <div className="flex-1 overflow-hidden">
+          <Forms mappings={formMappings} setMappings={setFormMappings} formName={formName} setFormName={setFormName} />
+        </div>
+      )}
+
+      {/* Generator tab */}
+      {activeTab === 'generator' && (
+        <>
+          {/* Content */}
       <div className="flex-1 overflow-y-auto p-4 flex flex-col">
         <div className="flex-1 flex flex-col">
           <div className="flex items-center justify-between mb-3">
@@ -376,22 +482,26 @@ const Seed: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <Footer
-        recordCount={recordCount}
-        setRecordCount={setRecordCount}
-        onDownloadAction={handleDownloadAction}
-        loading={loading}
-        progress={progress}
-      />
-
-      {/* Bottom Sheet */}
-      {showBottomSheet && (
-        <BottomSheet
-          closeBottomSheet={closeBottomSheet}
-          onSelect={onSelect}
-          activeField={activeFieldId ? fields.find(f => f.id === activeFieldId) : null}
+      {/* Footer — generator only */}
+      {activeTab === 'generator' && (
+        <Footer
+          recordCount={recordCount}
+          setRecordCount={setRecordCount}
+          onDownloadAction={handleDownloadAction}
+          loading={loading}
+          progress={progress}
         />
+      )}
+
+        {/* Bottom Sheet */}
+        {showBottomSheet && (
+          <BottomSheet
+            closeBottomSheet={closeBottomSheet}
+            onSelect={onSelect}
+            activeField={activeFieldId ? fields.find(f => f.id === activeFieldId) : null}
+          />
+        )}
+        </>
       )}
       <Toast />
     </div>

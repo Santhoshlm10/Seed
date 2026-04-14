@@ -67,7 +67,7 @@ function ConfigurationInput({ option, configValues, onChange }: ConfigurationInp
                         className={`w-full ${inputBg} border ${borderColor} rounded-lg px-3 py-2 text-sm ${textPrimary} focus:outline-none focus:border-blue-500`}
                     >
                         <option value="">Select an option</option>
-                        {option.selectValues?.map((selectValue) => (
+                        {option.selectValues?.map((selectValue: { key: string; label: string }) => (
                             <option key={selectValue.key} value={selectValue.key}>
                                 {selectValue.label}
                             </option>
@@ -79,7 +79,7 @@ function ConfigurationInput({ option, configValues, onChange }: ConfigurationInp
                 const selectedValues = Array.isArray(value) ? value : [];
                 return (
                     <div className={`${bgSecondary} border ${borderColor} rounded-lg p-3 max-h-48 overflow-y-auto`}>
-                        {option.selectValues?.map((selectValue) => (
+                        {option.selectValues?.map((selectValue: { key: string; label: string }) => (
                             <label
                                 key={selectValue.key}
                                 className="flex items-center gap-2 py-2 cursor-pointer hover:bg-opacity-80"

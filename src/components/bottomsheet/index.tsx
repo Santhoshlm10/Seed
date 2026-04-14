@@ -12,7 +12,7 @@ interface IBottomSheet {
   activeField?: { id: string; name: string; value: any } | null;
 }
 
-function BottomSheet({ closeBottomSheet, onSelect, activeField }: IBottomSheet) {
+function BottomSheet({ closeBottomSheet, onSelect, activeField: _activeField }: IBottomSheet) {
   const { theme, isDarkMode } = useTheme();
   const { bgSecondary, borderColor, textPrimary, inputBg, textSecondary } = theme;
 
