@@ -13,10 +13,20 @@
         "storage",
         "tabs",
         "sidePanel",
-        "downloads"
+        "downloads",
+        "scripting",
+        "activeTab"
     ],
     "side_panel": {
         "default_path": "index.html"
     },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"],
+            "run_at": "document_idle"
+        }
+    ],
+    "host_permissions": ["<all_urls>"],
     "homepage_url": "https://github.com/Santhoshlm10/seed"
 }

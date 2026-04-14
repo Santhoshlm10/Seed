@@ -6,6 +6,7 @@ self.onmessage = function (event) {
   const { type, schema, count, data, format, fileName, tableName, collectionName } = event.data;
 
   const generateData = (schema, count, reportProgress) => {
+    console.log("GenerateData", schema)
     const generated = [];
     const totalCount = parseInt(count);
     const progressStep = 100;
@@ -13,39 +14,132 @@ self.onmessage = function (event) {
     for (let i = 0; i < totalCount; i++) {
       const record = {};
       schema.forEach(field => {
-        const { category, subCategory, parameterName, options } = field;
+        const { category, subCategory, parameterName, columnName, options } = field;
+        const key = (columnName || parameterName).replace(/\s+/g, "");
         try {
+          const fakerOptions = {};
           if (faker[category] && typeof faker[category][subCategory] === 'function') {
-            // Build options object from parameter options
-            const fakerOptions = {};
-            if (options && Array.isArray(options)) {
-              options.forEach(option => {
-                // Use 'value' property (configured by user) instead of defaultValue
-                if (option.keyName && option.value !== undefined) {
-                  let optionValue = option.value;
 
-                  // Convert date strings to Date objects for faker
-                  if (option.type === 'date' && typeof optionValue === 'string') {
-                    optionValue = new Date(optionValue);
+            // --- Special case: faker.helpers.fromRegExp(pattern) ---
+            if (category === 'helpers' && subCategory === 'fromRegExp') {
+              const patternOption = options && Array.isArray(options)
+                ? options.find(o => o.keyName === 'pattern')
+                : null;
+              const rawPattern = patternOption
+                ? (patternOption.value !== undefined ? patternOption.value : patternOption.defaultValue)
+                : null;
+
+              let result;
+              if (rawPattern) {
+                try {
+                  result = faker.helpers.fromRegExp(new RegExp(rawPattern));
+                } catch (regexErr) {
+                  console.warn(`[${key}] Invalid regex pattern "${rawPattern}": ${regexErr.message}. Falling back to default.`);
+                  result = faker.helpers.fromRegExp(/[A-Z]{2}[0-9]{4}/);
+                }
+              } else {
+                result = faker.helpers.fromRegExp(/[A-Z]{2}[0-9]{4}/);
+              }
+
+              record[key] = result;
+              // Skip the rest of the generic processing for this field
+              return;
+            }
+            // --------------------------------------------------------
+
+            // Build options object from parameter options
+            if (options && Array.isArray(options)) {
+              const setNestedProperty = (obj, path, value) => {
+                const parts = path.split('.');
+                let current = obj;
+                for (let i = 0; i < parts.length - 1; i++) {
+                  const part = parts[i];
+                  if (!(part in current)) {
+                    current[part] = {};
+                  }
+                  current = current[part];
+                }
+                current[parts[parts.length - 1]] = value;
+              };
+
+              const parseOptions = (opts) => {
+                opts.forEach(option => {
+                  // If this is a container object with children, skip the parent value
+                  // and only process the children (e.g. 'length' with 'length.min'/'length.max')
+                  if (option.type === 'object' && option.children && option.children.length > 0) {
+                    parseOptions(option.children);
+                    return;
                   }
 
-                  fakerOptions[option.keyName] = optionValue;
+                  const optionValue = option.value !== undefined ? option.value : option.defaultValue;
+                  
+                  if (option.keyName && optionValue !== undefined && optionValue !== "") {
+                    let processedValue = optionValue;
+
+                    // Cast to number if the option type is number
+                    if (option.type === 'number') {
+                      processedValue = Number(processedValue);
+                    }
+
+                    // Convert date strings to Date objects for faker
+                    if (option.type === 'date' && typeof processedValue === 'string') {
+                      processedValue = new Date(processedValue);
+                    }
+
+                    // Skip invalid numbers
+                    if (option.type === 'number' && isNaN(processedValue)) {
+                      return;
+                    }
+
+                    setNestedProperty(fakerOptions, option.keyName, processedValue);
+                  }
+                });
+              };
+
+              parseOptions(options);
+
+              // Safeguard: normalize fakerOptions.length to a valid number or {min, max} object
+              if (fakerOptions.length !== undefined) {
+                if (typeof fakerOptions.length === 'string' || typeof fakerOptions.length === 'number') {
+                  // Convert string "3" -> number 3, clamp to at least 1
+                  const n = Math.max(1, parseInt(fakerOptions.length) || 1);
+                  fakerOptions.length = n;
+                } else if (typeof fakerOptions.length === 'object') {
+                  let { min, max } = fakerOptions.length;
+                  min = Math.max(1, Number(min) || 1);
+                  max = Math.max(min, Number(max) || min);
+                  fakerOptions.length = { min, max };
                 }
-              });
+              }
             }
 
             // Call faker function with options if available
+            let result;
             if (Object.keys(fakerOptions).length > 0) {
-              record[parameterName] = faker[category][subCategory](fakerOptions);
+              try {
+                result = faker[category][subCategory](fakerOptions);
+              } catch (optErr) {
+                // Options caused an error — store debug info in field and retry without options
+                console.warn(`[${key}] Options caused error: ${optErr.message}. fakerOptions: ${JSON.stringify(fakerOptions)}. Retrying without options.`);
+                record[key] = `[DEBUG - bad options: ${JSON.stringify(fakerOptions)}]`;
+                result = faker[category][subCategory]();
+              }
             } else {
-              record[parameterName] = faker[category][subCategory]();
+              result = faker[category][subCategory]();
+            }
+
+            // Handle return type for object types with selectedValue
+            if (field.returnType && field.returnType.type === "object" && field.returnType.selectedValue) {
+              record[key] = result ? result[field.returnType.selectedValue] : null;
+            } else if (!record[key]?.startsWith?.('[DEBUG')) {
+              record[key] = result;
             }
           } else {
-            record[parameterName] = null;
+            record[key] = null;
           }
         } catch (e) {
-          console.error(`Error generating field ${parameterName}:`, e);
-          record[parameterName] = null;
+          console.error(`Error generating field ${key}:`, e);
+          record[key] = null;
         }
       });
       generated.push(record);

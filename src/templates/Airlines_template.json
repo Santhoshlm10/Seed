@@ -1,0 +1,221 @@
+{
+  "data": [
+    {
+      "parameterName": "Aircraft Type",
+      "searchQueries": [
+        "airplane",
+        "air",
+        "aircraft type"
+      ],
+      "category": "airline",
+      "subCategory": "aircraftType",
+      "description": "Returns a random aircraft type.",
+      "returnType": {
+        "type": "string",
+        "values": []
+      },
+      "options": null,
+      "columnName": "AirCraftType"
+    },
+    {
+      "parameterName": "Air Line",
+      "searchQueries": [
+        "airplane",
+        "air",
+        "aircraft line"
+      ],
+      "category": "airline",
+      "subCategory": "airline",
+      "description": "Generates a random airline",
+      "returnType": {
+        "type": "object",
+        "values": [
+          {
+            "name": "Name",
+            "key": "name",
+            "type": "string"
+          },
+          {
+            "name": "IATA Code",
+            "key": "iataCode",
+            "type": "string"
+          }
+        ],
+        "selectedValue": "name"
+      },
+      "columnName": "AirLine"
+    },
+    {
+      "parameterName": "Air Plane",
+      "searchQueries": [
+        "airplane",
+        "air",
+        "aircraft line"
+      ],
+      "category": "airline",
+      "subCategory": "airplane",
+      "description": "Generates a random airplane.",
+      "returnType": {
+        "type": "object",
+        "values": [
+          {
+            "name": "Name",
+            "key": "name",
+            "type": "string"
+          },
+          {
+            "name": "IATA Type Code",
+            "key": "iataTypeCode",
+            "type": "string"
+          }
+        ],
+        "selectedValue": "name"
+      },
+      "columnName": "AirPlane"
+    },
+    {
+      "parameterName": "Airport",
+      "searchQueries": [
+        "airplane",
+        "air",
+        "airport"
+      ],
+      "category": "airline",
+      "subCategory": "airport",
+      "description": "Generates a random airport.",
+      "returnType": {
+        "type": "object",
+        "values": [
+          {
+            "name": "Name",
+            "key": "name",
+            "type": "string"
+          },
+          {
+            "name": "IATA Code",
+            "key": "iataCode",
+            "type": "string"
+          }
+        ],
+        "selectedValue": "name"
+      },
+      "columnName": "Airport"
+    },
+    {
+      "parameterName": "Flight Number",
+      "searchQueries": [
+        "airplane",
+        "air",
+        "aircraft line",
+        "flightNumber"
+      ],
+      "category": "airline",
+      "subCategory": "flightNumber",
+      "description": "Returns a random flight number.",
+      "returnType": {
+        "type": "string",
+        "values": []
+      },
+      "options": [
+        {
+          "name": "Add leading zeros",
+          "keyName": "addLeadingZeros",
+          "type": "boolean",
+          "description": "Whether to pad the flight number up to 4 digits with leading zeros.",
+          "defaultValue": false,
+          "value": true
+        },
+        {
+          "name": "Length",
+          "keyName": "length",
+          "type": "object",
+          "children": [
+            {
+              "name": "Min value",
+              "keyName": "length.min",
+              "type": "number",
+              "description": "The minimum number of digits to generate."
+            },
+            {
+              "name": "Max value",
+              "keyName": "length.max",
+              "type": "number",
+              "description": "The maximum number of digits to generate."
+            }
+          ],
+          "description": "The number or range of digits to generate.",
+          "value": "3"
+        }
+      ],
+      "columnName": "FlightNumber"
+    },
+    {
+      "parameterName": "Record Locator",
+      "searchQueries": [
+        "airplane",
+        "air",
+        "record locator"
+      ],
+      "category": "airline",
+      "subCategory": "recordLocator",
+      "description": "Generates a random record locator.",
+      "returnType": {
+        "type": "string",
+        "values": []
+      },
+      "options": [
+        {
+          "name": "Allow Numerics",
+          "keyName": "addLeadingZeros",
+          "type": "boolean",
+          "description": "Whether to pad the flight number up to 4 digits with leading zeros.",
+          "defaultValue": false,
+          "value": true
+        }
+      ],
+      "columnName": "RecordLocator"
+    },
+    {
+      "parameterName": "Seat",
+      "searchQueries": [
+        "airplane",
+        "air",
+        "Seat"
+      ],
+      "category": "airline",
+      "subCategory": "seat",
+      "description": "Generates a random seat.",
+      "returnType": {
+        "type": "string",
+        "values": []
+      },
+      "options": [
+        {
+          "name": "Aircraft type",
+          "keyName": "aircraftType",
+          "type": "select",
+          "selectValues": [
+            {
+              "key": "narrowbody",
+              "label": "Narrow Body"
+            },
+            {
+              "key": "regional",
+              "label": "Regional"
+            },
+            {
+              "key": "widebody",
+              "label": "Widebody"
+            }
+          ],
+          "description": "Whether to pad the flight number up to 4 digits with leading zeros.",
+          "defaultValue": "",
+          "value": "regional"
+        }
+      ],
+      "columnName": "Seat"
+    }
+  ],
+  "playgroundName": "Airlines",
+  "count": "100"
+}

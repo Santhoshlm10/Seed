@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useTheme } from "../ThemeProvider";
-import { Clone, ModifyConfiguration, Plus, Trash2, EmptyStateIcon } from "./ui/Icons";
+import { Clone, Plus, Trash2, EmptyStateIcon } from "./ui/Icons";
 import Header from "./header";
 import BottomSheet from "./bottomsheet";
 import Menu from "./ui/Menu";
+import Forms from "./forms/Forms";
 
 import { Parameter } from "../models/Playground";
+import { FormFieldMapping } from "../models/Forms";
 import Footer from "./footer";
 import useDataGenerator from "../hooks/useDataGenerator";
+import { useToast } from "./hooks/useToast";
 
 interface Field {
   id: string;
@@ -37,11 +40,40 @@ const Seed: React.FC = () => {
   const [draggedField, setDraggedField] = useState<string | null>(null);
   const [dragOverField, setDragOverField] = useState<string | null>(null);
   const { generateFile, loading, progress } = useDataGenerator();
+  const { showToast, Toast } = useToast();
+  const [activeTab, setActiveTab] = useState<'generator' | 'forms'>('generator');
+  const [formMappings, setFormMappings] = useState<FormFieldMapping[]>([]);
+  const [formName, setFormName] = useState<string>('Untitled Form');
 
   const handleDownloadAction = (action: string) => {
+    // Validate field names
+    const emptyFields = fields.filter(f => !f.name.trim());
+    if (emptyFields.length > 0) {
+      showToast("All fields must have a name", "error");
+      return;
+    }
+
     const fileName = `${schemaName}_data`;
-    const schema: Parameter[] = fields.map(f => f.value);
-    generateFile(null, action, fileName, schema, recordCount, schemaName.replace(/\s+/g, '_'), schemaName.replace(/\s+/g, '_'));
+    const schema: Parameter[] = fields.map(f => ({ ...f.value, columnName: f.name.replace(/\s+/g, "") }));
+    const isCopy = action === 'json-copy';
+    const format = isCopy ? 'json' : action;
+    
+    generateFile(
+      null, 
+      format, 
+      fileName, 
+      schema, 
+      recordCount, 
+      schemaName.replace(/\s+/g, '_'), 
+      schemaName.replace(/\s+/g, '_'), 
+      isCopy,
+      () => {
+        showToast(isCopy ? "Copied to clipboard" : "Download started", "success");
+      },
+      (err) => {
+        showToast(err, "error");
+      }
+    );
   };
 
   const openBottomSheet = (fieldId: string) => {
@@ -56,7 +88,14 @@ const Seed: React.FC = () => {
 
   const onSelect = (data: any) => {
     if (activeFieldId) {
-      updateField(activeFieldId, "value", data);
+      setFields(
+        fields.map((field) => {
+          const cleanedName = (field.name.replace(/\s+/g, "") || data.parameterName.replace(/\s+/g, ""));
+          return field.id === activeFieldId
+            ? { ...field, value: { ...data, columnName: cleanedName }, name: cleanedName }
+            : field;
+        }),
+      );
       closeBottomSheet();
     }
   };
@@ -64,7 +103,7 @@ const Seed: React.FC = () => {
   const addField = () => {
     const newField: Field = {
       id: Date.now().toString(),
-      name: "",
+      name: `field_${fields.length + 1}`,
       value: {}
     };
     setFields([...fields, newField]);
@@ -80,7 +119,7 @@ const Seed: React.FC = () => {
       const newField = {
         ...fieldToClone,
         id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
-        name: fieldToClone.name + " - Clone"
+        name: fieldToClone.name + "_Clone"
       };
       const index = fields.findIndex((f) => f.id === id);
       const newFields = [...fields];
@@ -90,9 +129,10 @@ const Seed: React.FC = () => {
   };
 
   const updateField = (id: string, key: keyof Field, value: string) => {
+    const processedValue = key === "name" ? value.replace(/\s+/g, "") : value;
     setFields(
       fields.map((field) =>
-        field.id === id ? { ...field, [key]: value } : field,
+        field.id === id ? { ...field, [key]: processedValue, value: key === 'name' ? { ...field.value, columnName: processedValue } : field.value } : field,
       ),
     );
   };
@@ -145,12 +185,14 @@ const Seed: React.FC = () => {
         const content = event.target?.result as string;
         const parsed = JSON.parse(content);
         if (parsed.data && Array.isArray(parsed.data)) {
-          // Map back to Field structure
-          const importedFields: Field[] = parsed.data.map((param: any) => ({
-            id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
-            name: param.parameterName || "", // Or use existing logic if name is stored differently
-            value: param
-          }));
+          const importedFields: Field[] = parsed.data.map((param: any) => {
+            const sanitizedName = (param.columnName || param.parameterName || "").replace(/\s+/g, "");
+            return {
+              id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
+              name: sanitizedName,
+              value: { ...param, columnName: sanitizedName }
+            };
+          });
           setFields(importedFields);
           if (parsed.playgroundName) setSchemaName(parsed.playgroundName);
           if (parsed.count) setRecordCount(Number(parsed.count));
@@ -174,6 +216,74 @@ const Seed: React.FC = () => {
       if (file) {
         processFile(file);
       }
+    };
+    input.click();
+  };
+
+  // ─── Form export / import ────────────────────────────────────────────────
+
+  const downloadJSON = (content: string, fileName: string) => {
+    const blob = new Blob([content], { type: 'application/json' });
+    // @ts-ignore
+    const isExtension = typeof chrome !== 'undefined' && chrome.downloads;
+    if (isExtension) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        // @ts-ignore
+        chrome.downloads.download({ url: reader.result as string, filename: fileName, saveAs: false });
+      };
+      reader.readAsDataURL(blob);
+    } else {
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(link.href), 100);
+    }
+  };
+
+  const handleExportForm = () => {
+    if (formMappings.length === 0) {
+      showToast('No form fields to export', 'error');
+      return;
+    }
+    const sanitized = formName.replace(/[<>:"/\\|?*]/g, '_');
+    const content = JSON.stringify({ version: 1, name: formName, mappings: formMappings }, null, 2);
+    downloadJSON(content, `${sanitized}_form.json`);
+    showToast('Form exported', 'success');
+  };
+
+  const handleImportForm = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const parsed = JSON.parse(ev.target?.result as string);
+          if (parsed.mappings && Array.isArray(parsed.mappings)) {
+            // Re-stamp IDs so they're unique in this session
+            const imported: FormFieldMapping[] = parsed.mappings.map((m: FormFieldMapping) => ({
+              ...m,
+              id: `field_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+            }));
+            setFormMappings(imported);
+            if (parsed.name) setFormName(parsed.name);
+            setActiveTab('forms');
+            showToast(`Imported ${imported.length} field${imported.length !== 1 ? 's' : ''}`, 'success');
+          } else {
+            showToast('Invalid form file', 'error');
+          }
+        } catch {
+          showToast('Could not parse file', 'error');
+        }
+      };
+      reader.readAsText(file);
     };
     input.click();
   };
@@ -229,9 +339,42 @@ const Seed: React.FC = () => {
       className={`w-auto h-full ${bgPrimary} ${textPrimary} flex flex-col relative overflow-hidden`}
     >
       {/* Header */}
-      <Header onExport={handleExport} onImport={handleImport} />
+      <Header
+        activeTab={activeTab}
+        onExport={handleExport}
+        onImport={handleImport}
+        onExportForm={handleExportForm}
+        onImportForm={handleImportForm}
+      />
 
-      {/* Content */}
+      {/* Tab Bar */}
+      <div className={`flex border-b ${borderColor} shrink-0`}>
+        {(['generator', 'forms'] as const).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`flex-1 py-2.5 text-sm font-semibold transition-colors capitalize ${
+              activeTab === tab
+                ? `border-b-2 border-blue-500 text-blue-500`
+                : `${textSecondary} hover:${textPrimary}`
+            }`}
+          >
+            {tab === 'generator' ? 'Generator' : 'Forms'}
+          </button>
+        ))}
+      </div>
+
+      {/* Forms tab — full height, own scroll */}
+      {activeTab === 'forms' && (
+        <div className="flex-1 overflow-hidden">
+          <Forms mappings={formMappings} setMappings={setFormMappings} formName={formName} setFormName={setFormName} />
+        </div>
+      )}
+
+      {/* Generator tab */}
+      {activeTab === 'generator' && (
+        <>
+          {/* Content */}
       <div className="flex-1 overflow-y-auto p-4 flex flex-col">
         <div className="flex-1 flex flex-col">
           <div className="flex items-center justify-between mb-3">
@@ -301,7 +444,6 @@ const Seed: React.FC = () => {
                           lists={[
                             { name: "Clone Item", icon: <Clone />, onClick: () => cloneField(field.id) },
                             { name: "Delete Item", icon: <Trash2 />, onClick: () => removeField(field.id) },
-                            { name: "Configuration", icon: <ModifyConfiguration />, onClick: () => openBottomSheet(field.id) },
                           ]}
                         />
                       </div>
@@ -340,23 +482,28 @@ const Seed: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <Footer
-        recordCount={recordCount}
-        setRecordCount={setRecordCount}
-        onDownloadAction={handleDownloadAction}
-        loading={loading}
-        progress={progress}
-      />
-
-      {/* Bottom Sheet */}
-      {showBottomSheet && (
-        <BottomSheet
-          closeBottomSheet={closeBottomSheet}
-          onSelect={onSelect}
-          activeField={activeFieldId ? fields.find(f => f.id === activeFieldId) : null}
+      {/* Footer — generator only */}
+      {activeTab === 'generator' && (
+        <Footer
+          recordCount={recordCount}
+          setRecordCount={setRecordCount}
+          onDownloadAction={handleDownloadAction}
+          loading={loading}
+          progress={progress}
         />
       )}
+
+        {/* Bottom Sheet */}
+        {showBottomSheet && (
+          <BottomSheet
+            closeBottomSheet={closeBottomSheet}
+            onSelect={onSelect}
+            activeField={activeFieldId ? fields.find(f => f.id === activeFieldId) : null}
+          />
+        )}
+        </>
+      )}
+      <Toast />
     </div>
   );
 };

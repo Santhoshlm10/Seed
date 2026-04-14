@@ -5335,5 +5335,30 @@
         ]
       }
     ]
+  },
+  "Helpers": {
+    "groupName": "Helpers",
+    "groupValue": [
+      {
+        "parameterName": "From RegExp",
+        "searchQueries": ["helpers", "regex", "regexp", "pattern", "custom", "fromRegExp"],
+        "category": "helpers",
+        "subCategory": "fromRegExp",
+        "description": "Generates a string matching the given regular expression-like string or regex object. Supports character classes, quantifiers (+, *, ?, {n}, {n,m}), and alternation (|).",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Pattern",
+            "keyName": "pattern",
+            "type": "regex",
+            "description": "A regex pattern string to generate matching data from. Example: [A-Z]{2}[0-9]{4} or \\d{3}-\\d{2}-\\d{4}",
+            "defaultValue": "[A-Z]{2}[0-9]{4}"
+          }
+        ]
+      }
+    ]
   }
 }

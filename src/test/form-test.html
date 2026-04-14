@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seed — Form Injection Test</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 36px;
+      width: 100%;
+      max-width: 560px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    }
+
+    .card-header {
+      margin-bottom: 28px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #38bdf8;
+      background: #0c4a6e33;
+      border: 1px solid #0ea5e933;
+      border-radius: 20px;
+      padding: 3px 10px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    h1 span { color: #38bdf8; }
+
+    .subtitle {
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 6px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #334155;
+      margin: 24px 0;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #475569;
+      margin-bottom: 14px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .field:last-child { margin-bottom: 0; }
+
+    label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .selector-tag {
+      font-size: 10px;
+      font-weight: 500;
+      font-family: 'Courier New', monospace;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #38bdf8;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="date"],
+    input[type="url"],
+    select,
+    textarea {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 14px;
+      padding: 10px 12px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.15s;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px #38bdf81a;
+    }
+
+    select option { background: #1e293b; }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    .submit-row {
+      margin-top: 28px;
+      display: flex;
+      gap: 10px;
+    }
+
+    button[type="submit"] {
+      flex: 1;
+      padding: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    button[type="submit"]:hover { background: #1d4ed8; }
+
+    button[type="reset"] {
+      padding: 12px 18px;
+      background: transparent;
+      color: #64748b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    button[type="reset"]:hover {
+      border-color: #475569;
+      color: #94a3b8;
+    }
+
+    .hint {
+      margin-top: 24px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .hint strong { color: #94a3b8; }
+
+    .hint code {
+      font-family: 'Courier New', monospace;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 4px;
+      padding: 1px 5px;
+      color: #38bdf8;
+      font-size: 11px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 12px;
+    }
+
+    th {
+      text-align: left;
+      color: #475569;
+      font-weight: 600;
+      padding: 6px 8px;
+      border-bottom: 1px solid #334155;
+    }
+
+    td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #1e293b;
+      color: #94a3b8;
+      vertical-align: middle;
+    }
+
+    td code {
+      font-family: 'Courier New', monospace;
+      color: #38bdf8;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-size: 11px;
+    }
+
+    td em {
+      font-style: normal;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">
+      <div class="badge">🌱 Seed — Test Form</div>
+      <h1>User Registration <span>Form</span></h1>
+      <p class="subtitle">Use the Seed extension's Forms tab to auto-fill this with fake data.</p>
+    </div>
+
+    <form id="registration-form" autocomplete="off">
+
+      <!-- Personal Info -->
+      <p class="section-title">Personal Information</p>
+      <div class="grid-2">
+        <div class="field">
+          <label>First Name <span class="selector-tag">#firstName</span></label>
+          <input type="text" id="firstName" name="firstName" placeholder="John" />
+        </div>
+        <div class="field">
+          <label>Last Name <span class="selector-tag">#lastName</span></label>
+          <input type="text" id="lastName" name="lastName" placeholder="Doe" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Email Address <span class="selector-tag">#email</span></label>
+        <input type="email" id="email" name="email" placeholder="john@example.com" />
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Phone <span class="selector-tag">#phone</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 555 000 0000" />
+        </div>
+        <div class="field">
+          <label>Date of Birth <span class="selector-tag">#dob</span></label>
+          <input type="date" id="dob" name="dob" />
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Address -->
+      <p class="section-title">Address</p>
+
+      <div class="field">
+        <label>Street Address <span class="selector-tag">#street</span></label>
+        <input type="text" id="street" name="street" placeholder="123 Main St" />
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>City <span class="selector-tag">#city</span></label>
+          <input type="text" id="city" name="city" placeholder="New York" />
+        </div>
+        <div class="field">
+          <label>Zip Code <span class="selector-tag">#zipCode</span></label>
+          <input type="text" id="zipCode" name="zipCode" placeholder="10001" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Country <span class="selector-tag">#country</span></label>
+        <select id="country" name="country">
+          <option value="">Select a country…</option>
+          <option value="US">United States</option>
+          <option value="GB">United Kingdom</option>
+          <option value="CA">Canada</option>
+          <option value="AU">Australia</option>
+          <option value="IN">India</option>
+          <option value="DE">Germany</option>
+          <option value="FR">France</option>
+          <option value="JP">Japan</option>
+        </select>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Account -->
+      <p class="section-title">Account</p>
+
+      <div class="field">
+        <label>Username <span class="selector-tag">#username</span></label>
+        <input type="text" id="username" name="username" placeholder="johndoe42" />
+      </div>
+
+      <div class="field">
+        <label>Website / Portfolio <span class="selector-tag">#website</span></label>
+        <input type="url" id="website" name="website" placeholder="https://example.com" />
+      </div>
+
+      <div class="field">
+        <label>Job Title <span class="selector-tag">#jobTitle</span></label>
+        <input type="text" id="jobTitle" name="jobTitle" placeholder="Software Engineer" />
+      </div>
+
+      <div class="field">
+        <label>Company <span class="selector-tag">#company</span></label>
+        <input type="text" id="company" name="company" placeholder="Acme Corp" />
+      </div>
+
+      <div class="field">
+        <label>Bio <span class="selector-tag">#bio</span></label>
+        <textarea id="bio" name="bio" placeholder="Tell us about yourself…"></textarea>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit">Submit Registration</button>
+        <button type="reset">Clear</button>
+      </div>
+    </form>
+
+    <!-- Selector cheat-sheet -->
+    <div class="hint">
+      <strong>🌱 Seed — Suggested field mappings</strong>
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Selector (ID)</th>
+            <th>Data Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>First Name</td><td><code>firstName</code></td><td><em>Person → First Name</em></td></tr>
+          <tr><td>Last Name</td><td><code>lastName</code></td><td><em>Person → Last Name</em></td></tr>
+          <tr><td>Email</td><td><code>email</code></td><td><em>Internet → Email</em></td></tr>
+          <tr><td>Phone</td><td><code>phone</code></td><td><em>Phone → Phone Number</em></td></tr>
+          <tr><td>Street</td><td><code>street</code></td><td><em>Location → Street Address</em></td></tr>
+          <tr><td>City</td><td><code>city</code></td><td><em>Location → City</em></td></tr>
+          <tr><td>Zip Code</td><td><code>zipCode</code></td><td><em>Location → Zip Code</em></td></tr>
+          <tr><td>Username</td><td><code>username</code></td><td><em>Internet → Username</em></td></tr>
+          <tr><td>Job Title</td><td><code>jobTitle</code></td><td><em>Person → Job Title</em></td></tr>
+          <tr><td>Company</td><td><code>company</code></td><td><em>Company → Name</em></td></tr>
+          <tr><td>Bio</td><td><code>bio</code></td><td><em>Lorem → Sentence</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('registration-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target));
+      console.log('Form submitted:', data);
+      alert('Form submitted! Check the browser console for the data.');
+    });
+  </script>
+</body>
+</html>

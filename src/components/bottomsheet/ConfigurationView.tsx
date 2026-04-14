@@ -14,21 +14,37 @@ function ConfigurationView({ parameter, onBack, onApply }: ConfigurationViewProp
     const { theme } = useTheme();
     const {  borderColor, textPrimary, textSecondary } = theme;
 
+    const [selectedReturnTypeKey, setSelectedReturnTypeKey] = useState<string | undefined>(
+        parameter.returnType.selectedValue
+    );
+
     const [configValues, setConfigValues] = useState<Record<string, any>>(() => {
         const initialValues: Record<string, any> = {};
-        parameter.options?.forEach((option) => {
-            initialValues[option.keyName] = option.value !== undefined
-                ? option.value
-                : option.defaultValue !== undefined
-                    ? option.defaultValue
-                    : option.type === "boolean"
-                        ? false
-                        : option.type === "multiSelect"
-                            ? []
-                            : option.type === "latlong"
-                                ? { lat: "", lng: "" }
-                                : "";
-        });
+        
+        const collectValues = (options: any[]) => {
+            options.forEach((option) => {
+                initialValues[option.keyName] = option.value !== undefined
+                    ? option.value
+                    : option.defaultValue !== undefined
+                        ? option.defaultValue
+                        : option.type === "boolean"
+                            ? false
+                            : option.type === "multiSelect"
+                                ? []
+                                : option.type === "latlong"
+                                    ? { lat: "", lng: "" }
+                                    : "";
+                
+                if (option.children && option.children.length > 0) {
+                    collectValues(option.children);
+                }
+            });
+        };
+
+        if (parameter.options) {
+            collectValues(parameter.options);
+        }
+        
         return initialValues;
     });
 
@@ -40,12 +56,26 @@ function ConfigurationView({ parameter, onBack, onApply }: ConfigurationViewProp
     };
 
     const handleApply = () => {
+        const updateOptionsWithValues = (options: any[]): any[] => {
+            return options.map((option) => {
+                const updatedOption = {
+                    ...option,
+                    value: configValues[option.keyName],
+                };
+                if (option.children && option.children.length > 0) {
+                    updatedOption.children = updateOptionsWithValues(option.children);
+                }
+                return updatedOption;
+            });
+        };
+
         const updatedParameter = {
             ...parameter,
-            options: parameter.options?.map((option) => ({
-                ...option,
-                value: configValues[option.keyName], 
-            })),
+            returnType: {
+                ...parameter.returnType,
+                selectedValue: selectedReturnTypeKey
+            },
+            options: parameter.options ? updateOptionsWithValues(parameter.options) : parameter.options,
         };
         onApply(updatedParameter as Parameter);
     };
@@ -73,19 +103,64 @@ function ConfigurationView({ parameter, onBack, onApply }: ConfigurationViewProp
             </div>
 
             {/* Configuration Options */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 space-y-6">
+                {/* Configuration Options */}
                 {parameter.options && parameter.options.length > 0 ? (
-                    parameter.options.map((option) => (
-                        <ConfigurationInput
-                            key={option.keyName}
-                            option={option}
-                            value={configValues[option.keyName]}
-                            onChange={(value) => handleValueChange(option.keyName, value)}
-                        />
-                    ))
+                    <div className="space-y-4">
+                        <label className={`text-sm font-semibold ${textPrimary} block mb-1`}>
+                            Options
+                        </label>
+                        {parameter.options.map((option) => (
+                            <ConfigurationInput
+                                key={option.keyName}
+                                option={option}
+                                configValues={configValues}
+                                onChange={handleValueChange}
+                            />
+                        ))}
+                    </div>
                 ) : (
-                    <div className={`text-center py-8 ${textSecondary}`}>
-                        <p>No configuration options available for this parameter.</p>
+                    parameter.returnType.type !== "object" && (
+                        <div className={`text-center py-8 ${textSecondary}`}>
+                            <p>No configuration options available for this parameter.</p>
+                        </div>
+                    )
+                )}
+
+                {/* Return Field Selection for Objects */}
+                {parameter.returnType.type === "object" && parameter.returnType.values && parameter.returnType.values.length > 0 && (
+                    <div className="space-y-3">
+                         <div className="flex items-center gap-2">
+                             <div className={`h-px flex-1 ${borderColor.replace("border-", "bg-")} opacity-20`}></div>
+                             <label className={`text-sm font-semibold ${textPrimary} whitespace-nowrap`}>
+                                 Return Field
+                             </label>
+                             <div className={`h-px flex-1 ${borderColor.replace("border-", "bg-")} opacity-20`}></div>
+                         </div>
+                        
+                        <div className={`grid grid-cols-2 gap-2`}>
+                            <button
+                                onClick={() => setSelectedReturnTypeKey(undefined)}
+                                className={`px-3 py-2 rounded-lg text-sm border transition-all ${!selectedReturnTypeKey
+                                        ? 'bg-blue-600 border-blue-600 text-white shadow-sm font-medium'
+                                        : `${borderColor} ${textSecondary} hover:${borderColor.replace("border-", "bg-")}`
+                                    }`}
+                            >
+                                Entire Object
+                            </button>
+                            {parameter.returnType.values.map((val) => (
+                                <button
+                                    key={val.key}
+                                    onClick={() => setSelectedReturnTypeKey(val.key)}
+                                    className={`px-3 py-2 rounded-lg text-sm border transition-all ${selectedReturnTypeKey === val.key
+                                            ? 'bg-blue-600 border-blue-600 text-white shadow-sm font-medium'
+                                            : `${borderColor} ${textSecondary} hover:${borderColor.replace("border-", "bg-")}`
+                                        }`}
+                                >
+                                    {val.name}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>
