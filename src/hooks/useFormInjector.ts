@@ -11,6 +11,61 @@ interface UseFormInjectorReturn {
   errors: string[];
 }
 
+// ─── Chrome helpers ────────────────────────────────────────────────────────────
+
+/**
+ * Checks whether the Seed content script is already running in `tabId`
+ * by sending a PING and expecting a PONG back.
+ */
+function pingTab(tabId: number): Promise<boolean> {
+  return new Promise((resolve) => {
+    // @ts-ignore
+    chrome.tabs.sendMessage(tabId, { type: 'SEED_PING' }, (response) => {
+      // @ts-ignore
+      if (chrome.runtime.lastError || !response) {
+        resolve(false);
+      } else {
+        resolve(response.type === 'SEED_PONG');
+      }
+    });
+  });
+}
+
+/**
+ * Injects content.js into the given tab if it hasn't been injected yet.
+ * Using scripting.executeScript (on-demand) instead of auto content_scripts
+ * avoids the need for content scripts running on every page load.
+ */
+function ensureContentScript(tabId: number): Promise<void> {
+  return new Promise(async (resolve, reject) => {
+    const alive = await pingTab(tabId);
+    if (alive) {
+      resolve();
+      return;
+    }
+
+    // @ts-ignore
+    chrome.scripting.executeScript(
+      { target: { tabId }, files: ['content.js'] },
+      () => {
+        // @ts-ignore
+        if (chrome.runtime.lastError) {
+          reject(new Error(
+            // @ts-ignore
+            chrome.runtime.lastError.message ??
+            'Could not inject content script. The page may be a Chrome system page (chrome://, devtools, etc.) where injection is not allowed.'
+          ));
+        } else {
+          // Small delay so the content script's listener registration completes
+          setTimeout(resolve, 80);
+        }
+      }
+    );
+  });
+}
+
+// ─── Hook ─────────────────────────────────────────────────────────────────────
+
 const useFormInjector = (mappings: FormFieldMapping[]): UseFormInjectorReturn => {
   const [status, setStatus] = useState<InjectionStatus>('idle');
   const [errors, setErrors]  = useState<string[]>([]);
@@ -26,39 +81,49 @@ const useFormInjector = (mappings: FormFieldMapping[]): UseFormInjectorReturn =>
       .filter(m => m.parameter !== null && m.selectorValue.trim() !== '')
       .map(m => ({
         ...(m.parameter as Parameter),
-        columnName: m.id, // use field id as key so we can match it back
+        columnName: m.id,
       }));
   }, [mappings]);
 
-  // Send the generated record to the content script in the active tab
-  const sendRecord = useCallback((record: Record<string, any>): Promise<string[]> => {
+  // Get the active tab id
+  const getActiveTabId = (): Promise<number | null> => {
     return new Promise((resolve) => {
       // @ts-ignore
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        const tab = tabs[0];
-        if (!tab?.id) {
-          resolve(['No active tab found. Make sure a page is open.']);
+        resolve(tabs[0]?.id ?? null);
+      });
+    });
+  };
+
+  // Send the generated record to the content script in the active tab
+  const sendRecord = useCallback(async (record: Record<string, any>): Promise<string[]> => {
+    const tabId = await getActiveTabId();
+    if (!tabId) return ['No active tab found. Make sure a page is open.'];
+
+    // Ensure content script is injected before messaging
+    try {
+      await ensureContentScript(tabId);
+    } catch (e: any) {
+      return [e.message ?? 'Failed to inject content script.'];
+    }
+
+    return new Promise((resolve) => {
+      // @ts-ignore
+      chrome.tabs.sendMessage(tabId, {
+        type: 'SEED_INJECT_RECORD',
+        record,
+        mappings: mappings.map(m => ({
+          fieldId: m.id,
+          selectorType: m.selectorType,
+          selectorValue: m.selectorValue,
+        })),
+      }, (response: { errors?: string[] } | undefined) => {
+        // @ts-ignore
+        if (chrome.runtime.lastError) {
+          resolve([`Could not reach the page content script. Try reloading the tab.`]);
           return;
         }
-
-        // @ts-ignore
-        chrome.tabs.sendMessage(tab.id, {
-          type: 'SEED_INJECT_RECORD',
-          record,
-          mappings: mappings.map(m => ({
-            fieldId: m.id,
-            selectorType: m.selectorType,
-            selectorValue: m.selectorValue,
-          })),
-        }, (response: { errors?: string[] } | undefined) => {
-          // @ts-ignore
-          if (chrome.runtime.lastError) {
-            // @ts-ignore
-            resolve([`Could not reach the page. Try reloading the tab after installing the extension.`]);
-            return;
-          }
-          resolve(response?.errors ?? []);
-        });
+        resolve(response?.errors ?? []);
       });
     });
   }, [mappings]);
@@ -85,7 +150,7 @@ const useFormInjector = (mappings: FormFieldMapping[]): UseFormInjectorReturn =>
         setStatus('injecting');
         const errs = await sendRecord(data[0]);
         setErrors(errs);
-        setStatus(errs.length > 0 ? 'error' : 'done');
+        setStatus(errs.length > 0 ? 'error' : 'idle');
       }
       if (type === 'ERROR') {
         setErrors([error ?? 'Data generation failed']);
