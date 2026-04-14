@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTheme } from "../ThemeProvider";
-import { Clone, ModifyConfiguration, Plus, Trash2, EmptyStateIcon } from "./ui/Icons";
+import { Clone, Plus, Trash2, EmptyStateIcon } from "./ui/Icons";
 import Header from "./header";
 import BottomSheet from "./bottomsheet";
 import Menu from "./ui/Menu";
@@ -8,6 +8,7 @@ import Menu from "./ui/Menu";
 import { Parameter } from "../models/Playground";
 import Footer from "./footer";
 import useDataGenerator from "../hooks/useDataGenerator";
+import { useToast } from "./hooks/useToast";
 
 interface Field {
   id: string;
@@ -37,11 +38,37 @@ const Seed: React.FC = () => {
   const [draggedField, setDraggedField] = useState<string | null>(null);
   const [dragOverField, setDragOverField] = useState<string | null>(null);
   const { generateFile, loading, progress } = useDataGenerator();
+  const { showToast, Toast } = useToast();
 
   const handleDownloadAction = (action: string) => {
+    // Validate field names
+    const emptyFields = fields.filter(f => !f.name.trim());
+    if (emptyFields.length > 0) {
+      showToast("All fields must have a name", "error");
+      return;
+    }
+
     const fileName = `${schemaName}_data`;
-    const schema: Parameter[] = fields.map(f => f.value);
-    generateFile(null, action, fileName, schema, recordCount, schemaName.replace(/\s+/g, '_'), schemaName.replace(/\s+/g, '_'));
+    const schema: Parameter[] = fields.map(f => ({ ...f.value, columnName: f.name.replace(/\s+/g, "") }));
+    const isCopy = action === 'json-copy';
+    const format = isCopy ? 'json' : action;
+    
+    generateFile(
+      null, 
+      format, 
+      fileName, 
+      schema, 
+      recordCount, 
+      schemaName.replace(/\s+/g, '_'), 
+      schemaName.replace(/\s+/g, '_'), 
+      isCopy,
+      () => {
+        showToast(isCopy ? "Copied to clipboard" : "Download started", "success");
+      },
+      (err) => {
+        showToast(err, "error");
+      }
+    );
   };
 
   const openBottomSheet = (fieldId: string) => {
@@ -56,7 +83,14 @@ const Seed: React.FC = () => {
 
   const onSelect = (data: any) => {
     if (activeFieldId) {
-      updateField(activeFieldId, "value", data);
+      setFields(
+        fields.map((field) => {
+          const cleanedName = (field.name.replace(/\s+/g, "") || data.parameterName.replace(/\s+/g, ""));
+          return field.id === activeFieldId
+            ? { ...field, value: { ...data, columnName: cleanedName }, name: cleanedName }
+            : field;
+        }),
+      );
       closeBottomSheet();
     }
   };
@@ -64,7 +98,7 @@ const Seed: React.FC = () => {
   const addField = () => {
     const newField: Field = {
       id: Date.now().toString(),
-      name: "",
+      name: `field_${fields.length + 1}`,
       value: {}
     };
     setFields([...fields, newField]);
@@ -80,7 +114,7 @@ const Seed: React.FC = () => {
       const newField = {
         ...fieldToClone,
         id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
-        name: fieldToClone.name + " - Clone"
+        name: fieldToClone.name + "_Clone"
       };
       const index = fields.findIndex((f) => f.id === id);
       const newFields = [...fields];
@@ -90,9 +124,10 @@ const Seed: React.FC = () => {
   };
 
   const updateField = (id: string, key: keyof Field, value: string) => {
+    const processedValue = key === "name" ? value.replace(/\s+/g, "") : value;
     setFields(
       fields.map((field) =>
-        field.id === id ? { ...field, [key]: value } : field,
+        field.id === id ? { ...field, [key]: processedValue, value: key === 'name' ? { ...field.value, columnName: processedValue } : field.value } : field,
       ),
     );
   };
@@ -145,12 +180,14 @@ const Seed: React.FC = () => {
         const content = event.target?.result as string;
         const parsed = JSON.parse(content);
         if (parsed.data && Array.isArray(parsed.data)) {
-          // Map back to Field structure
-          const importedFields: Field[] = parsed.data.map((param: any) => ({
-            id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
-            name: param.parameterName || "", // Or use existing logic if name is stored differently
-            value: param
-          }));
+          const importedFields: Field[] = parsed.data.map((param: any) => {
+            const sanitizedName = (param.columnName || param.parameterName || "").replace(/\s+/g, "");
+            return {
+              id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
+              name: sanitizedName,
+              value: { ...param, columnName: sanitizedName }
+            };
+          });
           setFields(importedFields);
           if (parsed.playgroundName) setSchemaName(parsed.playgroundName);
           if (parsed.count) setRecordCount(Number(parsed.count));
@@ -301,7 +338,6 @@ const Seed: React.FC = () => {
                           lists={[
                             { name: "Clone Item", icon: <Clone />, onClick: () => cloneField(field.id) },
                             { name: "Delete Item", icon: <Trash2 />, onClick: () => removeField(field.id) },
-                            { name: "Configuration", icon: <ModifyConfiguration />, onClick: () => openBottomSheet(field.id) },
                           ]}
                         />
                       </div>
@@ -357,6 +393,7 @@ const Seed: React.FC = () => {
           activeField={activeFieldId ? fields.find(f => f.id === activeFieldId) : null}
         />
       )}
+      <Toast />
     </div>
   );
 };

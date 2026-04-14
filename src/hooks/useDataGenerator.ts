@@ -13,7 +13,7 @@ interface WorkerMessage {
 
 interface UseDataGeneratorReturn {
     generateData: (schema: Parameter[], count: number, onComplete?: (data: any[]) => void) => void;
-    generateFile: (data: any[] | null, format: string, fileName: string, schema?: Parameter[], count?: number, tableName?: string, collectionName?: string) => void;
+    generateFile: (data: any[] | null, format: string, fileName: string, schema?: Parameter[], count?: number, tableName?: string, collectionName?: string, isCopy?: boolean, onSuccess?: () => void, onError?: (err: string) => void) => void;
     loading: boolean;
     progress: number;
     data: any[] | null;
@@ -86,7 +86,7 @@ const useDataGenerator = (): UseDataGeneratorReturn => {
         });
     }, []);
 
-    const generateFile = useCallback((data: any[] | null, format: string, fileName: string, schema?: Parameter[], count?: number, tableName?: string, collectionName?: string) => {
+    const generateFile = useCallback((data: any[] | null, format: string, fileName: string, schema?: Parameter[], count?: number, tableName?: string, collectionName?: string, isCopy?: boolean, onSuccess?: () => void, onError?: (err: string) => void) => {
         setLoading(true);
         setProgress(0);
         setError(null);
@@ -108,21 +108,42 @@ const useDataGenerator = (): UseDataGeneratorReturn => {
                     setProgress(100);
                     const { content, mimeType, fileName: dlFileName } = event.data as any;
                     try {
-                        const blob = new Blob([content], { type: mimeType });
-                        const link = document.createElement("a");
-                        link.href = URL.createObjectURL(blob);
-                        link.download = dlFileName;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                        setTimeout(() => URL.revokeObjectURL(link.href), 100);
-                    } catch (e:any) {
-                        setError(e.message || "Download failed");
+                        if (isCopy) {
+                            if (typeof content === 'string') {
+                                navigator.clipboard.writeText(content).then(() => {
+                                    if (onSuccess) onSuccess();
+                                }).catch(err => {
+                                    const errMsg = "Failed to copy to clipboard: " + err;
+                                    setError(errMsg);
+                                    if (onError) onError(errMsg);
+                                });
+                            } else {
+                                const errMsg = "Cannot copy binary data to clipboard";
+                                setError(errMsg);
+                                if (onError) onError(errMsg);
+                            }
+                        } else {
+                            const blob = new Blob([content], { type: mimeType });
+                            const link = document.createElement("a");
+                            link.href = URL.createObjectURL(blob);
+                            link.download = dlFileName;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            setTimeout(() => URL.revokeObjectURL(link.href), 100);
+                            if (onSuccess) onSuccess();
+                        }
+                    } catch (e: any) {
+                        const errMsg = e.message || "Operation failed";
+                        setError(errMsg);
+                        if (onError) onError(errMsg);
                     }
                     break;
                 case "ERROR":
-                    setError(error || "Worker error");
+                    const errMsg = error || "Worker error";
+                    setError(errMsg);
                     setLoading(false);
+                    if (onError) onError(errMsg);
                     break;
             }
         };

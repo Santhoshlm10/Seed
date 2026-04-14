@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Airline, Animal, ChevronDown, ChevronRight, Color, Commerce, Company, Database, DataType, Date, Finance, Food, Git, Hacker, Image, Internet, Location, Lorem, Music, Number, Person, Phone, Science, String, System, Vehicle, Word } from "./Icons";
+import { Airline, Animal, ChevronDown, ChevronRight, Color, Commerce, Company, Database, DataType, Date, Finance, Food, Git, Hacker, Helpers, Image, Internet, Location, Lorem, Music, Number, Person, Phone, Science, String, System, Vehicle, Word } from "./Icons";
 
 /**
  * There was no such component like accordion from Radix UI
@@ -34,6 +34,7 @@ const Accordion = ({
       "Food":Food,
       "Git":Git,
       "Hacker":Hacker,
+      "Helpers":Helpers,
       "Image":Image,
       "Internet":Internet,
       "Location":Location,

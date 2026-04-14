@@ -19,14 +19,8 @@ function BottomSheet({ closeBottomSheet, onSelect, activeField }: IBottomSheet) 
   const [dataSrc, setDataSrc] = React.useState<DataSource>(data as any);
   const [searchValue, setSearchValue] = useState<string>("");
 
-  // If activeField has a value (parameter), start in configuration view
-  const hasExistingParameter = activeField?.value && Object.keys(activeField.value).length > 0;
-  const [view, setView] = useState<'selection' | 'configuration'>(
-    hasExistingParameter ? 'configuration' : 'selection'
-  );
-  const [selectedParameter, setSelectedParameter] = useState<Parameter | null>(
-    hasExistingParameter ? activeField.value : null
-  );
+  const [view, setView] = useState<'selection' | 'configuration'>('selection');
+  const [selectedParameter, setSelectedParameter] = useState<Parameter | null>(null);
 
   const returnTitle = useCallback(
     (item: string) => {
@@ -62,6 +56,14 @@ function BottomSheet({ closeBottomSheet, onSelect, activeField }: IBottomSheet) 
   }
 
   const handleParameterSelect = (parameter: Parameter) => {
+    const hasOptions = parameter.options && parameter.options.length > 0;
+    const isObject = parameter.returnType.type === 'object';
+
+    if (!hasOptions && !isObject) {
+      onSelect(parameter);
+      closeBottomSheet();
+      return;
+    }
     setSelectedParameter(parameter);
     setView('configuration');
   };
@@ -161,7 +163,7 @@ function BottomSheet({ closeBottomSheet, onSelect, activeField }: IBottomSheet) 
 
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {dataSrc &&
-                Object.keys(dataSrc).map((item, index) => {
+                Object.keys(dataSrc).sort((a, b) => a.localeCompare(b)).map((item, index) => {
                   return (
                     <Accordion
                       title={returnTitle(item)}

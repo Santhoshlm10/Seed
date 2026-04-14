@@ -41,7 +41,7 @@ function Footer({ recordCount, setRecordCount, onDownloadAction, loading, progre
         { name: "Excel (.xlsx)", icon: <FileSpreadsheet />, onClick: () => onDownloadAction('excel') },
         { name: "CSV (.csv)", icon: <FileSpreadsheet />, onClick: () => onDownloadAction('csv') },
         { name: "JSON (.json)", icon: <FileJson />, onClick: () => onDownloadAction('json') },
-                { name: "Copy to Clipboard (json)", icon: <CopyIcon />, onClick: () => onDownloadAction('json') },
+                { name: "Copy to Clipboard (json)", icon: <CopyIcon />, onClick: () => onDownloadAction('json-copy') },
         { name: "SQL Insert", icon: <Database />, onClick: () => onDownloadAction('sql') },
         { name: "MongoDB Insert", icon: <Database />, onClick: () => onDownloadAction('mongo') },
     ];
