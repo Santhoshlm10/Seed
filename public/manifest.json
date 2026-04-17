@@ -1,6 +1,6 @@
 {
     "name": "Seed",
-    "description": "Seed is a developer tool that helps you work with test data. Define a schema, generate realistic fake records, export them to CSV, JSON, Excel or SQL — or inject them directly into any web form to speed up your testing workflow.",
+    "description": "A developer tool to generate realistic test data and inject it into web forms to accelerate testing.",
     "version": "0.0.1",
     "manifest_version": 3,
     "minimum_chrome_version": "114",
