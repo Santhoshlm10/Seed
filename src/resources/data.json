@@ -5340,6 +5340,26 @@
     "groupName": "Helpers",
     "groupValue": [
       {
+        "parameterName": "Array Element",
+        "searchQueries": ["helpers", "array", "element", "random", "list", "arrayElement"],
+        "category": "helpers",
+        "subCategory": "arrayElement",
+        "description": "Returns a random element from a given array.",
+        "returnType": {
+          "type": "string",
+          "values": []
+        },
+        "options": [
+          {
+            "name": "Array Elements (comma separated)",
+            "keyName": "array",
+            "type": "string",
+            "description": "A comma separated list of items to choose from. Example: apple, banana, orange",
+            "defaultValue": "apple, banana, orange"
+          }
+        ]
+      },
+      {
         "parameterName": "From RegExp",
         "searchQueries": ["helpers", "regex", "regexp", "pattern", "custom", "fromRegExp"],
         "category": "helpers",

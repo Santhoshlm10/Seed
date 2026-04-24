@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTheme } from "../../ThemeProvider";
-import { MoreVertical } from "./Icons";
+import { MoreVertical, About } from "./Icons";
 import { IMenuList } from "../../models/Menu";
 
 
@@ -42,13 +42,18 @@ function Menu({ lists, trigger, position }: IMenuList) {
               {lists.map((i, index) => (
                 <div key={index}>
                   <button
-                    className={`flex items-center gap-2 w-full text-left px-4 py-2 text-sm ${textPrimary} ${hoverBg} transition-colors`}
+                    className={`flex items-center gap-2 w-full text-left px-4 py-2 text-sm ${textPrimary} ${hoverBg} transition-colors group`}
                     onClick={() => {
                       i.onClick("");
                       setShowMenu(false);
                     }}
                   >
                     {i.icon}  {i.name}
+                    {i.infoText && (
+                      <span className={`ml-auto ${textSecondary}`} title={i.infoText}>
+                        <About />
+                      </span>
+                    )}
                   </button>
                 </div>
               ))}

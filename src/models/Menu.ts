@@ -1,7 +1,8 @@
 export interface IMenuItem {
   name: string;
   icon: React.ReactNode;
-  onClick: (data: string) => void
+  onClick: (data: string) => void;
+  infoText?: string;
 }
 export interface IMenuList {
   lists: IMenuItem[];

@@ -8,9 +8,10 @@ interface HeaderProps {
     onImport: () => void;
     onExportForm: () => void;
     onImportForm: () => void;
+    onImportBulkForm: () => void;
 }
 
-function Header({ activeTab, onExport, onImport, onExportForm, onImportForm }: HeaderProps) {
+function Header({ activeTab, onExport, onImport, onExportForm, onImportForm, onImportBulkForm }: HeaderProps) {
     const { theme, setTheme, isDarkMode } = useTheme();
     const { borderColor, textPrimary, textSecondary } = theme;
 
@@ -22,6 +23,7 @@ function Header({ activeTab, onExport, onImport, onExportForm, onImportForm }: H
           ]
         : [
             { name: "Import Form", icon: <Import />, onClick: onImportForm },
+            { name: "Import Bulk", icon: <Import />, onClick: onImportBulkForm, infoText: "Upload a zip file which includes json of forms" },
             { name: "Export Form", icon: <Export />, onClick: onExportForm },
             { name: "About", icon: <About />, onClick: () => window.open("https://github.com/Santhoshlm10/seed") },
           ];

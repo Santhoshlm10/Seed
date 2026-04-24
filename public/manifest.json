@@ -21,8 +21,6 @@
         "service_worker": "background.js"
     },
     "permissions": [
-        "storage",
-        "tabs",
         "sidePanel",
         "downloads",
         "scripting",

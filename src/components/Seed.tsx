@@ -7,10 +7,11 @@ import Menu from "./ui/Menu";
 import Forms from "./forms/Forms";
 
 import { Parameter } from "../models/Playground";
-import { FormFieldMapping } from "../models/Forms";
+import { FormFieldMapping, FormDefinition } from "../models/Forms";
 import Footer from "./footer";
 import useDataGenerator from "../hooks/useDataGenerator";
 import { useToast } from "./hooks/useToast";
+import JSZip from "jszip";
 
 interface Field {
   id: string;
@@ -44,6 +45,7 @@ const Seed: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'generator' | 'forms'>('generator');
   const [formMappings, setFormMappings] = useState<FormFieldMapping[]>([]);
   const [formName, setFormName] = useState<string>('Untitled Form');
+  const [bulkForms, setBulkForms] = useState<FormDefinition[]>([]);
 
   const handleDownloadAction = (action: string) => {
     // Validate field names
@@ -274,6 +276,7 @@ const Seed: React.FC = () => {
             }));
             setFormMappings(imported);
             if (parsed.name) setFormName(parsed.name);
+            setBulkForms([]); // Clear bulk forms when importing a single form
             setActiveTab('forms');
             showToast(`Imported ${imported.length} field${imported.length !== 1 ? 's' : ''}`, 'success');
           } else {
@@ -284,6 +287,53 @@ const Seed: React.FC = () => {
         }
       };
       reader.readAsText(file);
+    };
+    input.click();
+  };
+
+  const handleImportBulkForm = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.zip,application/zip';
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+      
+      try {
+        const zip = new JSZip();
+        const loadedZip = await zip.loadAsync(file);
+        const forms: FormDefinition[] = [];
+        
+        for (const [filename, zipEntry] of Object.entries(loadedZip.files)) {
+          if (!zipEntry.dir && filename.endsWith('.json')) {
+            const content = await zipEntry.async("text");
+            try {
+              const parsed = JSON.parse(content);
+              if (parsed.mappings && Array.isArray(parsed.mappings)) {
+                forms.push({
+                  name: parsed.name || filename.replace('.json', ''),
+                  mappings: parsed.mappings.map((m: FormFieldMapping) => ({
+                    ...m,
+                    id: `field_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+                  }))
+                });
+              }
+            } catch (err) {
+              console.warn(`Skipping invalid JSON file in zip: ${filename}`);
+            }
+          }
+        }
+        
+        if (forms.length > 0) {
+          setBulkForms(forms);
+          setActiveTab('forms');
+          showToast(`Imported ${forms.length} bulk forms`, 'success');
+        } else {
+          showToast('No valid forms found in the zip file', 'error');
+        }
+      } catch (err) {
+        showToast('Failed to parse zip file', 'error');
+      }
     };
     input.click();
   };
@@ -345,6 +395,7 @@ const Seed: React.FC = () => {
         onImport={handleImport}
         onExportForm={handleExportForm}
         onImportForm={handleImportForm}
+        onImportBulkForm={handleImportBulkForm}
       />
 
       {/* Tab Bar */}
@@ -367,7 +418,7 @@ const Seed: React.FC = () => {
       {/* Forms tab — full height, own scroll */}
       {activeTab === 'forms' && (
         <div className="flex-1 overflow-hidden">
-          <Forms mappings={formMappings} setMappings={setFormMappings} formName={formName} setFormName={setFormName} />
+          <Forms mappings={formMappings} setMappings={setFormMappings} formName={formName} setFormName={setFormName} bulkForms={bulkForms} setBulkForms={setBulkForms} />
         </div>
       )}
 

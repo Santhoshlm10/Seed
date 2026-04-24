@@ -10,6 +10,7 @@ export function createRandomUser() {
       registeredAt: faker.word.words({count:{max:10,min:1}}),
       nearByLocation: faker.location.nearbyGPSCoordinate({origin:[10,10]}),
       dateBetween: faker.date.between({from:"2026-02-01",to:"2026-02-04"}),
+      choice: faker.helpers.arrayElements(['a', 'b', 'c'])
       };
   }
   

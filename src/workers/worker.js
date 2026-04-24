@@ -45,6 +45,31 @@ self.onmessage = function (event) {
               // Skip the rest of the generic processing for this field
               return;
             }
+            // --- Special case: faker.helpers.arrayElement(array) ---
+            if (category === 'helpers' && subCategory === 'arrayElement') {
+              const arrayOption = options && Array.isArray(options)
+                ? options.find(o => o.keyName === 'array')
+                : null;
+              const rawArray = arrayOption
+                ? (arrayOption.value !== undefined && arrayOption.value !== "" ? arrayOption.value : arrayOption.defaultValue)
+                : null;
+
+              let result;
+              if (rawArray) {
+                const arr = typeof rawArray === 'string' ? rawArray.split(',').map(s => s.trim()).filter(s => s.length > 0) : rawArray;
+                if (arr && arr.length > 0) {
+                  result = faker.helpers.arrayElement(arr);
+                } else {
+                  result = faker.helpers.arrayElement(['a', 'b', 'c']);
+                }
+              } else {
+                result = faker.helpers.arrayElement(['a', 'b', 'c']);
+              }
+
+              record[key] = result;
+              // Skip the rest of the generic processing for this field
+              return;
+            }
             // --------------------------------------------------------
 
             // Build options object from parameter options

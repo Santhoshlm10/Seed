@@ -10,6 +10,11 @@ export interface FormFieldMapping {
   parameter: Parameter | null;
 }
 
+export interface FormDefinition {
+  name: string;
+  mappings: FormFieldMapping[];
+}
+
 export const SELECTOR_TYPE_LABELS: Record<SelectorType, string> = {
 
   id: 'ID',

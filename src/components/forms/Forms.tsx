@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useTheme } from '../../ThemeProvider';
-import { FormFieldMapping } from '../../models/Forms';
+import { FormFieldMapping, FormDefinition } from '../../models/Forms';
 import { Parameter } from '../../models/Playground';
 import FormFieldRow from './FormFieldRow';
 import BottomSheet from '../bottomsheet';
@@ -15,9 +15,55 @@ interface FormsProps {
   setMappings: React.Dispatch<React.SetStateAction<FormFieldMapping[]>>;
   formName: string;
   setFormName: React.Dispatch<React.SetStateAction<string>>;
+  bulkForms?: FormDefinition[];
+  setBulkForms?: React.Dispatch<React.SetStateAction<FormDefinition[]>>;
 }
 
-function Forms({ mappings, setMappings, formName, setFormName }: FormsProps) {
+function BulkFormCard({ form, theme }: { form: FormDefinition, theme: any }) {
+  const { inject, status, errors } = useFormInjector(form.mappings);
+  const { bgSecondary, borderColor, textPrimary, textSecondary } = theme;
+  
+  const busy = status === 'generating' || status === 'injecting';
+  const canInject = form.mappings.length > 0 && !busy;
+  
+  return (
+    <div className={`${bgSecondary} border ${borderColor} rounded-xl p-4 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow`}>
+      <div className="flex justify-between items-center">
+        <h3 className={`font-semibold ${textPrimary} truncate flex-1`} title={form.name}>{form.name}</h3>
+        <span className={`text-xs ${textSecondary} px-2 py-1 bg-opacity-50 rounded-full border ${borderColor}`}>
+          {form.mappings.length} field{form.mappings.length !== 1 ? 's' : ''}
+        </span>
+      </div>
+      
+      {errors.length > 0 && (
+        <div className="rounded-lg border border-red-300 bg-red-50 dark:bg-red-900/20 p-2 space-y-1 mt-1">
+          {errors.map((e, i) => (
+            <p key={i} className="text-xs text-red-500">{e}</p>
+          ))}
+        </div>
+      )}
+      
+      <div className="mt-auto pt-2">
+        <button
+          onClick={inject}
+          disabled={!canInject || busy}
+          className={`w-full py-2 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${
+            canInject && !busy
+              ? 'bg-blue-600 hover:bg-blue-700 text-white'
+              : `${bgSecondary} ${textSecondary} border ${borderColor} cursor-not-allowed opacity-70`
+          }`}
+        >
+          {busy && (
+            <span className="animate-spin inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
+          )}
+          {status === 'generating' ? 'Generating data…' : status === 'injecting' ? 'Injecting…' : 'Inject into form'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function Forms({ mappings, setMappings, formName, setFormName, bulkForms = [], setBulkForms }: FormsProps) {
   const { theme } = useTheme();
   const { bgPrimary, bgSecondary, borderColor, textPrimary, textSecondary, inputBg } = theme;
 
@@ -83,6 +129,31 @@ function Forms({ mappings, setMappings, formName, setFormName }: FormsProps) {
   };
 
   // ─── Render ────────────────────────────────────────────────────────────────
+
+  if (bulkForms.length > 0) {
+    return (
+      <div className={`w-full h-full flex flex-col ${bgPrimary} ${textPrimary}`}>
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold">Bulk Forms ({bulkForms.length})</h2>
+            {setBulkForms && (
+              <button 
+                onClick={() => setBulkForms([])}
+                className={`text-sm font-medium text-red-500 hover:text-red-400 transition-colors`}
+              >
+                Clear All
+              </button>
+            )}
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {bulkForms.map((form, index) => (
+              <BulkFormCard key={index} form={form} theme={theme} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`w-full h-full flex flex-col ${bgPrimary} ${textPrimary}`}>
