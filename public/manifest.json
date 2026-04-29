@@ -1,5 +1,5 @@
 {
-    "name": "Seed",
+    "name": "Seed - Generate Test Data and Automate Web",
     "description": "A developer tool to generate realistic test data and inject it into web forms to accelerate testing.",
     "version": "0.0.1",
     "manifest_version": 3,
